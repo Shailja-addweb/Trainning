@@ -1,0 +1,17 @@
+header {
+	background-color: red;
+	font-size: 80px;
+}
+header ul{
+	list-style-type: none;
+    margin: 50px;
+    padding: 40px 0px 0px 50 px;
+    overflow: hidden;
+}
+
+header li {
+	 float: left;
+	 list-style-type: none;
+	 font-size: 20px;
+
+}
