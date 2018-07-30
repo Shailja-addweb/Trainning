@@ -1,9 +1,12 @@
 * {
 	box-sizing: border-box;
+	font-family: "arial"; 	
 }
 
+/*--------------------------------------------header css --------------------------------------*/
+
 header {
-	background-color: red;
+	background-color: #D70310;
 	width: 100%;
 	height: 107px;
 	display: inline-block;
@@ -21,7 +24,7 @@ header .menu {
 	list-style-type: none;
     float: left;
     text-align: center;
-
+    font-size: small;
 }
 
 header ul{
@@ -29,32 +32,37 @@ header ul{
 }
 
 #main-menu li {
-    border-right: 1px solid White;
-
+    border-right: 1px solid lightgrey;
+    line-height: 6px;
 }
 
 #main-menu li:last-child {
     border: none;
 }
 
-header li {
+header .menu ul.header-menu li {
 	 display:inline-block;
 	 list-style-type: none;
 	 font-size: 17px;
 	 padding: 10px;
 	 text-align: center;
-	 background-color: red;
+	 background-color: #D70310;
 	 color: White;
+	 font-size: small;
 }
 
-header a{
+header .menu ul.header-menu li a{
 	color:White;
 	text-decoration: none;
+	font-size: 14px;
 }
 
-#main-menu a:hover{
+#main-menu li a:hover{
 	font-weight: bold;
 }
+
+/*--------------------------body css----------------------------------*/
+/*-------------------left sidebar css------------------------------------*/
 
 .main-container {
 	width: 100%;
@@ -63,58 +71,29 @@ header a{
 	/*font-family: "Times New Roman";*/
 }
 
-h1{
-	color: red;
-	/*font-family: "Courier New";*/
-	font-size: 60px;
-	font-weight: lighter;
-	line-height: 0px;
-	letter-spacing: -2px;
-	margin: 0;
-    border-bottom: 1px solid red;
-    padding-bottom: 30px;
-    margin-bottom: 12px;
-    display: inline-block;
-    width: 95%;
-}
-
-h2{
-	/*font-family: "Courier New, sans-serif";*/
-	letter-spacing: -1px;
-}
-
-h4{
-	color:red;
-	/*font-family: "Verdana, sans-serif";*/
-	letter-spacing: 0px;
-}
-
-p{
-	color: #b9b3b3;
-}
-
-.left-sidebar{
+.main-container .left-sidebar{
 		width: 30%;
 		float: left;
 		padding-left: 94px;	
 }
 
-.left-sidebar p{
+.main-container .left-sidebar p{
 	text-align: left;
 	height: 70px;
+    color:#bbb6bb;
     padding-left: 35px;
-    padding: 20px;
-
+    padding-right: 35px;
+    font-size: 13px;
 }
 
-.left-sidebar a{
+.main-container .left-sidebar ul.sidebar-menu  li a{
 	color:black;
 	text-decoration: none;
 }
 
-.left-sidebar li{
+.main-container .left-sidebar ul.sidebar-menu li{
 	margin: 0;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid #9B999F;
     padding-bottom: 15px;
     margin-bottom: 15px;
     display: inline-block;
@@ -123,35 +102,35 @@ p{
 
 }
 
-.main-container .left-sidebar .sidebar-menu img{
+.main-container .left-sidebar ul.sidebar-menu li img{
 	height: 8px;
 }
 
 ul{
-	list-style-type: none;
+	list-style-type: none;  /*for every ul tag of html file*/
 }
 
- .main-container form{
+ .main-container .left-sidebar form{
  	text-align: center;
-    padding: 3px;
+    display: inline;
+    width: 100%;
 }
 
-input{
+.main-container .left-sidebar form input{
 	margin: 2px 30px;
 	border-color: lightgrey;
 	border-width: 1px;
     border-style: double;
     text-align: left;
     box-sizing: border-box;
-    padding: 5px 15px;
+    padding: 5px 30px 5px 15px;
 }
-
-::placeholder{
+.main-container .left-sidebar form input::placeholder{
 	color:lightgrey;
 }
 
-#button{
-	background-color: red;
+.main-container .left-sidebar form #button{
+	background-color: #D70310;
     border: none;
     color: white;
     padding: 7px 40px 10px 10px;
@@ -162,13 +141,51 @@ input{
     border-radius: 5px;
 }
 
-.right-sidebar{
+/*-------------------right sidebar css------------------------------------*/
+
+.main-container .right-sidebar{
 	width: 70%;
 	float:left;
 
 }
 
-.book-cassie, .topics{
+.main-container .right-sidebar .book-cassie h1{
+	color: red;
+	/*font-family: "Courier New";*/
+	font-size: 60px;
+	font-weight: lighter;
+	line-height: 0px;
+	letter-spacing: -2px;
+	margin: 0;
+    border-bottom: 1px solid #D70310;
+    padding-bottom: 30px;
+    margin-bottom: 12px;
+    display: inline-block;
+    width: 95%;
+    margin-top: 30px;
+}
+
+.main-container .right-sidebar .book-cassie h2{	
+	/*font-family: "Courier New, sans-serif";*/
+	letter-spacing: -1px;
+	font-weight: lighter;
+    font-size: 18px;
+}
+
+.main-container .right-sidebar h3{
+	color:#D70310;
+	/*font-family: "Verdana, sans-serif";*/
+	letter-spacing: 0px;
+	font-weight: lighter;
+    font-size: 15px;
+}
+
+.main-container .right-sidebar .book-cassie p{
+	color: #bbb6bb;
+	font-size: 13px;
+}
+
+.main-container .book-cassie, .topics{
 	margin: 0;
     border-bottom: 1px solid black;
     padding-bottom: 15px;
@@ -177,27 +194,31 @@ input{
     width: 95%;
 }
 
-.topics-menu{
+.main-container .right-sidebar .topics .topics-menu{
 	color: #b9b3b3;
 	margin: 0;
     padding: 0;
     padding-bottom: 15px;
+    font-size: 13px;
+
 }
 
-.main-container .topics-menu img{
-	height: 8px;
+.main-container .right-sidebar .topics .topics-menu li img{
+	height: 7px;
 }
 
-video{
+.main-container .right-sidebar .video video{
 	width: 70%;
 	height: 300px;
 	padding-bottom: 50px;
 }
 
+/*-----------------------------------------------footer css------------------------*/
+
 footer{
 	display: inline-block;
     width: 100%;
-    background-color: #696969;
+    background-color: #737277;
    /* font-family: "monospace";*/
     vertical-align: top;
     padding-top: 20px;
@@ -205,63 +226,69 @@ footer{
     height: auto;
 }
 
-footer .bottom-second-menu {
-	border-right: 1px solid White;
-	
+
+footer .footer-menu ul.bottom-first-menu{
+	float: left;
+	width: 16.666666667%;
+	padding-left: 65px;
 }
-footer li{
+
+footer .footer-menu ul li{   /*for every li tag of footer */
 	margin: 0;
-    border-bottom: 1px dotted White;
+    border-bottom: 1px dotted #9B999F;
     padding-bottom: 7px;
     margin-bottom: 10px;
     display: inline-block;
-    width: 83%;
-
+    width: 70%;
+    font-size: 15px;
 }
 
-footer .bottom-first-menu li:last-child {
+footer .footer-menu ul.bottom-first-menu li:last-child {
     border: none;
 }
 
-footer .bottom-first-menu{
-	float: left;
-	width: 18%;
+footer .footer-menu ul.bottom-second-menu {
+	border-right: 1px solid #9B999F;
+	height: 165px;
 }
 
-footer .bottom-second-menu{
+footer .footer-menu ul.bottom-second-menu{
 	float: left;
-	width: 18%;
+	width: 16.666666667%;
+	padding-left: 20px;
 }
 
-footer .footer-menu a{
-	color:black;
+footer .footer-menu ul li a{
+	color:White;
 	text-decoration: none;
 }
-footer .footer-menu li::before;
-	content: ">";
+
+footer .footer-menu ul li::before{
+	content : ">";
+	color: white;
+}
+
+footer .footer-menu ul li a{
+	color:White;
+	text-decoration: none;
+	list-style-type: none;
 }
 
 footer .social{
 	float: left;
-	width: 27%;
+	width: 33.333333333%;
 	font-size: 20px;
-	margin: 10px;
-	padding-left: 0px;
-	color: lightgrey;
+	padding-left: 20px;
+	color: #AFAEB4;
 }
 
 footer .social h5{
 	margin: 10px;
 }
 
-footer .social img{
+footer .social .images img{
     height: 30px;
-}
-
-footer .footer-menu a{
-	color:White;
-	text-decoration: none;
-	list-style-type: none;
+    margin: 2px;
 }
 
 footer .social .images{
@@ -270,17 +297,19 @@ footer .social .images{
 }
 footer .logo-display{
 	float:left;
-	border-left: 1px solid White;
+	width: 33.333333333%;
+	border-left: 1px solid #9B999F;
 	padding-left: 30px;
+	margin-top: 15px;
 }
 
 footer .logo-display img{
-	height: 180px;
+	height: 165px;
 }
 .copy-right{
 	width: 100%;
 	display: inline-block;
 	text-align: Center;
-	background-color: red;
+	background-color: #D70310;
 	color: White;
 }
