@@ -18,6 +18,7 @@ header {
 	width: 100%;
 	height: 107px;
 	display: inline-block;
+	vertical-align: top;
 }
 
 header .logo{
@@ -345,12 +346,19 @@ footer .logo-display img{
 	width: 100%;
 	display: flex;
 }
+
 .main-gallery .wrapper .gallery-grid .row .one-third{
 	width: 33.333333%;
 	height: auto;
 	margin-bottom: 15px;
 	margin-left: 15px;
 	text-align: center;
+}
+
+.main-gallery .wrapper .gallery-grid .row .one-third img{
+	width: 100%;
+	height: auto;
+	display: flex;
 }
 
 .main-gallery h1{
@@ -397,4 +405,168 @@ footer .logo-display img{
 .main-gallery .wrapper .parent-pagination{
 	display: inline-block;
 	width: calc(100% - 10px);
+}
+
+/*@media only screen and (min-width: 992px) {
+	.main-gallery .wrapper .parent-pagination{
+		width: 50%;
+	}
+	.main-gallery .pagination a {
+		padding: 15px;
+	}
+} 
+
+@media only screen and (min-width: 768px) {
+	.main-gallery .wrapper .parent-pagination{
+		width: 50%;
+	}
+	.main-gallery .pagination a {
+		padding: 15px;
+	}
+} */
+
+/*-------------------------------------contact page----------------------------------------*/
+
+.main-contain{
+	width: 100%;
+	height: auto;
+	display: inline-flex;
+	background-color: #e0e0e0;
+	margin:0;
+	padding:0;
+
+}
+.main-contain .wrapper .contact-grid {
+	font-family: 'Montserrat', sans-serif;
+	margin-top: 65px;
+}
+ 
+.main-contain .wrapper .contact-grid .row {
+	width: 100%;
+	display: flex;
+} 
+
+.main-contain .wrapper .contact-grid .row .left-grid {
+	/*width: 33.333333%;*/
+	height: auto;
+	/*margin-bottom: 15px;
+	margin-left: 15px;*/
+	text-align: center;
+	float: left;
+}
+
+.main-contain .wrapper .contact-grid .row .left-grid .grid-email {
+	width: 60%;
+	height: auto;
+	float: left;
+}
+
+.main-contain .wrapper .contact-grid .row .left-grid {
+	float: left;
+	/*width: 33.333333333%;*/
+	font-size: 20px;
+	padding-left: 20px;
+	color: #AFAEB4;
+	width: 80%;
+	text-align: left;
+}
+
+.main-contain .wrapper .contact-grid .row .right-grid{
+	margin-left: 100px;
+	width: 20%;
+} 
+
+.main-contain .wrapper .contact-grid .row .left-grid h1{
+	font-size:30px;
+	text-align: left;
+	color:black;
+	font-weight: 400;
+	padding-bottom: 20px;
+}
+
+.main-contain .wrapper .contact-grid .row .left-grid h2 {
+	font-size:18px;
+	text-align: left;
+	color:black;
+	font-weight: 400;
+	padding-top: 20px;
+}
+
+.main-contain .wrapper .contact-grid .row .left-grid h3 {
+	padding-top: 35px;
+	color:black;
+	font-weight: 400;
+	font-size: 17px;
+	padding-bottom: 15px;
+}
+.main-contain .wrapper .contact-grid .row .left-grid button {
+	background-color: #11947d;
+    border: none;
+    color: white;
+    padding: 12px 17px 12px 17px;
+    text-align: left;
+    display: inline-block;
+    font-size: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+    font-weight: 700;
+}
+.main-contain .wrapper .contact-grid .row .left-grid .grid-call{
+	margin-left: 350px;
+}
+.main-contain .wrapper .contact-grid .row .right-grid h2{
+	font-weight: 400;
+}
+
+
+.main-contain .wrapper .contact-grid .row .left-grid .images img{
+    height: 30px;
+    margin: 2px;
+}
+
+.main-contain .wrapper .contact-grid .row .left-grid .images{
+	height: 30px;
+}
+
+.main-contain .wrapper .contact-grid .row .right-grid form input, textarea{
+	margin-top: 10px;
+	width: 100%;
+}
+
+.main-contain .wrapper .contact-grid .row .right-grid form{
+ 	text-align: center;
+    display: inline;
+    width: 100%;
+}
+
+.main-contain .wrapper .contact-grid .row .right-grid form input, textarea{
+	border-color: white;
+	border-width: 1px;
+    border-style: double;
+    text-align: left;
+    box-sizing: border-box;
+    padding: 6px;
+
+}
+
+.main-contain .wrapper .contact-grid .row .right-grid form input::placeholder, textarea::placeholder{
+	color:grey;
+	font-family: arial;
+}
+
+.main-contain .wrapper .contact-grid .row .right-grid form button{
+	background-color: #11947d;
+    border: none;
+    color: white;
+    padding: 12px 17px 12px 17px;
+    text-align: left;
+    display: inline-block;
+    font-size: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    font-weight: 700;
+}
+
+.main-contain .wrapper .contact-grid .row .left-grid .images {
+	padding-bottom: 60px;
 }
