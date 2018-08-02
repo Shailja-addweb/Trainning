@@ -1,0 +1,37 @@
+*{
+	box-sizing: border-box; 	
+	margin: 0;
+	padding:0;
+}
+
+/*.main-body{
+	background-color: black;
+	width: 100%;
+}
+
+.main-body .menu{
+    float: right;
+    display: inline-block;
+}
+.main-body .menu ul.main-menu{
+	list-style-type: none;
+	color:white;
+}
+.main-body .menu ul.main-menu li.list {
+    border-right: 1px solid white;
+    line-height: 6px;
+}
+
+.main-body .menu ul.main-menu li.list:last-child {
+    border: none;
+}*/
+
+.main-heder .first-header{
+	float:right;
+	width: 100%;
+}
+.main-header .first-header ul.main-menu{
+	background-color: black;
+	list-style-type: none;
+	color:white;
+}
