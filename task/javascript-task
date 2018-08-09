@@ -1,0 +1,3 @@
+Q-1 ) There is one textbox in the page in which you need to enter only numbers. For example, you enter 5 in that textbox then below that textbox you need to create 5 textbox with initial value as 5 in each textbox using DOM.
+
+Q-2 ) Add remove link to remove text box and remove all link to remove all text box.
