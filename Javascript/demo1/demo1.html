@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>demo1</title>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<!-- <script type="text/javascript" src="js/script.js"></script> -->
+		<script>
+		var count = 0;
+			function removeElement() {
+				document.body.removeChild(y);
+				count--;
+			}
+			function create() {
+	    		var n = document.getElementById("number").value;
+	    		/*if(n = ' '){
+	    			alert("Enter Numbers to create text box.");	
+	    			return false;
+	    		}*/
+	    	    if(isNaN(n) && n % 1 != 0){
+	        		alert("Please enter only numbers");
+	        		return false;
+	        	}
+			    for(var i=1; i <= n; i++){
+			    	count++;
+				    var y = document.createElement("div");
+					y.setAttribute("id", "div" + i);
+					var x = document.createElement("INPUT");
+					x.setAttribute("type", "text");
+					x.setAttribute("value", n);
+					var remove = document.createElement("a");
+					remove.setAttribute("href", "#");
+					remove.addEventListener("click", removeElement);
+					remove.textContent="REMOVE";								
+					/*document.getElementsByTagName("a").click() = document.removeChild(y);*/
+					/*$("a").click(function(){
+						$("div"+i).remove();
+					});*/
+					/*function remove(){
+						document.body.removeChild(y);
+						count--;
+					}*/
+					y.appendChild(x);
+					y.appendChild(remove);
+				    document.body.appendChild(y);
+				}
+				var removeall = document.createElement("a");
+				removeall.setAttribute("href", "#");
+				removeall.textContent="REMOVE ALL";
+				document.body.appendChild(removeall);
+				for(var j=0; j <= count; j--){
+					document.removeChild(y);
+				}
+			}
+
+		</script>
+	</head>
+	<body>
+		<h1>Text box created based on value of text box.</h1>
+		<input type="Text" name="number" placeholder="Enter number" id="number" class="num">
+		<button onclick="create()">Create</button>
+		<br>
+		<br>
+		<br>
+		<!-- <div id="new">
+		</div> -->
+	</body>
+</html>
