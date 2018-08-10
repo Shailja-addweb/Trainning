@@ -6,10 +6,11 @@
 		<!-- <script type="text/javascript" src="js/script.js"></script> -->
 		<script>
 		var count = 0;
-			function removeElement() {
-				document.body.removeChild(y);
-				count--;
-			}
+		var a=0;
+		window.onload=function(){
+  			document.getElementById("removeall").style.display='none';
+  		}
+			
 			function create() {
 	    		var n = document.getElementById("number").value;
 	    		/*if(n = ' '){
@@ -22,35 +23,50 @@
 	        	}
 			    for(var i=1; i <= n; i++){
 			    	count++;
+
+			    	// Create DIV Element
 				    var y = document.createElement("div");
-					y.setAttribute("id", "div" + i);
+					y.setAttribute("id", "div" + count);
+					y.setAttribute("class", "remove-div");
+
+					// Create textbox
 					var x = document.createElement("INPUT");
 					x.setAttribute("type", "text");
 					x.setAttribute("value", n);
-					var remove = document.createElement("a");
-					remove.setAttribute("href", "#");
-					remove.addEventListener("click", removeElement);
-					remove.textContent="REMOVE";								
-					/*document.getElementsByTagName("a").click() = document.removeChild(y);*/
-					/*$("a").click(function(){
-						$("div"+i).remove();
-					});*/
-					/*function remove(){
-						document.body.removeChild(y);
-						count--;
-					}*/
 					y.appendChild(x);
+
+					// Remove button
+					var remove = document.createElement("a");
+					remove.setAttribute("href", "#");	
+					remove.setAttribute("id", i);
+				   	remove.textContent="REMOVE";	
 					y.appendChild(remove);
+					/*alert(y.id);*/
+				    (function(ele) {
+					    remove.addEventListener("click", function() {
+							ele.removeChild(ele.childNodes[0]);
+							ele.removeChild(ele.childNodes[0]);
+				    		/*alert(y.id);*/
+				    		count--;
+					    })
+				    }(y))
+
+					// Append DIV With Textbox & Remove button
 				    document.body.appendChild(y);
 				}
-				var removeall = document.createElement("a");
-				removeall.setAttribute("href", "#");
-				removeall.textContent="REMOVE ALL";
-				document.body.appendChild(removeall);
-				for(var j=0; j <= count; j--){
-					document.removeChild(y);
-				}
+
+				document.getElementById("removeall").style.display = "block";
 			}
+
+			function removeall(){
+				
+				const elements = document.getElementsByClassName("remove-div");
+				while (elements.length > 0) {
+					elements[0].remove();
+				}
+				
+			}		
+
 
 		</script>
 	</head>
@@ -61,7 +77,7 @@
 		<br>
 		<br>
 		<br>
-		<!-- <div id="new">
-		</div> -->
+
+			<button id="removeall" class="RA" onclick="removeall()">Remove All</button>
 	</body>
 </html>
