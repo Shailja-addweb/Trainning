@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form-Submit</title>
+	<script>
+		function submitform() {
+			debugger;
+			document.getElementById('myform').submit();	
+		}
+	</script>
+</head>
+<body>
+	<h1> Submit the form using "button" type instead of "submit" input type. </h1>
+	<form action="new.html" method="post" id="myform">
+		<div class="div1">Enter your Name: </div><div class="name"><input type="text" name="name"></div>
+		<div class="div2">Enter Your Email id :</div><div class="email"> <input type="email" name="email"></div>
+		<div class="div3">Enter your City :</div><div class="city"> <input type="text" name="city"></div>
+		<div class="div4"><button onclick="submitform()">Submit</button></div>
+	</form>
+
+</body>
+</html>

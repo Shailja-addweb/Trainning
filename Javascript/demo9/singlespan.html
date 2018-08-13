@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Singlespan</title>
+	<script>
+		function select() {
+			debugger;
+			alert('phppppp');
+			var a = document.getElementsByName('technology').value;
+			document.getElementsByTagName('p').innerHTML = 'You have selected : ' + a;
+		}
+	</script>
+</head>
+<body>
+	<h1> Select your technology from radio buttons </h1>
+	<form action="#" method="post" id="myform"> 
+		<h2> Please select your technology : </h2>
+  		<input type="radio" name="technology" value="PHP" onclick="select()"> PHP
+  		<input type="radio" name="technology" value="ASP.NET"> ASP.NET
+  		<input type="radio" name="technology" value="ASP"> ASP 
+  		<input type="radio" name="technology" value="JSP"> JSP 
+  		<input type="radio" name="technology" value="PERL"> PERL  
+  		<input type="radio" name="technology" value="Cold Fusion"> Cold Fusion 
+  		<input type="radio" name="technology" value="Other"> Other 
+
+  		<p></p>
+	</form> 
+
+</body>
+</html>

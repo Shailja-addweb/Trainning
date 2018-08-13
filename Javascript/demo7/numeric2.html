@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Numeric_2</title>
+	<script>
+	function check() {
+		debugger;
+		numbers = /^[0-9]+$/;
+		var a = document.getElementById('check').value;
+		if(a == ''){
+			alert('Please enter any numeric value');
+			document.getElementById('check').focus();
+		}
+		else if(a.match(numbers)){
+			alert('Entered value is a numeric value');
+		}
+		else{
+			alert('Only numeric values are allowed. Please re-enter the value');
+			document.getElementById('check').focus();
+		}
+	}
+		
+	</script>
+</head>
+<body>
+	<h1>Validation without in-built methods</h1>
+	<input type="text" name="check" placeholder="Enter a number" id="check">
+	<button onclick="check()">Check</button>
+</body>
+</html>

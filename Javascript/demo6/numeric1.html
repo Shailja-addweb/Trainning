@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Numeric_1</title>
+	<script>
+		function check() {
+			debugger;
+			window.onload=function(){
+			 	document.getElementById('check').focus();
+			}
+			var a = document.getElementById('check').value;
+			if(a == ''){
+				alert('Please enter any numeric value');
+			}
+			else if(isNaN(a) && a % 1 != 0){
+				alert('Only numeric values are allowed. Please re-enter the value');
+			}
+			else{
+				alert('Entered value is a numeric value.')
+			}
+		}
+	</script>
+</head>
+<body>
+	<h1>Validation using in-built methods</h1>
+	<input type="text" name="textbox" id="check" placeholder="Enter number">
+	<button id="check" onclick="check()">Check</button>
+</body>
+</html>
