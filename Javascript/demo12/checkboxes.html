@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Checkboxes</title>
+	<script>
+		
+		function checkall(){
+			debugger;
+			var ca = document.getElementById('checkall');
+			var cb = document.getElementsByName('checkboxs');
+			
+			if(ca.checked == true){
+				for(var i=0; i<cb.length; i++) {
+    				cb[i].checked = true;
+    			}
+    		}
+
+    		if(ca.checked == false){
+				for(var i=0; i<cb.length; i++) {
+    				cb[i].checked = false;
+    			}
+    		}
+		}
+
+		function check(){
+			var ca = document.getElementById('checkall');
+			var cb = document.getElementsByName('checkboxs');
+    		for(var i=0; i<cb.length; i++) {
+    			if(cb[i].checked == false){
+   					ca.checked = false;
+   				}
+   			}
+   		}
+
+   		
+ 
+		
+	</script>
+</head>
+<body>
+	<h1> Check boxes check/un-check</h1>
+
+	<lable><input type="checkbox" name="checkall" value="Check All" id="checkall" onclick="checkall()" />Check All</lable><br />
+	<lable><input type="checkbox" name="checkboxs" value="USA" id="usa" onclick="check()" />USA</lable><br />
+	<lable><input type="checkbox" name="checkboxs" value="UK" id="uk" onclick="check()" />UK</lable><br />
+	<lable><input type="checkbox" name="checkboxs" value="India" id="india" onclick="check()" />India</lable><br />
+	<lable><input type="checkbox" name="checkboxs" value="Asia Pacific" id="asiapacific" onclick="check()" />Asia Pacific</lable><br />
+	<lable><input type="checkbox" name="checkboxs" value="Australia" id="australia" onclick="check()" />Australia</lable><br />
+	<lable><input type="checkbox" name="checkboxs" value="Middle East" id="middleeast" onclick="check()" />Middle East</lable><br /> 
+
+	</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DatevalidationEnhancement</title>
+	<script>
+		function check() {
+			debugger;
+			var d = document.getElementById('date').value;
+			/*alert(d);*/
+			/*var i = 4;
+			alert(d[i]);*/
+			var arr = d.split("-");
+			/*alert(arr[0]);
+			alert(arr[1]);
+			alert(arr[2]);*/
+			var date =  /^[0-9]{2}-[0-9]{2}-\^[0-9]{4}$/;
+			if(d.match(date)){
+				alert("Please enter date in DD-MM-YYYY format");
+				document.getElementById('date').focus();
+			}
+			else if(isNaN(arr[2]) || arr[2] < 0000 || arr[2] > 10000){
+				alert("Invalid year. Year Should be within the range 0000 to 9999");
+				document.getElementById('date').focus();
+			}
+
+			else if(isNaN(arr[1]) || arr[1] < 1 || arr[1] > 13){
+				alert("Invalid month. Month should be within the range 1 to 12");
+				document.getElementById('date').focus();
+
+			}
+
+			else if(isNaN(arr[0]) || arr[0] < 1 || arr[0] > 32){
+				if(arr[1]==2 || arr[1] == 02){
+					if((0 == arr[2] % 4) && (0 != arr[2] % 100) || (0 == arr[2] % 400) ){
+						alert("Invalid day. Day should be within the range 1 to 29");
+						document.getElementById('date').focus();
+					}
+					else{
+						alert("Invalid day. Day should be within the range 1 to 28");
+						document.getElementById('date').focus();
+					}
+				}
+				else if(arr[1] == 4 || arr[1] == 6 || arr[1] == 9 || arr[1] == 11){
+					alert("Invalid day. Day should be within the range 1 to 30");
+					document.getElementById('date').focus();
+				}
+				else{
+					alert("Invalid day. Day should be within the range 1 to 31");
+					document.getElementById('date').focus();
+				}
+
+			}
+			else if(arr[0] == 31){
+				if(arr[1] == 4 || arr[1] == 6 || arr[1] == 9 || arr[1] == 11){
+					alert("Invalid day. Day should be within the range 1 to 30");
+					document.getElementById('date').focus();
+				}
+			}
+			else{
+				alert("You have entered valid date. Its " + d + ". Thank you.")
+			}
+		}
+	</script>
+</head>
+<body>
+	<h1>Validation of date </h1>
+
+	<input type="text" id="date" name="date" placeholder="Enter Date in DD-MM-YYYY format" /> 
+	<button onclick="check()">Check</button>
+
+</body>
+</html>

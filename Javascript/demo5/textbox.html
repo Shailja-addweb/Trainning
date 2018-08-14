@@ -7,7 +7,7 @@
 		function check(){
 			debugger;
 			var letters = document.getElementById('textbox0').value.length;
-			if (letters < 3){
+			if (letters <= 2){
 				document.getElementById("textbox0").focus();
 			}
 			else{
@@ -19,7 +19,7 @@
 				x.setAttribute("name", "textbox" + i);
 				x.setAttribute("placeholder", "Enetr 3 digits");
 				x.setAttribute("maxlength", "3");
-				
+				/*document.getElementById("textbox" + i).focus();*/
 			
 
 				/*(function(add){*/
