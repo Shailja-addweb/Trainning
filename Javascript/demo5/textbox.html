@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>textbox</title>
+	<script>
+		var i = 1;
+		function check(){
+			debugger;
+			var letters = document.getElementById('textbox0').value.length;
+			if (letters < 3){
+				document.getElementById("textbox0").focus();
+			}
+			else{
+				var y = document.createElement("div");
+				y.setAttribute("id", "div" + i);
+
+				var x = document.createElement("INPUT");
+				x.setAttribute("type", "number");
+				x.setAttribute("name", "textbox" + i);
+				x.setAttribute("placeholder", "Enetr 3 digits");
+				x.setAttribute("maxlength", "3");
+				
+			
+
+				/*(function(add){*/
+					x.addEventListener("onkeyup", function(){
+						check();
+						//document.textbox+i.focus()
+					});
+					y.appendChild(x);
+						document.body.appendChild(y);
+				/*}(y))*/
+				
+			}
+		}
+		
+	</script>
+</head>
+<body>
+	<h1> once a textbox have 3 digits, another textbox will be created </h1>
+
+	<div class="main">
+		<input type="number" id="textbox0" name="textbox" placeholder="Enetr 3 digits" maxlength="3" onkeyup="check()">
+	</div>
+
+</body>
+</html>
