@@ -4,7 +4,7 @@ Q-2 ) Add remove link to remove text box and remove all link to remove all text 
 
 4) Select all checkbox functionality  ::: done
  
-5) There would be one textbox in that textbox user will type the digits, once he has already entered 3 digits in that textbox, create another textbox and cursor focus needs to be moved to that newly created textbox.
+5) There would be one textbox in that textbox user will type the digits, once he has already entered 3 digits in that textbox, create another textbox and cursor focus needs to be moved to that newly created textbox.  ::: done
 
 6) numeric1.htm :::done
 	Requirement :
@@ -51,7 +51,7 @@ Q-2 ) Add remove link to remove text box and remove all link to remove all text 
 		- Use multiple "span" HTML element for displaying the related message.
 		- Note that radio button should be selectable by clicking on the corresponding label.
 
-11) multiplebutton.htm
+11) multiplebutton.htm ::: done
 	Requirement :
 		- Clicking on different buttons ("button" input type) should submit the form to different pages.
 		- Consider "numeric1.htm" and "numeric2.htm" files for this.
@@ -60,7 +60,7 @@ Q-2 ) Add remove link to remove text box and remove all link to remove all text 
 		- Clicking on "Submit 1" button will open "numeric1.htm" while clicking on "Submit 2" button will open "numeric2.htm" in the 			same window.
 		- Use Browser back button for traversing among various pages.
 
-12) checkboxes.htm
+12) checkboxes.htm  ::: done
 	Requirement :
 		- Checking/Un-checking "Check All" check box should check/un-check all the other corresponding check boxes.
 		Also, if "Check All" check box is checked and
@@ -103,7 +103,7 @@ Q-2 ) Add remove link to remove text box and remove all link to remove all text 
 		- Year should be within the range (0000-9999).
 		- All other conditions apply.
 
-15) math.htm
+15) math.htm  ::: done
 	Requirement :
 
 	- Create an application for performing basic math operations like Addition, Subtraction, Multiplication and Division.
@@ -134,7 +134,7 @@ Q-2 ) Add remove link to remove text box and remove all link to remove all text 
 
 
 
-16) popup1.htm and popup2.htm
+16) popup1.htm and popup2.htm  :::done
 	Requirement :
 		- Create 2 HTML pages, viz. popup1.htm and popup2.htm.
 
@@ -155,12 +155,12 @@ Q-2 ) Add remove link to remove text box and remove all link to remove all text 
 		"popup2.htm" should be closed.
 
 
-17) print.htm
+17) print.htm  ::: done
 	Requirement :
 		- Put a button called "Print". Clicking on it should open the 'print' dialog of the browser. (Make sure printer is installed on 		the machine). If it is not installed, just write the code.
 
 
-18) droplist.htm	
+18) droplist.htm ::: done
 	Requirement :
 		- Put a droplist with 5 country name
 		(Eg. India, United Kingdom..). Default value should "Please select".
