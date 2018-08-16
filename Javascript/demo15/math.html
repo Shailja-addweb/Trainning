@@ -3,39 +3,38 @@
 <head>
 	<title>Math</title>
 	<script>
-		var num1 = document.getElementById('num1').value;
-		var num2 = document.getElementById('num2').value;
-		var res;
-		var op = document.getElementsByName('opration').value;
-
+		
 		function calc() {
 			debugger;
+			var num1 = document.getElementById('num1').value;
+			var num2 = document.getElementById('num2').value;
+			var res;
+
 			numbers = /^[0-9]+$/;
-			alert(op);
+		
 			if(num1 == '' || num2 == ''){
 				alert("Please enter first number or Please enter second number");
 			}
 			else if(num1.match(numbers) || num2.match(numbers)){
-				switch(op){
-					case '+': 
-						res = num1 + num2;
-						break;
-
-					case '-':
-						res = num1 - num2;
-						break;
-
-					case '*':
-						res = num1 * num2;
-						break;
-
-					case '/':
-						res = num1 / num2;
-
-					default:
-						alert("Please select the operation you want to perform");
+				if (document.getElementById('add').checked) {
+  					res = parseInt(num1) + parseInt(num2);
+  					document.getElementById("txt").innerHTML = "Result is " + res;
 				}
-				document.getElementById("txt").innerHTML = "Result is " + res;
+				else if(document.getElementById('sub').checked) {
+  					res = parseInt(num1) - parseInt(num2);
+  					document.getElementById("txt").innerHTML = "Result is " + res;
+				}
+				else if(document.getElementById('mul').checked) {
+  					res = parseInt(num1) * parseInt(num2);
+  					document.getElementById("txt").innerHTML = "Result is " + res;
+				}
+				else if(document.getElementById('div').checked) {
+  					res = parseInt(num1) / parseInt(num2);
+  					document.getElementById("txt").innerHTML = "Result is " + res;
+				}
+				else{
+					alert("Please select the operation you want to perform");
+				}
 			}
 			else{
 			
@@ -45,10 +44,16 @@
 		}
 
 		function reset() {
-			res = 0;
-			op.checked = false;
+			var num1 = document.getElementById('num1').value;
+			var num2 = document.getElementById('num2').value;
+			var res = 0;
+			var op1 = document.getElementById('add').checked=false;
+			var op2 = document.getElementById('sub').checked=false;
+			var op3 = document.getElementById('mul').checked=false;
+			var op4 = document.getElementById('div').checked=false;
 			document.getElementById('num1').value = '';
 			document.getElementById('num2').value = '';
+			document.getElementById('txt').style.display = "none";
 		}
 		
 	</script>
@@ -64,10 +69,10 @@
 
 	Please select operation you want to perform :<br><br>
 	<span id = "oprations">
-		<label><input type="radio" name="opration" id="add" value="+">Addition</label><br><br>
-		<label><input type="radio" name="opration" id="sub" value="-">Subtraction</label><br><br>
-		<label><input type="radio" name="opration" id="mul" value="*">Multiplication</label><br><br>
-		<label><input type="radio" name="opration" id="div" value="/">Division</label><br><br>
+		<label><input type="radio" name="opration" id="add" value="add">Addition</label><br><br>
+		<label><input type="radio" name="opration" id="sub" value="sub">Subtraction</label><br><br>
+		<label><input type="radio" name="opration" id="mul" value="mul">Multiplication</label><br><br>
+		<label><input type="radio" name="opration" id="div" value="div">Division</label><br><br>
 	</span>
 
 	<button id="cal" onclick="calc()"> Calculate </button>

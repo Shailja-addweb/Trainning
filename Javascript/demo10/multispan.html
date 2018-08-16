@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Singlespan</title>
+	<title>Multispan</title>
 	<script>
 		function check() {
 			debugger;
-			alert('phppppp');
-			var a = document.getElementsByName('tech');
-			for (var i = 0; i < a.length; i++) {
-				if(a[i].checked){
-					/*var r =  myform.elements["tech"].value;*/
-					document.getElementById('txt').innerhtml = 'You have selected : ' + a[i].value;
-				}	
+			for(var i = 1; i <= 7; i++){
+				var a = document.getElementById('rd'+i);
+				if(a.checked){
+					document.getElementById('technology').innerHTML = 'You have selected ' + a.value + ' ';
+				}
 			}
 		}
 	</script>
@@ -20,19 +18,13 @@
 	<h1> Select your technology from radio buttons </h1>
 	<form action="#" method="post" id="myform"> 
 		<h2> Please select your technology : </h2>
-		<span id="technology">
-  			<label><input type="radio" name="tech" id = rd1 value="PHP">PHP</label> 
-  			<label><input type="radio" name="tech" id = rd2 value="ASP.NET"> ASP.NET</label>
-  			<label><input type="radio" name="tech" id = rd3 value="ASP"> ASP </label>
-  			<label><input type="radio" name="tech" id = rd4 value="JSP"> JSP </label>
-  			<label><input type="radio" name="tech" id = rd5 value="PERL"> PERL </label>
-  			<label><input type="radio" name="tech" id = rd6 value="Cold Fusion"> Cold Fusion </label>
-  			<label><input type="radio" name="tech" id = rd7 value="Other"> Other <br /> <br /></label>
-  			<button onclick="check()">Check</button>
-  		</span>
-  		<span id = "txt">
-  			<p id="txt"></p>
-  		</span>
+  			<label><span id="technology" style="color: blue;"></span><input type="radio" name="tech" id = rd1 value="PHP" onclick="check()">  PHP</label>
+  			<label><span id="technology"></span><input type="radio" name="tech" id = rd2 value="ASP.NET" onclick="check()"> ASP.NET</label>
+  			<label><span id="technology"></span><input type="radio" name="tech" id = rd3 value="ASP" onclick="check()"> ASP </label>
+  			<label><span id="technology"></span><input type="radio" name="tech" id = rd4 value="JSP" onclick="check()"> JSP </label>
+  			<label><span id="technology"></span><input type="radio" name="tech" id = rd5 value="PERL" onclick="check()"> PERL </label>
+  			<label><span id="technology"></span><input type="radio" name="tech" id = rd6 value="Cold Fusion" onclick="check()"> Cold Fusion </label>
+  			<label><span id="technology"></span><input type="radio" name="tech[]" id = rd7 value="Other" onclick="check()"> Other <br /> <br /></label>
   		
 	</form> 
 

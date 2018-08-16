@@ -3,27 +3,30 @@
 <head>
 	<title>Multibutton</title>
 	<script>
-	function submit1() {
-		debugger;
-		document.getElementById('myform').submit();
-		window.locations.href("numeric1.html");
-		/*window.open("numeric1.html");*/
-	}
-
-	function submit2() {
-		document.getElementById('myform').submit();
-		location.replace("../demo7/numeric2.html");
-		/*window.open("../demo7/numeric2.html");*/
-	}
-		
+	
 	</script>
 </head>
 <body>
 	<form method="post" id="myform">
-		<p>Please click on "Submit 1" button for opening numeric1.htm</p>
-		<button id = "btn-1" onclick="submit1()">Submit 1</button>
-		<p>Please click on "Submit 2" button for opening numeric2.htm</p>
-		<button id = "btn-2" onclick="submit2()" >Submit 2</button>
+		<label>
+			Please click on
+				<button type="button">
+					<a href="#" onclick="location.reload();location.href='numeric1.html'">
+						Submit 1
+					</a>
+				</button>
+			button for opening numeric1.htm
+		</label>
+		<br><br>
+		<label>
+			Please click on
+				<button type="button">
+					<a href="#" onclick="location.reload();location.href='../demo7/numeric2.html'">
+						Submit 2
+					</a>
+				</button>
+			button for opening numeric2.htm
+		</label>	
 	</form>
 
 </body>

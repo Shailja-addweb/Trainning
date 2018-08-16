@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Droplist</title>
+	<script>
+		function change() {
+			debugger;
+			var a = document.getElementById('droplist');
+			var e = a.options[a.selectedIndex];
+			var x = e.id;
+			/*alert(a);*/
+			/*for(var i = 0; i<a.length; i++){*/
+				if(x == "c0"){
+					alert("Please select Country");
+				}
+				else if(x == "all"){
+					document.getElementById('country').style.display = "block";
+					document.getElementById('txt').innerHTML = '';
+				}
+				else if(x == "c1"){
+					document.getElementById('txt').innerHTML = e.value;
+					document.getElementById('country').style.display = "none";
+				}
+				else if(x == "c2"){
+					document.getElementById('txt').innerHTML = e.value;
+					document.getElementById('country').style.display = "none";
+				}
+				else if(x == "c3"){
+					document.getElementById('txt').innerHTML = e.value;
+					document.getElementById('country').style.display = "none";
+				}
+				else if(x == "c4"){
+					document.getElementById('txt').innerHTML = e.value;
+					document.getElementById('country').style.display = "none";
+				}
+				else if(x == "c5"){
+					document.getElementById('txt').innerHTML = e.value;
+					document.getElementById('country').style.display = "none";
+				}
+				else{
+					document.getElementById('country').style.display = "block";
+				}
+			/*}*/
+		}
+		
+	</script>
+</head>
+<body>
+	<h1>Country drop down list</h1>
+	<p>Choose a country : </p>
+	<select onchange="change()" id="droplist">
+		<option id="c0" value="Please-Select" selected>Please-Select</option>
+  		<option id="c1" value="India" >India</option>
+  		<option id="c2" value="United Kingdom" >United Kingdom</option>
+  		<option id="c3" value="Australia">Australia</option>
+  		<option id="c4" value="China" >China</option>
+  		<option id="c5" value="Canada" >Canada</option>
+  		<option id="all" value="All" >All</option>
+	</select>
+	<!-- <button onclick="change()">Change</button> -->
+	<br>
+	<br>
+	<br>
+	Your selected Country:<span id="txt"> </span>
+	<br>
+	<br>
+	<span id="country">
+		<label id = "l1">India</label><br><br>
+		<label id = "l2">United Kingdom</label><br><br>
+		<label id = "l3">Australia</label><br><br>
+		<label id = "l4">China</label><br><br>
+		<label id = "l5">Canada</label><br><br>
+	</span>
+	
+</body>
+</html>
