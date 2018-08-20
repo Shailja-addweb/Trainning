@@ -1,0 +1,7 @@
+If a student got 90% than student got 'A' grade;
+If a student got 80% than student got 'B' grade;
+If a student got 70% than student got 'C' grade;
+If a student got 60% than student got 'D' grade;
+If a student got 50% than student got 'Pass' grade;
+if a student got lessthn 50% than student is 'Fail'.
+no student have less thn 40 marks.
