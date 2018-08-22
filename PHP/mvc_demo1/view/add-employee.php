@@ -1,5 +1,6 @@
 <form method="post" action="" name="addemployeeForm">
 <table cellpadding="10">
+
 	<tr>
 		<td>User Name:</td>
 		<td><input type="text" name="username" value="<?php if(!empty($row['username'])) echo $row['username']; else echo '';?>"></td>
@@ -22,7 +23,7 @@
 
 	<tr>
 		<td>Contact Number:</td>
-		<td><input type="text" name="contact-number" value="<?php if(!empty($row['contact-number'])) echo $row['contact-number']; else echo '';?>"></td>
+		<td><input type="text" name="contact_number" value="<?php if(!empty($row['contact_number'])) echo $row['contact_number']; else echo '';?>"></td>
 	</tr>
 
 	<tr>
@@ -32,12 +33,12 @@
 
 	<tr>
 		<td>Date of Joining:</td>
-		<td><input type="text" name="date-of-joining" value="<?php if(!empty($row['date-of-joining'])) echo $row['date-of-joining']; else echo '';?>"></td>
+		<td><input type="text" name="date_of_joining" value="<?php if(!empty($row['date_of_joining'])) echo $row['date_of_joining']; else echo '';?>"></td>
 	</tr>
 
 	<tr>
 		<td>Date of Leaving:</td>
-		<td><input type="text" name="date-of-leaving" value="<?php if(!empty($row['date-of-leaving'])) echo $row['date-of-leaving']; else echo '';?>"></td>
+		<td><input type="text" name="date_of_leaving" value="<?php if(!empty($row['date_of_leaving'])) echo $row['date_of_leaving']; else echo '';?>"></td>
 	</tr>
 
 	<tr>

@@ -42,11 +42,17 @@ ul li a:hover{
 
 <?php
 
-require_once 'controller/employeeController.php';
+//echo '1';
+include_once 'controller/employeeController.php';
 
+//echo '2';
 $controller = new employeeController();
 
+//echo '3';
 $controller->handleRequest();
 
 ?>
+
+
+
 

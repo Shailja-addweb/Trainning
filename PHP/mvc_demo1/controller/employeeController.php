@@ -1,11 +1,10 @@
 <?php 
-echo 'in'; die;
+//echo "5";
+include('./model/employeeModel.php');
 
-include_once('model/employeeModel.php');
-
+//echo '6';
 class employeeController{
-    echo "controller";
-	
+    	
 	private $employeeModel = NULL;
 
 	public function __construct() {
@@ -16,6 +15,7 @@ class employeeController{
 
 	public function handleRequest() {
 
+        //echo 'ygiud'; 
         $op = isset($_GET['op'])?$_GET['op']:NULL;
         try {
             if ( !$op || $op == 'list' ) {
@@ -35,6 +35,7 @@ class employeeController{
     }
 
     public function addUser() {
+        //echo "fun";
     	if(isset($_POST['submit']) && !empty($_POST['submit'])) 
     	{
     		$arrayemployee = array();
@@ -42,13 +43,14 @@ class employeeController{
     		$arrayemployee['firstname'] = $_POST['firstname'];
     		$arrayemployee['lastname'] = $_POST['lastname'];
     		$arrayemployee['address'] = $_POST['address'];
-    		$arrayemployee['contact-number'] = $_POST['contact -number'];
+    		$arrayemployee['contact_number'] = $_POST['contact_number'];
     		$arrayemployee['department'] = $_POST['department'];
-    		$arrayemployee['date-of-joining'] = $_POST['date-of-joining'];
-    		$arrayemployee['date-of-leaving'] = $_POST['date-of-leaving'];
+    		$arrayemployee['date_of_joining'] = $_POST['date_of_joining'];
+    		$arrayemployee['date_of_leaving'] = $_POST['date_of_leaving'];
     		$arrayemployee['status'] = $_POST['status'];
     		$arrayemployee['endeffdt'] = $_POST['endeffdt'];
-    		$result = $this->employeeModel->addUser($arrayemployee);
+    		$result = $this->employeeModel->AddUser($arrayemployee);
+        
             if($result) {
                 header('location:index.php?op=list&add_flag=1');
             }
@@ -58,16 +60,15 @@ class employeeController{
     	}
     	else {
             $row = array();
-    		include('view/add-employee.php');
+    		include('./view/add-employee.php');
     	}
     	
     }
 
     public function ListUser() {
-       
     	$result = $this->employeeModel->listUser();
     	$noofrow = mysqli_num_rows($result);
-    	include('view/employeelist.php');
+    	include('./view/employeelist.php');
     }
 
     public function editUser() {
@@ -83,10 +84,10 @@ class employeeController{
                 $arrayemployee['firstname'] = $_POST['firstname'];
 	    		$arrayemployee['lastname'] = $_POST['lastname'];
 	    		$arrayemployee['address'] = $_POST['address'];
-                $arrayemployee['contact-number'] = $_POST['contact-number'];
+                $arrayemployee['contact_number'] = $_POST['contact_number'];
                 $arrayemployee['department'] = $_POST['department'];
-                $arrayemployee['date-of-joining'] = $_POST['date-of-joining'];
-                $arrayemployee['date-of-leaving'] = $_POST['date-of-leaving'];
+                $arrayemployee['date_of_joining'] = $_POST['date_of_joining'];
+                $arrayemployee['date_of_leaving'] = $_POST['date_of_leaving'];
                 $arrayemployee['status'] = $_POST['status'];
                 $arrayemployee['endeffdt'] = $_POST['endeffdt'];
 	    		$result = $this->employeeModel->UpdateUser($arrayemployee);
@@ -97,9 +98,9 @@ class employeeController{
                 }
 	    	}
 	    	else {
-	    		include('view/add-employee.php');
+	    		include('./view/add-employee.php');
 	    	}
-     	}
+     	} 
     }
 
     public function deleteUser() {
@@ -112,6 +113,10 @@ class employeeController{
             else {
                 header('location:index.php?op=list&delete_flag=0');
             }       
+        }
+        else{
+            $result = $this->employeeModel->listUser();
+            include('./view/employeelist.php');
         }
     }
 
