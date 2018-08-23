@@ -28,8 +28,8 @@ ul li a:hover{
 <ul>
   <li><a href="index.php">Home</a></li>
   <li><a href="?op=list">Employeelist</a></li>
-  <li><a href="view/department.php">Department</a></li>
-  <li><a href="view/salary.php">Salary</a></li>
+  <li><a href="?op=dep">Department</a></li>
+  <li><a href="?op=sal">Salary</a></li>
 </ul>
 </div>
 <?php

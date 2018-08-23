@@ -41,16 +41,16 @@ class employeeModel{
 				'" . addslashes($arrayemployee['department']) . "',
 				'" . addslashes($arrayemployee['date_of_joining']) . "',
 				'" . addslashes($arrayemployee['date_of_leaving']) . "',
-				'" . addslashes($arrayemployee['status']) . "',
-				'" . addslashes($arrayemployee['endeffdt']) . "')";
+				'active',
+				'2020-01-01')";
 		
-		$result = mysqli_query($this->con, $query);		
+		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}
 
 	public function listUser() {
 
-		$query = "SELECT * FROM Employee";
+		$query = "SELECT * FROM Employee ORDER BY department, date_of_joining ";
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}
@@ -82,9 +82,132 @@ class employeeModel{
 		return $result;
 	}
 
-	public function deleteUser($recid) {
-		
+	public function DeleteUser($recid) {
 		$query = "DELETE FROM Employee WHERE recid=$recid";		
+		$result = mysqli_query($this->con, $query);	
+		print_r($result);
+		return $result;
+	}
+
+	public function listDep() {
+
+		$query = "SELECT * FROM Department ORDER BY name ";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
+
+	public function AddDep($arrayemployee) {
+  			
+		$query = "INSERT INTO Department
+				(name, status, endeffdt) 
+				VALUES
+				('" . addslashes($arrayemployee['name']) . "',
+				'active',
+				'2020-01-01')";
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function FetchDepDetails($recid) {
+
+		
+		$query = "SELECT * FROM Department WHERE recid='$recid'";		
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function UpdateDep($arrayemployee) {
+		
+		$query = "UPDATE Department 
+					SET name ='" . addslashes($arrayemployee['name']) . "' , 
+					status = '" . addslashes($arrayemployee['status']) . "',
+					endeffdt = '" . addslashes($arrayemployee['endeffdt']) . "' 
+					WHERE recid='" . $arrayemployee['recid'] . "'";		
+
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function DeleteDep($recid) {
+		$query = "DELETE FROM Department WHERE recid=$recid";		
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function listSal() {
+
+		$query = "SELECT * FROM Salary";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
+
+	public function AddSal($arrayemployee) {
+  			
+		$query = "INSERT INTO Salary
+				(employee_name, month, year, amount) 
+				VALUES
+				('" . addslashes($arrayemployee['employee_name']) . "',
+				'" . addslashes($arrayemployee['month']) . "',
+				'" . addslashes($arrayemployee['year']) . "',
+				'" . addslashes($arrayemployee['amount']) . "')";
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function FetchSalDetails($recid) {
+
+		
+		$query = "SELECT * FROM Salary WHERE recid='$recid'";		
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function UpdateSal($arrayemployee) {
+		
+		$query = "UPDATE Salary 
+					SET employee_name ='" . addslashes($arrayemployee['employee_name']) . "' , 
+					month = '" . addslashes($arrayemployee['month']) . "', 
+					year = '" . addslashes($arrayemployee['year']) . "',
+					amount = '" . addslashes($arrayemployee['amount']) . "',
+					WHERE recid='" . $arrayemployee['recid'] . "'";		
+
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function DeleteSal($recid) {
+		$query = "DELETE FROM Salary WHERE recid=$recid";		
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function ChangeA($arrayemployee){
+		echo "hi";
+		$query = "UPDATE Employee 
+					SET status = 'inactive', 
+					WHERE recid='" . $arrayemployee['recid'] . "'";		
+
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function ChangeI($arrayemployee){
+		$query = "UPDATE Employee 
+					SET status = 'active', 
+					WHERE recid='" . $arrayemployee['recid'] . "'";		
+
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function active($status){
+		$query = "SELECT *  FROM Employee WHERE stutus=$status";
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function inactive($status){
+		$query = "SELECT *  FROM Employee WHERE stutus=$status";
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}

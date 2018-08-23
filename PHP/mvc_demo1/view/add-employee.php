@@ -41,7 +41,7 @@
 		<td><input type="text" name="date_of_leaving" value="<?php if(!empty($row['date_of_leaving'])) echo $row['date_of_leaving']; else echo '';?>"></td>
 	</tr>
 
-	<tr>
+	<!-- <tr>
 		<td>Status:</td>
 		<td><input type="text" name="status" value="<?php if(!empty($row['status'])) echo $row['status']; else echo '';?>"></td>
 	</tr>
@@ -50,7 +50,7 @@
 		<td>Endeffdt:</td>
 		<td><input type="text" name="endeffdt" value="<?php if(!empty($row['endeffdt'])) echo $row['endeffdt']; else echo '';?>"></td>
 	</tr>
-
+ -->
 	<?php if(!empty($row['recid'])) {?>
 
 	<input type="hidden" name="recid" value="<?php echo $row['recid']; ?>">
