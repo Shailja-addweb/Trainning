@@ -36,14 +36,31 @@ class employeeController{
                 $this->deleteDep();
             } elseif ( $op == 'sal'){
                 $this->ListSal();
+                //$this->salname();
             } elseif ( $op == 'addsal' ) {
                 $this->addSal();
             } elseif ( $op == 'editsal' ) {
                 $this->editSal();
             } elseif ( $op == 'deletesal' ) {
                 $this->deleteSal();
-            } elseif ( $op == 'status' ) {
-                $this->change();
+            } elseif ( $op == 'statusemp' ) {
+                $this->changeEmp();
+            } elseif ( $op == 'statusdep' ) {
+                $this->changeDep();
+            } elseif ( $op == 'allemp' ) {
+                $this->allemp();
+            } elseif ( $op == 'activeemp' ) {
+                $this->activeemp();
+            } elseif ( $op == 'inactiveemp' ) {
+                $this->inactiveemp();
+            } elseif ( $op == 'alldep' ) {
+                $this->alldep();
+            } elseif ( $op == 'activedep' ) {
+                $this->activedep();
+            } elseif ( $op == 'inactivedep' ) {
+                $this->inactivedep();
+            } elseif ( $op == 'show' ) {
+                $this->show();
             } else {
                 $this->showError("Page not found", "Page for operation ".$op." was not found!");
             }
@@ -210,7 +227,9 @@ class employeeController{
 
     public function ListSal() {
         $result = $this->employeeModel->listSal();
+        $result1 = $this->employeeModel->salName();
         $noofrow = mysqli_num_rows($result);
+        $row = mysqli_num_rows($result1);
         include('./view/salary.php');
     }
 
@@ -232,7 +251,7 @@ class employeeController{
             }
         }
         else {
-            $row = array();
+            //$row = array();
             include('./view/add-salary.php');
         }
         
@@ -280,78 +299,108 @@ class employeeController{
         }
     }
 
-    public function change() {
+    public function changeEmp() {
         if(!empty($_GET['id'])) {
             $recid = $_GET['id'];
-            if($_GET['status'] == 'active'){
-                if(isset($_POST['submit']) && !empty($_POST['submit'])) 
-                {
-                    $arrayemployee = array();
-                        
-                    $arrayemployee['status'] = $_POST['status'];
-                    $arrayemployee['endeffdt'] = $_POST['endeffdt'];
-                    $result = $this->employeeModel->ChangeA($arrayemployee);
-                    if(!empty($result)) {
-                        header('location:index.php?op=list&update_flag=1');
-                    } else {
-                        header('location:index.php?op=list&update_flag=0');
-                    }
+            $result = $this->employeeModel->fetchStatusE($recid);
+            $row = mysqli_fetch_array($result);
+            if($row['status'] == 'active'){
+                $result = $this->employeeModel->ChangeEmpA($row);
+                if(!empty($result)) {
+                    header('location:index.php?op=list&update_flag=1');
+                } else {
+                    header('location:index.php?op=list&update_flag=0');
                 }
-                else {
-                    include('./view/add-employee.php');
-                }
-            }
-            else{
-                if(isset($_POST['submit']) && !empty($_POST['submit'])) 
-                {
-                    $arrayemployee = array();
-                    $arrayemployee['recid'] = $_POST['recid'];
-                    $arrayemployee['username'] = $_POST['username'];
-                    $arrayemployee['firstname'] = $_POST['firstname'];
-                    $arrayemployee['lastname'] = $_POST['lastname'];
-                    $arrayemployee['address'] = $_POST['address'];
-                    $arrayemployee['contact_number'] = $_POST['contact_number'];
-                    $arrayemployee['department'] = $_POST['department'];
-                    $arrayemployee['date_of_joining'] = $_POST['date_of_joining'];
-                    $arrayemployee['date_of_leaving'] = $_POST['date_of_leaving'];
-                    $arrayemployee['status'] = $_POST['status'];
-                    $arrayemployee['endeffdt'] = $_POST['endeffdt'];
-                    $result = $this->employeeModel->ChangeI($arrayemployee);
-                    if(!empty($result)) {
-                        header('location:index.php?op=list&update_flag=1');
-                    } else {
-                        header('location:index.php?op=list&update_flag=0');
-                    }
-                }
-                else {
-                    include('./view/add-employee.php');
+            } else {
+                $result = $this->employeeModel->ChangeEmpI($row);
+                if(!empty($result)) {
+                    header('location:index.php?op=list&update_flag=1');
+                } else {
+                    header('location:index.php?op=list&update_flag=0');
                 }
             }
             
-        } 
+        }
+        else {
+            include('./view/employeelist.php');
+        }
     }
 
-    /*if(isset($_POST['radio']) && !empty($_POST['radio'])) {
-        $btn = $_GET['name'];
-        if($btn == 'all'){
-            $result = $this->employeeModel->listUser();
-            $noofrow = mysqli_num_rows($result);
-            include('./view/employeelist.php');
+    public function changeDep() {
+        if(!empty($_GET['id'])) {
+            $recid = $_GET['id'];
+            $result = $this->employeeModel->fetchStatusD($recid);
+            $row = mysqli_fetch_array($result);
+            if($row['status'] == 'active'){
+                $result = $this->employeeModel->ChangeDepA($row);
+                if(!empty($result)) {
+                    header('location:index.php?op=dep&update_flag=1');
+                } else {
+                    header('location:index.php?op=dep&update_flag=0');
+                }
+            } else {
+                $result = $this->employeeModel->ChangeDepI($row);
+                if(!empty($result)) {
+                    header('location:index.php?op=dep&update_flag=1');
+                } else {
+                    header('location:index.php?op=dep&update_flag=0');
+                }
+            }
+            
         }
-        elseif($btn == 'active'){
-            $status = $_GET['name']
-            $result = $this->employeeModel->active($status);
-            $noofrow = mysqli_num_rows($result);
-            include('./view/employeelist.php');
+        else {
+            include('./view/department.php');
         }
-        elseif ($btn == 'inactive')) {
-            $status = $_GET['name'];
-            $result = $this->employeeModel->inactive($status);
-            $noofrow = mysqli_num_rows($result);
-            include('./view/employeelist.php');
-        }
-        
-    }*/
+    }
+
+    public function allemp(){
+        $result = $this->employeeModel->AllEmp();
+        $noofrow = mysqli_num_rows($result);
+        include('./view/employeelist.php');
+    }
+
+    public function activeemp(){
+        $result = $this->employeeModel->ActiveEmp();
+        $noofrow = mysqli_num_rows($result);
+        include('./view/employeelist.php');
+    }
+
+    public function inactiveemp(){
+        $result = $this->employeeModel->InactiveEmp();
+        $noofrow = mysqli_num_rows($result);
+        include('./view/employeelist.php');
+    }
+
+    public function alldep(){
+        $result = $this->employeeModel->AllDep();
+        $noofrow = mysqli_num_rows($result);
+        include('./view/department.php');
+    }
+
+    public function activedep(){
+        $result = $this->employeeModel->ActiveDep();
+        $noofrow = mysqli_num_rows($result);
+        include('./view/department.php');
+    }
+
+    public function inactivedep(){
+        $result = $this->employeeModel->InactiveDep();
+        $noofrow = mysqli_num_rows($result);
+        include('./view/department.php');
+    }
+
+    public function show(){
+        $id = $_POST['emp_name'];
+        $month = $_POST['month'];
+        $year = $_POST['year'];
+        $result = $this->employeeModel->Show($id, $month, $year);
+        $noofrow = $result->num_rows;
+        /*echo "result: ";
+        print_r($result);
+        echo "nooofrow ";
+        print_r($nooofrow);*/
+        include('./view/salary.php');
+    }
 
 }
 

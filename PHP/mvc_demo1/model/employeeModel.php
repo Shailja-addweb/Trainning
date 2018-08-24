@@ -83,9 +83,9 @@ class employeeModel{
 	}
 
 	public function DeleteUser($recid) {
-		$query = "DELETE FROM Employee WHERE recid=$recid";		
+		$query = "UPDATE Employee
+				  SET endeffdt = NOW() WHERE recid=$recid";	
 		$result = mysqli_query($this->con, $query);	
-		print_r($result);
 		return $result;
 	}
 
@@ -129,7 +129,8 @@ class employeeModel{
 	}
 
 	public function DeleteDep($recid) {
-		$query = "DELETE FROM Department WHERE recid=$recid";		
+		$query = "UPDATE Department
+				  SET endeffdt = NOW() WHERE recid=$recid";	
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}
@@ -139,6 +140,12 @@ class employeeModel{
 		$query = "SELECT * FROM Salary";
 		$result = mysqli_query($this->con, $query);
 		return $result;
+	}
+
+	public function salName(){
+		$query = "SELECT recid, employee_name FROM Salary";
+		$result1 = mysqli_query($this->con, $query);
+		return $result1;
 	}
 
 	public function AddSal($arrayemployee) {
@@ -181,36 +188,95 @@ class employeeModel{
 		return $result;
 	}
 
-	public function ChangeA($arrayemployee){
-		echo "hi";
+	public function fetchStatusE($recid){
+		$query = "SELECT recid,status FROM Employee WHERE recid='$recid'";		
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function fetchStatusD($recid){
+		$query = "SELECT recid,status FROM Department WHERE recid='$recid'";		
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function ChangeEmpA($row){
 		$query = "UPDATE Employee 
-					SET status = 'inactive', 
-					WHERE recid='" . $arrayemployee['recid'] . "'";		
-
+					SET status = 'inactive' 
+					WHERE recid='" . $row['recid'] . "'";		
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}
 
-	public function ChangeI($arrayemployee){
+	public function ChangeEmpI($row){
 		$query = "UPDATE Employee 
-					SET status = 'active', 
-					WHERE recid='" . $arrayemployee['recid'] . "'";		
+					SET status = 'active' 
+					WHERE recid='" . $row['recid'] . "'";		
 
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}
 
-	public function active($status){
-		$query = "SELECT *  FROM Employee WHERE stutus=$status";
+	public function ChangeDepA($row){
+		$query = "UPDATE Department 
+					SET status = 'inactive' 
+					WHERE recid='" . $row['recid'] . "'";		
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}
 
-	public function inactive($status){
-		$query = "SELECT *  FROM Employee WHERE stutus=$status";
+	public function ChangeDepI($row){
+		$query = "UPDATE Department 
+					SET status = 'active' 
+					WHERE recid='" . $row['recid'] . "'";		
+
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}
+
+	public function AllEmp(){
+		$query = "SELECT * FROM Employee";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
+
+	public function ActiveEmp(){
+		$query = "SELECT *  FROM Employee WHERE status='active'";
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function InactiveEmp(){
+		$query = "SELECT *  FROM Employee WHERE status='inactive'";
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function AllDep(){
+		$query = "SELECT * FROM Department";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
+
+	public function ActiveDep(){
+		$query = "SELECT *  FROM Department WHERE status='active'";
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}
+
+	public function InactiveDep(){
+		$query = "SELECT *  FROM Department WHERE status='inactive'";
+		$result = mysqli_query($this->con, $query);	
+		return $result;
+	}	
+
+	public function Show($id, $month, $year){
+		$query = "SELECT * FROM Salary WHERE recid='$id' OR month='$month' OR year='$year'";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
+
+
 }
 
 ?>

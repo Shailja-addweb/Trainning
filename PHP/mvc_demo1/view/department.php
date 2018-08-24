@@ -8,6 +8,50 @@
 		font-size:14px;
 	}
 </style>
+<script>
+	/*$("#hide").click(function {
+		delete_fun = function(){
+			alert("here");
+		}
+	});*/
+	/*function delete_fun() {
+		//
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+    		if (this.readyState == 4 && this.status == 200) {
+      			
+    		}
+  		};
+  		xhttp.open("POST", "index.php?op=deletedep&id=<?php echo $resultArray['recid'];?>", true);
+ 	 	xhttp.send(<?php echo $resultArray['recid'];?>);
+	}*/
+
+	function delete_fun(){
+		//alert("here");
+        var req = new XMLHttpRequest();
+        var out = '';
+        var url = "index.php?op=deletedep&id=<?php echo $resultArray['recid'];?>";
+        req.open('GET',url,true);
+
+        req.onreadystatechange = function(){
+            if (req.readyState == 4){
+                //out = req.result;
+                //$('#delrow').hide("slow");
+                $('.delrow').hide();
+            }
+        }  
+	}
+
+	 /*function delete_fun(){
+	 	//link clicked
+	 	alert("here");
+	 	$(".hide").click(function(){
+	 		var id = $this->$resultArray['recid'];
+	 		var rownum = id;
+	 		 
+	 	});
+	 }*/
+</script>
 
 <?php if(isset($_POST['add_flag']) && $_POST['add_flag'] == '1') {
 	echo '<span class="succmsg"> Record Inserted Successfully </span>';
@@ -45,22 +89,30 @@
 	</tr>
 	<?php 
 	if($noofrow>0) {
+
 		while($resultArray = mysqli_fetch_array($result)) { ?>
-			<tr>
-				<td><?php echo $resultArray['recid']; ?></td>
-				<td><?php echo $resultArray['name']; ?></td>
-				<td><a href="#"><?php echo $resultArray['status']; ?></a></td>
-				<td><?php echo $resultArray['endeffdt']; ?></td>
-				<td><a href="index.php?op=editdep&id=<?php echo $resultArray['recid'];?>">Edit</a></td>
-				<td><span class="delete">
-				<a onClick="javascript: return confirm('Please confirm deletion	');" href="index.php?op=deletedep&id=<?php echo $resultArray['recid'];?>">Delete</a>
-				</span></td>
-			</tr><?php
-	} } else { ?>
+			<span id="delrow">
+				<tr>
+					<td><?php echo $resultArray['recid']; ?></td>
+					<td><?php echo $resultArray['name']; ?></td>
+					<td><a href="index.php?op=statusdep&id=<?php echo $resultArray['recid'];?>"><?php echo $resultArray['status']; ?></a></td>
+					<td><?php echo $resultArray['endeffdt']; ?></td>
+					<td><a href="index.php?op=editdep&id=<?php echo $resultArray['recid'];?>">Edit</a></td>
+					<td>
+					<a class ="hide" href="#" onClick="delete_fun()">Delete</a>
+					</td>
+				</tr>
+			</span><?php
+		} 
+	}
+	else { ?>
 		<td colspan="5">No Record</td><?php
 	}?>
-
-	
 	
 </table>
   
+ <form method="post" action="" name="btn-name">
+   <label><input type="radio" name="all" value="all" id = "all" onclick="location.href='index.php?op=alldep'"> All</label>
+  	<label><input type="radio" name="active" value="active" id = "active" onclick="location.href='index.php?op=activedep'"> Active</label>
+  	<label><input type="radio" name="inactive" value="inactive" id = "inactive" onclick="location.href='index.php?op=inactivedep'"> Inactive </label>
+ </form>

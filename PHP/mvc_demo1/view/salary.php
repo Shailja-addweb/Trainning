@@ -30,6 +30,32 @@
  else {
 	echo '';
 }; ?>
+<br />
+<br />
+<form method = "post" action="index.php?op=show">
+Employee Name : 
+<select id = "name" name = "emp_name">
+	<option > Select Name </option>
+	<?php 
+		if($row>0){
+			while ($resultArrayN = mysqli_fetch_array($result1)) {
+            	echo '<option value="'.$resultArrayN['recid'].'">'.$resultArrayN['employee_name'].
+            	'</option>';
+			}        
+        }
+	?>
+	
+	
+</select>
+
+Month : <input type="text" name="month"> 
+Year : <input type="text" name="year">
+
+<button>Show</button>
+</form>
+<br />
+<br />
+<br />
 
 <table cellpadding="10" cellspacing="5">
 	<tr>
@@ -45,7 +71,8 @@
 		<th colspan="2">ACTION</th>
 	</tr>
 	<?php 
-	if($noofrow>0) {
+	if($noofrow > 0) {
+	
 		while($resultArray = mysqli_fetch_array($result)) { ?>
 			<tr>
 				<td><?php echo $resultArray['recid']; ?></td>
@@ -58,9 +85,10 @@
 				<a onClick="javascript: return confirm('Please confirm deletion	');" href="index.php?op=deletesal&id=<?php echo $resultArray['recid'];?>">Delete</a>
 				</span></td>
 			</tr><?php
-	} } else { ?>
+		} 
+	} 
+	else { ?>
 		<td colspan="5">No Record</td><?php
 	}?>
 
 </table>
-  

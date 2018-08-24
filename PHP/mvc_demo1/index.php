@@ -23,6 +23,9 @@ ul li a:hover{
 </style>
 
 <html>
+<!-- <head>
+  <link rel="stylesheet" type="text/css" src="./js/jquery.min.js"">
+</head> -->
 <body>
 <div style="width:1250px;background-color:#000000;height:30px;color:#ffffff;"> 
 <ul>

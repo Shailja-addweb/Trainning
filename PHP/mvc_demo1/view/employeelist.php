@@ -94,7 +94,7 @@
 				<td><?php echo $resultArray['department']; ?></td>
 				<td><?php echo $resultArray['date_of_joining']; ?></td>
 				<td><?php echo $resultArray['date_of_leaving']; ?></td>
-				<td><a href="index.php?op=status&id=<?php echo $resultArray['recid'];?>"><?php echo $resultArray['status']; ?></a></td>
+				<td><a href="index.php?op=statusemp&id=<?php echo $resultArray['recid'];?>"><?php echo $resultArray['status']; ?></a></td>
 				<!-- <td><?php echo $resultArray['endeffdt']; ?></td> -->
 				<td><a href="index.php?op=edit&id=<?php echo $resultArray['recid'];?>">Edit</a></td>
 				<td><span class="delete">
@@ -110,7 +110,7 @@
 </table>
 
 <form method="post" action="" name="btn-name">
-   <label><input type="radio" name="all" value="all" id = "all"> All</label>
-  	<label><input type="radio" name="active" value="active" id = "active"> Active</label>
-  	<label><input type="radio" name="inactive" value="inactive" id = "inactive"> Inactive </label>
+   <label><input type="radio" name="all" value="all" id = "all" onclick="location.href='index.php?op=allemp'"> All</label>
+  	<label><input type="radio" name="active" value="active" id = "active" onclick="location.href='index.php?op=activeemp'"> Active</label>
+  	<label><input type="radio" name="inactive" value="inactive" id = "inactive" onclick="location.href='index.php?op=inactiveemp'"> Inactive </label>
  </form>
