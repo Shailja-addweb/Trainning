@@ -50,7 +50,7 @@ class employeeModel{
 
 	public function listUser() {
 
-		$query = "SELECT * FROM Employee ORDER BY department, date_of_joining ";
+		$query = "SELECT * FROM Employee WHERE isDelete = 0 ORDER BY department, date_of_joining ";
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}
@@ -84,14 +84,14 @@ class employeeModel{
 
 	public function DeleteUser($recid) {
 		$query = "UPDATE Employee
-				  SET endeffdt = NOW() WHERE recid=$recid";	
+				  SET endeffdt = NOW(), isDelete = 1 WHERE recid=$recid";	
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}
 
 	public function listDep() {
 
-		$query = "SELECT * FROM Department ORDER BY name ";
+		$query = "SELECT * FROM Department WHERE isDelete = 0 ORDER BY name ";
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}
@@ -130,14 +130,14 @@ class employeeModel{
 
 	public function DeleteDep($recid) {
 		$query = "UPDATE Department
-				  SET endeffdt = NOW() WHERE recid=$recid";	
+				  SET endeffdt = NOW(), isDelete = 1 WHERE recid=$recid";	
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}
 
 	public function listSal() {
 
-		$query = "SELECT * FROM Salary";
+		$query = "SELECT * FROM Salary WHERE isDelete = 0";
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}
@@ -183,7 +183,8 @@ class employeeModel{
 	}
 
 	public function DeleteSal($recid) {
-		$query = "DELETE FROM Salary WHERE recid=$recid";		
+		$query = "UPDATE Salary
+				  SET isDelete = 1 WHERE recid=$recid";		
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}
@@ -275,8 +276,6 @@ class employeeModel{
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}
-
-
 }
 
 ?>

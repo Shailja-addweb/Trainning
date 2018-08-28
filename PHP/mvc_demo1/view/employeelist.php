@@ -9,37 +9,6 @@
 	}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script >
-
-	$(document).ready(function(){
-
- 		// Delete 
- 		$('.delete').click(function(){
-
-  			
-  			var recId = $(this).attr("data-id");
-  			
-  			// AJAX Request
-  			$.ajax({
-   				url: 'index.php?op=ajaxDelete',
-   				type: 'POST',
-   				data: { id:recId },
-   				success: function(response){
-
-   					alert(response);
-
-    			// Removing row from HTML Table
-    				$(el).closest('tr').css('background','tomato');
-    				$(el).closest('tr').fadeOut(800, function(){ 
-     					$(this).remove();
-    				});
-
-   				}
-  			});
-
- 		});
-	});
-</script>
 
 <?php if(isset($_POST['add_flag']) && $_POST['add_flag'] == '1') {
 	echo '<span class="succmsg"> Record Inserted Successfully </span>';
@@ -63,6 +32,7 @@
 	echo '';
 }; ?>
 
+<div class="recdords">
 <table cellpadding="10" cellspacing="5">
 	<tr>
 		<td colspan="6" align="right"><a href="index.php?op=add">Add User</a></td>
@@ -99,7 +69,7 @@
 				<!-- <td><?php echo $resultArray['endeffdt']; ?></td> -->
 				<td><a href="index.php?op=edit&id=<?php echo $resultArray['recid'];?>">Edit</a></td>
 				<td>
-				<a class="delete" href="javascript:;" data-id="<?php echo $resultArray['recid'];?>">Delete</a>
+				<a class="delete" href="#" data-id="<?php echo $resultArray['recid'];?>">Delete</a> 
 				</td>
 			</tr><?php
 	} } else { ?>
@@ -112,3 +82,34 @@
   	<label><input type="radio" name="active" value="active" id = "active" onclick="location.href='index.php?op=activeemp'"> Active</label>
   	<label><input type="radio" name="inactive" value="inactive" id = "inactive" onclick="location.href='index.php?op=inactiveemp'"> Inactive </label>
  </form>
+</div>
+ <script >
+
+	$(document).ready(function(){
+
+ 		// Delete 
+ 		 $('.delete').click(function(){
+
+  			//alert("here");
+  			var recId = $(this).attr("data-id");
+  				//alert(recId);
+  			
+  			// AJAX Request
+  			$.ajax({
+   				url: 'index.php?op=delete',
+   				type: 'GET',
+   				data: { id:recId },
+   				success: function(response){
+
+   					//alert(response);
+   					//$('.records').html(response);
+   					//$('.records').text();
+   					 location.reload();
+
+   				}
+    		});
+
+   		});
+   	});
+
+</script>

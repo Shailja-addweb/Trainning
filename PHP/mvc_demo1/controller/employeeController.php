@@ -61,8 +61,6 @@ class employeeController{
                 $this->inactivedep();
             } elseif ( $op == 'show' ) {
                 $this->show();
-            } elseif ( $op == 'ajaxDelete' ) {
-                $this->ajaxDelete();
             } else {
                 $this->showError("Page not found", "Page for operation ".$op." was not found!");
             }
@@ -142,9 +140,9 @@ class employeeController{
 
     public function deleteUser() {
         
-         //print_r($_GET['id']);
-
+       print_r($_GET['id']);
         if(!empty($_GET['id'])) {
+             //print_r("here");
             $recid = $_GET['id'];
             $result = $this->employeeModel->DeleteUser($recid); 
             if(!empty($result)) {
@@ -217,7 +215,8 @@ class employeeController{
 
         if(!empty($_GET['id'])) {
             $recid = $_GET['id'];
-            $result = $this->employeeModel->DeleteDep($recid); 
+            $result1 = $this->employeeModel->DeleteDep($recid); 
+            //$result = $this->employeeModel->DeleteDep($recid); 
             if(!empty($result)) {
                 header('location:index.php?op=dep&delete_flag=1');
             }  
@@ -403,12 +402,6 @@ class employeeController{
         print_r($nooofrow);*/
         include('./view/salary.php');
     }
-
-
-    public function ajaxDelete(){
-       
-    }
-
 
 }
 

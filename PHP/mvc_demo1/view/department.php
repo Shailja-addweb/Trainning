@@ -8,50 +8,8 @@
 		font-size:14px;
 	}
 </style>
-<script>
-	/*$("#hide").click(function {
-		delete_fun = function(){
-			alert("here");
-		}
-	});*/
-	/*function delete_fun() {
-		//
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-    		if (this.readyState == 4 && this.status == 200) {
-      			
-    		}
-  		};
-  		xhttp.open("POST", "index.php?op=deletedep&id=<?php echo $resultArray['recid'];?>", true);
- 	 	xhttp.send(<?php echo $resultArray['recid'];?>);
-	}*/
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-	function delete_fun(){
-		//alert("here");
-        var req = new XMLHttpRequest();
-        var out = '';
-        var url = "index.php?op=deletedep&id=<?php echo $resultArray['recid'];?>";
-        req.open('GET',url,true);
-
-        req.onreadystatechange = function(){
-            if (req.readyState == 4){
-                //out = req.result;
-                //$('#delrow').hide("slow");
-                $('.delrow').hide();
-            }
-        }  
-	}
-
-	 /*function delete_fun(){
-	 	//link clicked
-	 	alert("here");
-	 	$(".hide").click(function(){
-	 		var id = $this->$resultArray['recid'];
-	 		var rownum = id;
-	 		 
-	 	});
-	 }*/
-</script>
 
 <?php if(isset($_POST['add_flag']) && $_POST['add_flag'] == '1') {
 	echo '<span class="succmsg"> Record Inserted Successfully </span>';
@@ -99,7 +57,7 @@
 					<td><?php echo $resultArray['endeffdt']; ?></td>
 					<td><a href="index.php?op=editdep&id=<?php echo $resultArray['recid'];?>">Edit</a></td>
 					<td>
-					<a class ="hide" href="#" onClick="delete_fun()">Delete</a>
+					<a class="delete" href="#" data-id="<?php echo $resultArray['recid'];?>">Delete</a>
 					</td>
 				</tr>
 			</span><?php
@@ -116,3 +74,27 @@
   	<label><input type="radio" name="active" value="active" id = "active" onclick="location.href='index.php?op=activedep'"> Active</label>
   	<label><input type="radio" name="inactive" value="inactive" id = "inactive" onclick="location.href='index.php?op=inactivedep'"> Inactive </label>
  </form>
+
+ <script >
+
+	$(document).ready(function(){
+
+ 		 $('.delete').click(function(){
+
+  			var recId = $(this).attr("data-id");
+  			
+  			$.ajax({
+   				url: 'index.php?op=deletedep',
+   				type: 'GET',
+   				data: { id:recId },
+   				success: function(response){
+
+   					 location.reload();
+
+   				}
+    		});
+
+   		});
+   	});
+
+</script>

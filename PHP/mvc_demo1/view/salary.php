@@ -8,6 +8,8 @@
 		font-size:14px;
 	}
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 
 <?php if(isset($_POST['add_flag']) && $_POST['add_flag'] == '1') {
 	echo '<span class="succmsg"> Record Inserted Successfully </span>';
@@ -81,9 +83,7 @@ Year : <input type="text" name="year">
 				<td><?php echo $resultArray['year']; ?></td>
 				<td><?php echo $resultArray['amount'];?></td>
 				<td><a href="index.php?op=editsal&id=<?php echo $resultArray['recid'];?>">Edit</a></td>
-				<td><span class="delete">
-				<a onClick="javascript: return confirm('Please confirm deletion	');" href="index.php?op=deletesal&id=<?php echo $resultArray['recid'];?>">Delete</a>
-				</span></td>
+				<td><a class="delete" href="#" data-id="<?php echo $resultArray['recid'];?>">Delete</a></td>
 			</tr><?php
 		} 
 	} 
@@ -92,3 +92,20 @@ Year : <input type="text" name="year">
 	}?>
 
 </table>
+
+<script>
+	$(document).ready(function(){
+		$('.delete').click(function(){
+			var recId = $(this).attr("data-id");
+
+			$.ajax({
+				url: 'index.php?op=deletesal',
+				type: 'GET',
+				data: { id:recId },
+				success: function(response){
+					location.reload();
+				}
+			});
+		});
+	});
+</script>
