@@ -8,24 +8,25 @@
 		font-size:14px;
 	}
 </style>
-<!-- <script >
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script >
+
 	$(document).ready(function(){
 
  		// Delete 
  		$('.delete').click(function(){
-  			var el = this;
-  			var id = this.id;
-  			var splitid = id.split("_");
 
-  			// Delete id
-  			var deleteid = splitid[1];
- 
+  			
+  			var recId = $(this).attr("data-id");
+  			
   			// AJAX Request
   			$.ajax({
-   				url: 'remove.php',
+   				url: 'index.php?op=ajaxDelete',
    				type: 'POST',
-   				data: { id:deleteid },
+   				data: { id:recId },
    				success: function(response){
+
+   					alert(response);
 
     			// Removing row from HTML Table
     				$(el).closest('tr').css('background','tomato');
@@ -38,7 +39,7 @@
 
  		});
 	});
-</script> -->
+</script>
 
 <?php if(isset($_POST['add_flag']) && $_POST['add_flag'] == '1') {
 	echo '<span class="succmsg"> Record Inserted Successfully </span>';
@@ -97,16 +98,13 @@
 				<td><a href="index.php?op=statusemp&id=<?php echo $resultArray['recid'];?>"><?php echo $resultArray['status']; ?></a></td>
 				<!-- <td><?php echo $resultArray['endeffdt']; ?></td> -->
 				<td><a href="index.php?op=edit&id=<?php echo $resultArray['recid'];?>">Edit</a></td>
-				<td><span class="delete">
-				<a onClick="javascript: return confirm('Please confirm deletion	');" href="index.php?op=delete&id=<?php echo $resultArray['recid'];?>">Delete</a>
-				</span></td>
+				<td>
+				<a class="delete" href="javascript:;" data-id="<?php echo $resultArray['recid'];?>">Delete</a>
+				</td>
 			</tr><?php
 	} } else { ?>
 		<td colspan="5">No Record</td><?php
 	}?>
-	
-	
-
 </table>
 
 <form method="post" action="" name="btn-name">

@@ -2,14 +2,29 @@
 	$servername = "mysql";
 	$username = "root";
 	$password = "root";
-	$dbname = "php_mvc";
+	$dbname = "php";
 
 	// Create connection
-	$conn = mysqli_connect($servername, $username, $password, $dbname);
+	$con = mysqli_connect($servername, $username, $password, $dbname);
 
 	// Check connection
-	if (!$conn) {
+	if (!$con) {
 	    die("Connection failed: " . mysqli_connect_error());
 	}
-	echo "Connected successfully";
+	echo "connected";
+
+
+	$query = "SELECT * FROM Employee";
+	$result = mysqli_query($conn, $query);
+	print_r("<pre>");
+	print_r($result);
+	$res = mysqli_num_rows($result);
+	print_r("<pre>");
+	print_r($res);
+	$resultArray = mysqli_fetch_array($result, MYSQLI_ASSOC);
+	print_r("<pre>");
+	print_r($resultArray);
+
+
+	
 ?>

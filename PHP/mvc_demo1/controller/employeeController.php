@@ -61,6 +61,8 @@ class employeeController{
                 $this->inactivedep();
             } elseif ( $op == 'show' ) {
                 $this->show();
+            } elseif ( $op == 'ajaxDelete' ) {
+                $this->ajaxDelete();
             } else {
                 $this->showError("Page not found", "Page for operation ".$op." was not found!");
             }
@@ -401,6 +403,12 @@ class employeeController{
         print_r($nooofrow);*/
         include('./view/salary.php');
     }
+
+
+    public function ajaxDelete(){
+       
+    }
+
 
 }
 
