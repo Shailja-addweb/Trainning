@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jquery-demo</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('p').click(function(){
+				$(this).hide();
+			});
+
+
+			$('.delete').click(function(){
+				alert("here");
+				var txt = '<br><input type="text" name="msg">';
+				$.ajax({
+   					url: 'http://localhost/public/Shailja-full-backup/Javascript/jquery/demo1.html',
+   					type: 'GET',
+   					//data: txt,
+   					success: function(){
+   						$(".msg").append(txt);
+   					}
+   				});
+			});
+		});
+	</script>
+</head>
+<body>
+
+	<p>hello...</p>
+	<p>Click on text to hide </p>
+	<!-- <button>click here</button><br> -->
+	<a href="#" class="delete">click here</a>
+	<div class =  "msg"></div>
+</body>
+</html>
