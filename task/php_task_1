@@ -1,0 +1,53 @@
+Create CRUD (i.e. Add, Edit, Delete) for below screens:
+
+
+Employee
+=======
+recid
+username
+firstname
+lastname
+address
+contact number
+Department
+Date of Joining
+Date of Leaving
+status (Active, Inactive)
+endeffdt (While we delete any user set this date with current date & time)
+
+
+Below fields should be sortable (Asc, Desc):
+  - Department
+  - Date of Joining
+
+Radio button filter for (All, Active, Inactive) which displays records according to users selection
+
+Department
+========
+recid
+name
+status
+endeffdt
+
+Below fields should be sortable (Asc, Desc):
+  - name
+
+Radio button filter for (All, Active, Inactive) which displays records according to users selection
+
+
+Salary
+=====
+recid
+employee name
+month
+year
+amount
+
+Below filters required:
+  - Employee Name (Dropdown)
+  - Month
+  - Year
+  - User must select date range to filter the records
+
+
+NOTE: Delete record feature must be done via AJAX
