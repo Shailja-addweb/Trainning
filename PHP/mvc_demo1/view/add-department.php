@@ -1,37 +1,48 @@
-<form method="post" action="" name="addemployeeForm">
-<table cellpadding="10">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-	<tr>
-		<td>Name:</td>
-		<td><input type="text" name="name" value="<?php if(!empty($row['name'])) echo $row['name']; else echo '';?>"></td>
-	</tr>
+<form method="post" action="" name="addemployeeForm" id="dep-form">
+	<table cellpadding="10">
 
-	<tr>
-		<td>Status:</td>
-		<td><input type="text" name="status" value="<?php if(!empty($row['status'])) echo $row['status']; else echo '';?>"></td>
-	</tr>
+		<tr>
+			<td>Name:</td>
+			<td><input type="text" name="name" id="name" 
+			           value="<?php if(!empty($row['name'])) echo $row['name']; else echo '';?>" required>
+			</td>
+		</tr><?php 
+		if(!empty($row['recid'])) {?>
 
-	<tr>
-		<td>Endeffdt:</td>
-		<td><input type="text" name="endeffdt" value="<?php if(!empty($row['endeffdt'])) echo $row['endeffdt']; else echo '';?>"></td>
-	</tr>
+			<input type="hidden" name="recid" value="<?php echo $row['recid']; ?>">
 
-	<?php if(!empty($row['recid'])) {?>
+			<tr>
+				<td colspan="2"><input type="submit" name="submit" value="Update">
+								<input type="reset" name="reset" value="Cancel">
+				</td>
+			</tr><?php 
+		} 
+		else { ?>
 
-	<input type="hidden" name="recid" value="<?php echo $row['recid']; ?>">
-	<tr>
-		<td colspan="2"><input type="submit" name="submit" value="Update">
-			<input type="reset" name="reset" value="Cancel">
-		</td>
-	</tr><?php 
-
-	} else { ?>
-	<tr>
-		<td colspan="2"><input type="submit" name="submit" value="Save">
-			<input type="reset" name="reset" value="Cancel">
-		</td>
-	</tr><?php
-	} ?>
+			<tr>
+				<td colspan="2"><input type="submit" name="submit" value="Save" id="save">
+							<input type="reset" name="reset" value="Cancel">
+				</td>
+			</tr><?php
+		} ?>
 	
-</table>
+	</table>
 </form>
+
+<script>
+	$(document).ready(function(){
+		$('#dep-form').validate();
+		
+		$('#save').click(function(){
+			var n = $('#name').val();
+			var letters = new RegExp("^[a-zA-Z]+$");
+			
+			if(!letters.test(n)){
+				var res = alert("Name must be alphabetic");
+				return false;
+			}
+		});	
+	});
+</script>
