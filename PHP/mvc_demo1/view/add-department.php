@@ -14,7 +14,7 @@
 			<input type="hidden" name="recid" value="<?php echo $row['recid']; ?>">
 
 			<tr>
-				<td colspan="2"><input type="submit" name="submit" value="Update">
+				<td colspan="2"><input type="submit" name="submit" value="Update" id= "update">
 								<input type="reset" name="reset" value="Cancel">
 				</td>
 			</tr><?php 
@@ -44,5 +44,15 @@
 				return false;
 			}
 		});	
+
+		$('#update').click(function(){
+			var n = $('#name').val();
+			var letters = new RegExp("^[a-zA-Z]+$");
+			
+			if(!letters.test(n)){
+			    alert("Name must be alphabetic");
+				return false;
+			}
+		});
 	});
 </script>

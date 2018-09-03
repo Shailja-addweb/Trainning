@@ -25,7 +25,7 @@ class employeeModel{
   			
 		$query = "INSERT INTO Employee
 				(username, firstname, lastname, address, contact_number, department, 
-				date_of_joining, date_of_leaving, status, endeffdt, isDelete) 
+				date_of_joining, date_of_leaving, image, status, endeffdt, isDelete) 
 				VALUES
 				('" . addslashes($arrayemployee['username']) . "',
 				'" . addslashes($arrayemployee['firstname']) . "',
@@ -35,11 +35,13 @@ class employeeModel{
 				'" . addslashes($arrayemployee['department']) . "',
 				'" . addslashes($arrayemployee['date_of_joining']) . "',
 				'" . addslashes($arrayemployee['date_of_leaving']) . "',
+				'" . $arrayemployee["image"] . "',
 				'1',
 				'2020-01-01',
 				0 )";
 		
 		$result = mysqli_query($this->con, $query);	
+		
 		return $result;
 	}
 
@@ -69,9 +71,11 @@ class employeeModel{
 					department = '" . addslashes($arrayemployee['department']) . "',
 					date_of_joining = '" . addslashes($arrayemployee['date_of_joining']) . "',
 					date_of_leaving = '" . addslashes($arrayemployee['date_of_leaving']) . "',
+					image = '" . $arrayemployee["image"] . "',
 					status = '" . addslashes($arrayemployee['status']) . "',
 					endeffdt = '" . addslashes($arrayemployee['endeffdt']) . "' 
-					WHERE recid='" . $arrayemployee['recid'] . "'";		
+					WHERE recid='" . $arrayemployee['recid'] . "'";	
+
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}

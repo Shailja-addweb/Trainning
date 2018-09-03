@@ -96,13 +96,6 @@
    					type: 'GET',
    					success: function(response){
 
-   						 //location.reload();
-   						 //document.write('<span class="succmsg"> </span>');
-   						 //$("span.succmsg").text("Record Deleted Successfully ");
-   						  //$("#record").load("location:index.php?op=dep&delete_flag=1");
-   						  /*$(form).fadeOut(100, function(){
-                            form.html(response).fadeIn().delay(100);
-  						  });*/
   						  $('#records').empty();
   						  $('#records').html(response);
    					}
@@ -131,3 +124,4 @@
 		});
  	});
 </script>
+</div>

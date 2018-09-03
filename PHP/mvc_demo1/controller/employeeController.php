@@ -57,6 +57,17 @@
            
         	if(isset($_POST['submit']) && !empty($_POST['submit'])) 
         	{  
+                $target_dir = "./images/";
+                $target_file = basename($_FILES["image"]["name"]);
+                $file_tmp = $_FILES["image"]["tmp_name"];
+
+                if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir.$target_file)){
+                    echo "The file " . basename( $_FILES["image"]["name"]) . " has been uploaded."; 
+                } 
+                 else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+            
         		$arrayemployee = array();
         		$arrayemployee['username'] = $_POST['username'];
         		$arrayemployee['firstname'] = $_POST['firstname'];
@@ -66,9 +77,11 @@
         		$arrayemployee['department'] = $_POST['department'];
         		$arrayemployee['date_of_joining'] = $_POST['date_of_joining'];
         		$arrayemployee['date_of_leaving'] = $_POST['date_of_leaving'];
-        		//$arrayemployee['status'] = "1";
-        		//$arrayemployee['endeffdt'] = "";
+                $arrayemployee['image'] = $target_file;
+        		$arrayemployee['status'] = "1";
+        		$arrayemployee['endeffdt'] = "";
         		$result = $this->employeeModel->AddEmployee($arrayemployee);
+
 
                 if($result) {
                     header('location:index.php?op=emplist&add_flag=1');
@@ -80,6 +93,9 @@
                     $data = $this->TblDataE($noofrow, $result); 
                     include('./view/employeelist.php');
                 }
+               print_r("here");exit();
+
+                   
         	}
         	else {
                 $row = array();
@@ -107,6 +123,7 @@
                         <th>Department</th>
                         <th>Date of Joining</th>
                         <th>Date of leaving</th>
+                        <th>Image</th>
                         <th>Status</th>
                         <th colspan=\"2\">ACTION</th>
                       </tr> ";
@@ -125,6 +142,7 @@
                         $data .= " <td> " . $resultdata['department'] . " </td> " ;
                         $data .= " <td> " . $resultdata['date_of_joining'] . " </td> " ;
                         $data .= " <td> " . $resultdata['date_of_leaving'] . " </td> " ;
+                        $data .= " <td> <img src=\"data:image/jpeg;base64," . base64_encode($resultdata['image']) . "\"> </td> " ;
                         $data .= " <td> <a class=\"status\" id=\"status-" . $resultdata['recid'] . "\" 
                                            href=\"javascript:;\" data-id= " .  $resultdata['recid'] . " > " . $resultdata['status'] . " </a></td> " ;
                        // $data .= " <td> " $resultdata['endeffdt'] . " </td> " ;
@@ -133,6 +151,7 @@
                         $data .= "<td> <a class=\"delete\" href=\"javascript:;\" data-id= " . $resultdata['recid'] . " >Delete </a> </td> " ; 
 
                     $data .= " </tr>" ;
+    
                 } 
                 return $data; 
             }
@@ -151,6 +170,16 @@
          		$row = mysqli_fetch_array($result);
          		if(isset($_POST['submit']) && !empty($_POST['submit'])) 
     	    	{
+                    $target_dir = "./images/";
+                    $target_file = basename($_FILES["image"]["name"]);
+                    $file_tmp = $_FILES["image"]["tmp_name"];
+
+                    if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir.$target_file)){
+                        echo "The file " . basename( $_FILES["image"]["name"]) . " has been uploaded."; 
+                    } 
+                    else {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
     	    		$arrayemployee = array();
     	    		$arrayemployee['recid'] = $_POST['recid'];
     	    		$arrayemployee['username'] = $_POST['username'];
@@ -161,6 +190,7 @@
                     $arrayemployee['department'] = $_POST['department'];
                     $arrayemployee['date_of_joining'] = $_POST['date_of_joining'];
                     $arrayemployee['date_of_leaving'] = $_POST['date_of_leaving'];
+                    $arrayemployee['image'] = $target_file;
                     $arrayemployee['status'] = $row['status'];
                     $arrayemployee['endeffdt'] = $row['endeffdt'];
     	    		$result = $this->employeeModel->UpdateUser($arrayemployee);

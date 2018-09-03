@@ -1,6 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<form method="post" action="" name="addemployeeForm" id="emp-form"> 
+
+<form method="post" action="" name="addemployeeForm" id="emp-form" enctype="multipart/form-data"> 
 	<table cellpadding="10">
 
 		<tr>
@@ -57,19 +58,25 @@
 			<td><input type="text" name="date_of_leaving" id="date_of_leaving" 
 			           value="<?php if(!empty($row['date_of_leaving'])) echo $row['date_of_leaving']; else echo '';?>" >
 			</td>
-		</tr> <?php 
+		</tr> 
+
+		<tr>
+			<td>Image:</td>
+			<td><input type="file" name="image" accept="image/*" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>">
+			</td>
+		</tr><?php 
 				if(!empty($row['recid'])) {?>
 
 					<input type="hidden" name="recid" value="<?php echo $row['recid']; ?>">
 					<tr>
-						<td colspan="2"><input type="submit" name="submit" value="Update">
+						<td colspan="2"><input type="submit" name="submit" value="Update" id=update>
 										<input type="reset" name="reset" value="Cancel">
 						</td>
 					</tr><?php 
 				} 
 				else { ?>
 					<tr>
-						<td colspan="2"><input type="submit" name="submit" value="Save" id="save">
+						<td colspan="2"><input type="submit" name="submit" value="Save" id="save"  /> 
 										<input type="reset" name="reset" value="Cancel">
 						</td>
 					</tr><?php
@@ -92,12 +99,18 @@
 			var cnl = $('#contact_number').val().length;
 			var dj = $('#date_of_joining').val();
 			var dl = $('#date_of_leaving').val();
+			// var image = $('#image').val();
+			var ext = $	('#image').val().split('.').pop().toLowerCase();
 			var letters = new RegExp("^[a-zA-Z]+$");
 			var letter = new RegExp("^[a-zA-Z0-9_.]+$");
 			var num = new RegExp("^[0-9]+$");
 			var dt = new RegExp("^\d{4}-\d{2}-\d{2}$");	
 
-			if(!letter.test(un) || !letter.test(ad) || !letter.test(dep) ){
+			if(un == '' || fn == '' || ln == '' || ad == '' || dep == '' || cn == '' || dj == '' || dl == '' || image == '' ){
+			 	alert("Please Enter each values");
+			 	return false;
+			 }
+			else if(!letter.test(un) || !letter.test(ad) || !letters.test(dep) ){
 				alert("Username and address and department must be alphanumeric");
 				return false;
 			}
@@ -109,14 +122,77 @@
 				alert("contact number must be numeric and 10 digit");
 				return false;
 			}
-			else if( !dt.test(dj) || !dt.test(dl)){
-				alert(dj "and" dl);
+			else if( !dt.match(dj) || !dt.match(dl)){
 				alert("invalid format, format must be YYYY-MM-DD");
 				return false;
 			}
 			else if( dl < dj ){
 				alert("date of Leaving must be after date of joining");
 				return false;
+			}
+			else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1){
+				alert("invalid image file");
+				$('#image').val('');
+				return false;	
+			}
+			else {
+				var res = confirm("Are you sure you want to save records?");
+				//alert(res);
+				if(res){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+		});
+
+		$('#update').click(function(){
+			
+			var un = $('#username').val();
+			var fn = $('#firstname').val();
+			var ln = $('#lastname').val();
+			var ad = $('#address').val();
+			var dep = $('#department').val();
+			var cn = $('#contact_number').val();
+			var cnl = $('#contact_number').val().length;
+			var dj = $('#date_of_joining').val();
+			var dl = $('#date_of_leaving').val();
+			var image = $('#image').val();
+			var ext = $	('#image').val().split('.').pop().toLowerCase();
+			var letters = new RegExp("^[a-zA-Z]+$");
+			var letter = new RegExp("^[a-zA-Z0-9_.,]+$");
+			var num = new RegExp("^[0-9]+$");
+			var dt = new RegExp("^\d{4}-\d{2}-\d{2}$");	
+
+			 if(un == '' || fn == '' || ln == '' || ad == '' || dep == '' || cn == '' || dj == '' || dl == '' || image = ''){
+			 	alert("Please Enter each values");
+			 	return false;
+			 }
+			else if(!letter.test(un) || !letter.test(ad) || !letter.test(dep) ){
+				alert("Username and address and department must be alphanumeric");
+				return false;
+			}
+			else if(!letters.test(fn) || !letters.test(ln)){
+				var res = alert("Name must be alphabetic");
+				return false;
+			}
+			else if(!num.test(cn) || cnl != 10 ){
+				alert("contact number must be numeric and 10 digit");
+				return false;
+			}
+			/*else if( !dt.test(dj) || !dt.test(dl)){
+				alert("invalid format, format must be YYYY-MM-DD");
+				return false;
+			}*/
+			else if( dl < dj ){
+				alert("date of Leaving must be after date of joining");
+				return false;
+			}
+			else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1){
+				alert("invalid image file");
+				$('#image').val('');
+				return false;	
 			}
 			else {
 				var res = confirm("Are you sure you want to save records?");

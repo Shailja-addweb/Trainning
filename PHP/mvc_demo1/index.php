@@ -52,7 +52,6 @@
                   echo "Welcome to the MVC ARCHITECTURE..!!";
                   ?><br/>
                   <br/>
-                </div>
               </body>
         </html><?php 
 
