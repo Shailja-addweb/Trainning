@@ -99,8 +99,14 @@
 		return $result;
 	}	
 
-	public function SortName(){
+	public function SortNameA(){
 		$query = "SELECT * FROM Department WHERE isDelete = 0 ORDER BY name ";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
+
+	public function SortNameD(){
+		$query = "SELECT * FROM Department WHERE isDelete = 0 ORDER BY name DESC ";
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}

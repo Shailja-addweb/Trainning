@@ -56,7 +56,7 @@
               </body>
         </html><?php 
 
-              if ($_GET['op'] == 'emplist' || $_GET['op'] == '' || $_GET['op'] == 'addemp' || $_GET['op'] == 'delete' || $_GET['op'] == 'edit' || $_GET['op'] == 'allemp' || $_GET['op'] == 'activeemp' || $_GET['op'] == 'inactiveemp' || $_GET['op'] == 'changeE' || $_GET['op'] == 'sortdep' || $_GET['op'] == 'sortdj'){
+              if ($_GET['op'] == 'emplist' || $_GET['op'] == '' || $_GET['op'] == 'addemp' || $_GET['op'] == 'delete' || $_GET['op'] == 'edit' || $_GET['op'] == 'allemp' || $_GET['op'] == 'activeemp' || $_GET['op'] == 'inactiveemp' || $_GET['op'] == 'changeE' || $_GET['op'] == 'sortdep_asc' || $_GET['op'] == 'sortdep_desc' || $_GET['op'] == 'sortdj_asc' || $_GET['op'] == 'sortdj_desc' ){
 
                   include_once 'controller/employeeController.php';
                   
@@ -64,7 +64,7 @@
                  
                   $controller->handleRequest();
               
-              } elseif ($_GET['op'] == 'deplist' || $_GET['op'] == 'adddep' || $_GET['op'] == 'deletedep' || $_GET['op'] == 'editdep' || $_GET['op'] == 'alldep' || $_GET['op'] == 'activedep' || $_GET['op'] == 'inactivedep' || $_GET['op'] == 'changeD' || $_GET['op'] == 'sort'){
+              } elseif ($_GET['op'] == 'deplist' || $_GET['op'] == 'adddep' || $_GET['op'] == 'deletedep' || $_GET['op'] == 'editdep' || $_GET['op'] == 'alldep' || $_GET['op'] == 'activedep' || $_GET['op'] == 'inactivedep' || $_GET['op'] == 'changeD' || $_GET['op'] == 'sort_asc' || $_GET['op'] == 'sort_desc'){
 
                   include_once 'controller/departmentController.php';
     

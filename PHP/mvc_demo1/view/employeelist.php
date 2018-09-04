@@ -63,14 +63,12 @@
   					  onclick="location.href='index.php?op=inactiveemp'" <?php echo $inct_checked ;?>> Inactive 
   		</label>
 
-  		<!-- <label><input type="radio" name="show" value="sortdep" id = "sortdep" 
-  					  onclick="location.href='index.php?op=sortdep'" <?php echo $inct_checked ;?>> Sort by Department 
-  		</label> -->
-
  	</form>
 
- 	<a href="javascript:;" id="sort_dep">Sort By Department</a> &nbsp; &nbsp;
- 	<a href="javascript:;" id="sort_dj">Sort By 'Date of Joining'</a>
+ 	SORT BY : <a href="javascript:;" id="sort_dep_asc">Department ASC</a> &nbsp; &nbsp;
+ 	<a href="javascript:;" id="sort_dep_desc">Department DESC</a> &nbsp; &nbsp;
+ 	<a href="javascript:;" id="sort_dj_asc">Date of Joining ASC</a>&nbsp; &nbsp;
+ 	<a href="javascript:;" id="sort_dj_desc">Date of Joining DESC</a>
 
 
 	<table cellpadding="10" cellspacing="5" id="tblEmp">
@@ -120,20 +118,20 @@
  		 		success: function(response){
  		 			
  		 			/*if ( Status == 1 ){
-						$('#status-'+recId).text("0");
+						$('#status-'+recId).text("Inactive");
 					}
 					else {
-				 		$('#status-'+recId).text('1');
+				 		$('#status-'+recId).text('Active');
 				 	}*/
 				 	$('#records').html(response);
  		 		}
  		 	});
 		});
 
-		$('#sort_dep').click(function(){
+		$('#sort_dep_asc').click(function(){
 
 			$.ajax({
-				url: 'index.php?op=sortdep',
+				url: 'index.php?op=sortdep_asc',
 				type:'GET',
 				success: function(response){
 
@@ -142,10 +140,10 @@
 			});
 		});
 
-		$('#sort_dj').click(function(){
+		$('#sort_dep_desc').click(function(){
 
 			$.ajax({
-				url: 'index.php?op=sortdj',
+				url: 'index.php?op=sortdep_desc',
 				type:'GET',
 				success: function(response){
 
@@ -153,6 +151,60 @@
 				}
 			});
 		});
+
+		$('#sort_dj_asc').click(function(){
+
+			$.ajax({
+				url: 'index.php?op=sortdj_asc',
+				type:'GET',
+				success: function(response){
+
+					$('#records').html(response);
+				}
+			});
+		});
+
+		$('#sort_dj_desc').click(function(){
+
+			$.ajax({
+				url: 'index.php?op=sortdj_desc',
+				type:'GET',
+				success: function(response){
+
+					$('#records').html(response);
+				}
+			});
+		});
+
+		/*var table = $('table');
+		$('#dep, #dj').wrapInner('<span title="sort this column"/>').each(function(){
+
+			var th = $(this),
+                thIndex = th.index(),
+                inverse = false;
+
+            th.click(function(){
+
+            	table.find('td').filter(function(){
+                    
+                    return $(this).index() === thIndex;
+                    
+                }).sortElements(function(a, b){
+                    
+                    return $.text([a]) > $.text([b]) ?
+                        inverse ? -1 : 1
+                        : inverse ? 1 : -1;
+                    
+                }, function(){
+                    
+                    // parentNode is the element we want to move
+                    return this.parentNode; 
+                    
+                });
+                
+                inverse = !inverse;
+            });
+		});*/
  	});
 </script>
 </div>

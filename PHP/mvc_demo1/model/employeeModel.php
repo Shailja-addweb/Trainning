@@ -122,14 +122,26 @@ class employeeModel{
 		return $result;
 	}
 	
-	public function SortDep(){
+	public function SortDepA(){
 		$query = "SELECT * FROM Employee WHERE isDelete = 0 ORDER BY department ";
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}
 
-	public function SortDJ(){
-		$query = "SELECT * FROM Employee WHERE isDelete = 0 ORDER BY date_of_joining";
+	public function SortDepD(){
+		$query = "SELECT * FROM Employee WHERE isDelete = 0 ORDER BY department DESC ";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
+
+	public function SortDJA(){
+		$query = "SELECT * FROM Employee WHERE isDelete = 0 ORDER BY date_of_joining ";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
+
+	public function SortDJD(){
+		$query = "SELECT * FROM Employee WHERE isDelete = 0 ORDER BY date_of_joining DESC ";
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}

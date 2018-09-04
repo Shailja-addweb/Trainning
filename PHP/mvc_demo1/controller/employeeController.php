@@ -40,11 +40,17 @@
                 elseif ( $op == 'inactiveemp' ) {
                     $this->inactiveemp();
                 } 
-                elseif ( $op == 'sortdep' ) {
-                    $this->sortDep();
+                elseif ( $op == 'sortdep_asc' ) {
+                    $this->sortDepA();
                 }
-                elseif ( $op == 'sortdj' ) {
-                    $this->sortDJ();
+                elseif ( $op == 'sortdep_desc' ) {
+                    $this->sortDepD();
+                }
+                elseif ( $op == 'sortdj_asc' ) {
+                    $this->sortDJA();
+                }
+                elseif ( $op == 'sortdj_desc' ) {
+                    $this->sortDJD();
                 }
                 elseif ( $op == 'changeE') {
                     $id = $_GET['id']; 
@@ -126,8 +132,8 @@
                         <th>Last Name</th>
                         <th>Address</th>
                         <th>Contact Number</th>
-                        <th>Department</th>
-                        <th>Date of Joining</th>
+                        <th id=\"dep\">Department</th>
+                        <th id=\"dj\">Date of Joining</th>
                         <th>Date of leaving</th>
                         <th>Image</th>
                         <th>Status</th>
@@ -154,7 +160,6 @@
                         else {
                             $data .= " <td> <img src=\"images/default.png\" width=\"50\" height=\"50\"> </td> " ;    
                         }
-                        
                         $data .= " <td> <a class=\"status\" id=\"status-" . $resultdata['recid'] . "\" 
                                            href=\"javascript:;\" data-id= " .  $resultdata['recid'] . " > " . $resultdata['status'] . " </a></td> " ;
                        // $data .= " <td> " $resultdata['endeffdt'] . " </td> " ;
@@ -271,8 +276,8 @@
             }
         }
 
-        public function sortDep(){
-            $result = $this->employeeModel->SortDep();
+        public function sortDepA(){
+            $result = $this->employeeModel->SortDepA();
             $noofrow = mysqli_num_rows($result);
 
             if(!empty($result)){
@@ -281,8 +286,28 @@
             }
         }
 
-        public function sortDJ(){
-            $result = $this->employeeModel->SortDJ();
+        public function sortDepD(){
+            $result = $this->employeeModel->SortDepD();
+            $noofrow = mysqli_num_rows($result);
+
+            if(!empty($result)){
+                $data = $this->TblDataE($noofrow, $result); 
+                include('./view/employeelist.php');
+            }
+        }
+
+        public function sortDJA(){
+            $result = $this->employeeModel->SortDJA();
+            $noofrow = mysqli_num_rows($result);
+
+            if(!empty($result)){
+                $data = $this->TblDataE($noofrow, $result); 
+                include('./view/employeelist.php');
+            }
+        }
+
+        public function sortDJD(){
+            $result = $this->employeeModel->SortDJD();
             $noofrow = mysqli_num_rows($result);
 
             if(!empty($result)){

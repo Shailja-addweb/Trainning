@@ -39,8 +39,11 @@
                 elseif ( $op == 'inactivedep' ) {
                     $this->inactivedep();
                 }
-                elseif ( $op == 'sort' ) {
-                    $this->sortName();
+                elseif ( $op == 'sort_asc' ) {
+                    $this->sortNameA();
+                }
+                elseif ( $op == 'sort_desc' ) {
+                    $this->sortNameD();
                 }
                 elseif ( $op == 'changeD') {
                     $id = $_GET['id']; 
@@ -208,8 +211,8 @@
             }  
         }
 
-        public function sortName(){
-            $result = $this->departmentModel->SortName();
+        public function sortNameA(){
+            $result = $this->departmentModel->SortNameA();
             $noofrow = mysqli_num_rows($result);
 
             if(!empty($result)){
@@ -217,5 +220,16 @@
                 include('./view/department.php');
             }
         }
+
+        public function sortNameD(){
+            $result = $this->departmentModel->SortNameD();
+            $noofrow = mysqli_num_rows($result);
+
+            if(!empty($result)){
+                $data = $this->TblDataD($noofrow, $result); 
+                include('./view/department.php');
+            }
+        }
+    
 	}				
 ?>

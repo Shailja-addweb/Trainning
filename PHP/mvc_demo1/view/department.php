@@ -68,7 +68,8 @@
 	  	</label>
 	 </form>
 
-	 <a href="javascript:;" id="sort_name">Sort By Name </a>
+	 SORT BY: <a href="javascript:;" id="sort_name_asc"> Name ASC </a> &nbsp; &nbsp;
+	 		  <a href="javascript:;" id="sort_name_desc"> Name DESC </a>
 
 
 	<table cellpadding="10" cellspacing="5" id="tblDept">
@@ -125,10 +126,10 @@
  		 	});
 		});
 
-		$('#sort_name').click(function(){
+		$('#sort_name_asc').click(function(){
 
 			$.ajax({
-				url: 'index.php?op=sort',
+				url: 'index.php?op=sort_asc',
 				type:'GET',
 				success: function(response){
 
@@ -136,6 +137,19 @@
 				}
 			});
 		});
+
+		$('#sort_name_desc').click(function(){
+
+			$.ajax({
+				url: 'index.php?op=sort_desc',
+				type:'GET',
+				success: function(response){
+
+					$('#records').html(response);
+				}
+			});
+		});
+
    	});
 
 </script>
