@@ -142,7 +142,13 @@
                         $data .= " <td> " . $resultdata['department'] . " </td> " ;
                         $data .= " <td> " . $resultdata['date_of_joining'] . " </td> " ;
                         $data .= " <td> " . $resultdata['date_of_leaving'] . " </td> " ;
-                        $data .= " <td> <img src=\"data:image/jpeg;base64," . base64_encode($resultdata['image']) . "\"> </td> " ;
+                        if(!empty($resultdata['image'])){
+                            $data .= " <td> <img src=\"images/" . ($resultdata['image']) . "\" width=\"50\" height=\"50\"> </td> " ;
+                        }
+                        else {
+                            $data .= " <td> <img src=\"images/default.png\" width=\"50\" height=\"50\"> </td> " ;    
+                        }
+                        
                         $data .= " <td> <a class=\"status\" id=\"status-" . $resultdata['recid'] . "\" 
                                            href=\"javascript:;\" data-id= " .  $resultdata['recid'] . " > " . $resultdata['status'] . " </a></td> " ;
                        // $data .= " <td> " $resultdata['endeffdt'] . " </td> " ;
@@ -168,6 +174,7 @@
          		$recid = $_GET['id'];
          		$result = $this->employeeModel->FetchUserDetails($recid);
          		$row = mysqli_fetch_array($result);
+                //print_r($row["image"]);exit();
          		if(isset($_POST['submit']) && !empty($_POST['submit'])) 
     	    	{
                     $target_dir = "./images/";

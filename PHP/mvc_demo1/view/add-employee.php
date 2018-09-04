@@ -5,6 +5,30 @@
 	<table cellpadding="10">
 
 		<tr>
+			<td>Image:</td>
+			<td>
+				<?php if (!empty($row['recid'])) { ?>
+						<div class="forImages">
+						<?php if(!empty($row['image'])){
+							?>
+					<img src="images/<?php echo $row['image'];?> " width="100" height="80" alt="book image" id="forimage"><?php }
+					else {?>
+						<img src="images/default.png" width="100" height="80" alt="book image" id="forimage"> <?php }?><br><br>
+					<input type="checkbox" name="change" value="change" id="change">Change Profile Photo &nbsp; &nbsp;  
+					<input type="button" name="remove" value="Remove Photo" id="remove"></div><br>
+					<div class="changeimage" style="display: none">
+						<input type="file" name="image" accept="image/*" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>">
+					</div>
+				<?php } 
+
+				else { ?>
+					<input type="file" name="image" accept="image/*" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>">
+				<?php } ?>
+
+			</td>
+		</tr>
+
+		<tr>
 			<td>User Name:</td>
 			<td><input type="text" name="username" id="username" 
 			           value="<?php if(!empty($row['username'])) echo $row['username']; else echo '';?>">
@@ -60,11 +84,7 @@
 			</td>
 		</tr> 
 
-		<tr>
-			<td>Image:</td>
-			<td><input type="file" name="image" accept="image/*" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>">
-			</td>
-		</tr><?php 
+		<?php 
 				if(!empty($row['recid'])) {?>
 
 					<input type="hidden" name="recid" value="<?php echo $row['recid']; ?>">
@@ -87,7 +107,25 @@
 
 <script>
 	$(document).ready(function(){
+
+		$('.changeimage').hide();
+
+		$('#change').click(function(){
+			if($(this).is(":checked")) {
+				$('#forimage').hide();
+        		$(".changeimage").show();
+        		$('#remove').hide();
+    		} else {
+        		$(".changeimage").hide();
+        		$('#forimage').show();
+        		$('#remove').show();
+    		} 
+		});
 		
+		$("#remove").click(function(){
+			  $('#forimage').attr('src','images/default.png');
+		});
+
 		$('#save').click(function(){
 			
 			var un = $('#username').val();
@@ -106,11 +144,11 @@
 			var num = new RegExp("^[0-9]+$");
 			var dt = new RegExp("^\d{4}-\d{2}-\d{2}$");	
 
-			if(un == '' || fn == '' || ln == '' || ad == '' || dep == '' || cn == '' || dj == '' || dl == '' || image == '' ){
+			if(un == '' || fn == '' || ln == '' || ad == '' || dep == '' || cn == '' || dj == '' || dl == '' ){
 			 	alert("Please Enter each values");
 			 	return false;
 			 }
-			else if(!letter.test(un) || !letter.test(ad) || !letters.test(dep) ){
+			else if(!letter.match(un) || !letter.match(ad) || !letters.match(dep) ){
 				alert("Username and address and department must be alphanumeric");
 				return false;
 			}
@@ -130,9 +168,9 @@
 				alert("date of Leaving must be after date of joining");
 				return false;
 			}
-			else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1){
+			else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg', 'svg']) == -1){
 				alert("invalid image file");
-				$('#image').val('');
+				//$('#image').val('');
 				return false;	
 			}
 			else {
@@ -165,11 +203,11 @@
 			var num = new RegExp("^[0-9]+$");
 			var dt = new RegExp("^\d{4}-\d{2}-\d{2}$");	
 
-			 if(un == '' || fn == '' || ln == '' || ad == '' || dep == '' || cn == '' || dj == '' || dl == '' || image = ''){
+			 if(un == '' || fn == '' || ln == '' || ad == '' || dep == '' || cn == '' || dj == '' || dl == '' ){
 			 	alert("Please Enter each values");
 			 	return false;
 			 }
-			else if(!letter.test(un) || !letter.test(ad) || !letter.test(dep) ){
+			else if(!letter.match(un) || !letter.match(ad) || !letter.match(dep) ){
 				alert("Username and address and department must be alphanumeric");
 				return false;
 			}
@@ -189,11 +227,11 @@
 				alert("date of Leaving must be after date of joining");
 				return false;
 			}
-			else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1){
+			/*else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1){
 				alert("invalid image file");
 				$('#image').val('');
 				return false;	
-			}
+			}*/
 			else {
 				var res = confirm("Are you sure you want to save records?");
 				//alert(res);
