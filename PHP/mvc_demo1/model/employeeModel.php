@@ -47,7 +47,7 @@ class employeeModel{
 
 	public function listUser() {
 
-		$query = "SELECT * FROM Employee WHERE isDelete = 0 ORDER BY department, date_of_joining ";
+		$query = "SELECT * FROM Employee WHERE isDelete = 0 ";
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}
@@ -122,6 +122,17 @@ class employeeModel{
 		return $result;
 	}
 	
+	public function SortDep(){
+		$query = "SELECT * FROM Employee WHERE isDelete = 0 ORDER BY department ";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
+
+	public function SortDJ(){
+		$query = "SELECT * FROM Employee WHERE isDelete = 0 ORDER BY date_of_joining";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
 }
 
 ?>

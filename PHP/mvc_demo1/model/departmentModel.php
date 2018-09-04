@@ -22,7 +22,7 @@
 
   	public function ListDep() {
 
-		$query = "SELECT * FROM Department WHERE isDelete = 0 ORDER BY name ";
+		$query = "SELECT * FROM Department WHERE isDelete = 0 ";
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}
@@ -98,6 +98,12 @@
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}	
+
+	public function SortName(){
+		$query = "SELECT * FROM Department WHERE isDelete = 0 ORDER BY name ";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
 
 }
 

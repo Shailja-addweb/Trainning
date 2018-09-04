@@ -39,6 +39,9 @@
                 elseif ( $op == 'inactivedep' ) {
                     $this->inactivedep();
                 }
+                elseif ( $op == 'sort' ) {
+                    $this->sortName();
+                }
                 elseif ( $op == 'changeD') {
                     $id = $_GET['id']; 
                     $this->changeD($id);
@@ -178,7 +181,7 @@
         public function alldep(){
             $result = $this->departmentModel->AllDep();
             $noofrow = mysqli_num_rows($result);
-            $noofrow = mysqli_num_rows($result);
+            
             if(!empty($result)){
                 $data = $this->TblDataD($noofrow, $result); 
                 include('./view/department.php');
@@ -188,7 +191,7 @@
         public function activedep(){
             $result = $this->departmentModel->ActiveDep();
             $noofrow = mysqli_num_rows($result);
-            $noofrow = mysqli_num_rows($result);
+           
             if(!empty($result)){
                 $data = $this->TblDataD($noofrow, $result); 
                 include('./view/department.php');
@@ -198,11 +201,21 @@
         public function inactivedep(){
             $result = $this->departmentModel->InactiveDep();
             $noofrow = mysqli_num_rows($result);
-            $noofrow = mysqli_num_rows($result);
+            
             if(!empty($result)){
                 $data = $this->TblDataD($noofrow, $result); 
                 include('./view/department.php');
             }  
+        }
+
+        public function sortName(){
+            $result = $this->departmentModel->SortName();
+            $noofrow = mysqli_num_rows($result);
+
+            if(!empty($result)){
+                $data = $this->TblDataD($noofrow, $result); 
+                include('./view/department.php');
+            }
         }
 	}				
 ?>

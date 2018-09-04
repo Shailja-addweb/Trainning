@@ -68,6 +68,8 @@
 	  	</label>
 	 </form>
 
+	 <a href="javascript:;" id="sort_name">Sort By Name </a>
+
 
 	<table cellpadding="10" cellspacing="5" id="tblDept">
 		<tr>
@@ -121,6 +123,18 @@
 				 	 $('#records').html(response);
  		 		}
  		 	});
+		});
+
+		$('#sort_name').click(function(){
+
+			$.ajax({
+				url: 'index.php?op=sort',
+				type:'GET',
+				success: function(response){
+
+					$('#records').html(response);
+				}
+			});
 		});
    	});
 

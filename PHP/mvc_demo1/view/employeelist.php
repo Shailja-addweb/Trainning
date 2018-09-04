@@ -63,7 +63,14 @@
   					  onclick="location.href='index.php?op=inactiveemp'" <?php echo $inct_checked ;?>> Inactive 
   		</label>
 
+  		<!-- <label><input type="radio" name="show" value="sortdep" id = "sortdep" 
+  					  onclick="location.href='index.php?op=sortdep'" <?php echo $inct_checked ;?>> Sort by Department 
+  		</label> -->
+
  	</form>
+
+ 	<a href="javascript:;" id="sort_dep">Sort By Department</a> &nbsp; &nbsp;
+ 	<a href="javascript:;" id="sort_dj">Sort By 'Date of Joining'</a>
 
 
 	<table cellpadding="10" cellspacing="5" id="tblEmp">
@@ -121,6 +128,30 @@
 				 	$('#records').html(response);
  		 		}
  		 	});
+		});
+
+		$('#sort_dep').click(function(){
+
+			$.ajax({
+				url: 'index.php?op=sortdep',
+				type:'GET',
+				success: function(response){
+
+					$('#records').html(response);
+				}
+			});
+		});
+
+		$('#sort_dj').click(function(){
+
+			$.ajax({
+				url: 'index.php?op=sortdj',
+				type:'GET',
+				success: function(response){
+
+					$('#records').html(response);
+				}
+			});
 		});
  	});
 </script>

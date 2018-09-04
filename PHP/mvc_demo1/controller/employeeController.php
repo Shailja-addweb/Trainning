@@ -40,6 +40,12 @@
                 elseif ( $op == 'inactiveemp' ) {
                     $this->inactiveemp();
                 } 
+                elseif ( $op == 'sortdep' ) {
+                    $this->sortDep();
+                }
+                elseif ( $op == 'sortdj' ) {
+                    $this->sortDJ();
+                }
                 elseif ( $op == 'changeE') {
                     $id = $_GET['id']; 
                     $this->changeE($id);
@@ -259,6 +265,26 @@
         public function inactiveemp(){
             $result = $this->employeeModel->InactiveEmp();
             $noofrow = mysqli_num_rows($result);
+            if(!empty($result)){
+                $data = $this->TblDataE($noofrow, $result); 
+                include('./view/employeelist.php');
+            }
+        }
+
+        public function sortDep(){
+            $result = $this->employeeModel->SortDep();
+            $noofrow = mysqli_num_rows($result);
+
+            if(!empty($result)){
+                $data = $this->TblDataE($noofrow, $result); 
+                include('./view/employeelist.php');
+            }
+        }
+
+        public function sortDJ(){
+            $result = $this->employeeModel->SortDJ();
+            $noofrow = mysqli_num_rows($result);
+
             if(!empty($result)){
                 $data = $this->TblDataE($noofrow, $result); 
                 include('./view/employeelist.php');
