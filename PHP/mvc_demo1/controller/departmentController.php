@@ -62,27 +62,28 @@
             $noofrow = mysqli_num_rows($result);
             if(!empty($result)){
                 $data = $this->TblDataD($noofrow, $result); 
-                include('./view/department.php');
+                include_once ('./view/department.php');
             }    
         }
 
         public function TblDataD($noofrow, $result) {
             $data = " <tr>
                         <th>Id</th>
-                        <th>Name</th>
+                        <th id=\"change\"><a href=\"javascript:;\">Name</a></th>
                         <th>Status</th>
                         <th colspan=\"2\">ACTION</th>
                     </tr> ";
             //print_r($noofrow);  
             if($noofrow>0) {
                 while($resultdata = mysqli_fetch_array($result)) {
+                    // print_r($resultdata['status']);exit();
                      
                     $data .= " <tr> " ;
                             
                         $data .= " <td> " . $resultdata['recid'] . " </td> " ;
                         $data .= " <td> " . $resultdata['name'] . " </td> " ;
                         $data .= " <td> <a class=\"status\" id=\"status-" . $resultdata['recid'] . "\" 
-                                           href=\"javascript:;\" data-id= " .  $resultdata['recid'] . " > " . $resultdata['status'] . " </a></td> " ;
+                                           href=\"javascript:;\" data-id= " .  $resultdata['recid'] . " > " . $resultdata['status'] = 1 ? 'active' : 'inactive' . " </a></td> " ;
     
                         $data .= " <td> <a href=\"index.php?op=editdep&id= " . $resultdata['recid'] . "\">
                                     Edit</a> </td>" ;
@@ -111,12 +112,12 @@
                 $result = $this->departmentModel->AddDep($arrayemployee);
 
                 if($result) {
-                    header('location:index.php?op=dep&add_flag=1');
+                    header('location:index.php?op=deplist&add_flag=1');
                     $data = $this->TblDataD($noofrow, $result); 
                     include('./view/department.php');
                 }
                 else {
-                    header('location:index.php?op=dep&add_flag=0');
+                    header('location:index.php?op=deplist&add_flag=0');
                     $data = $this->TblDataD($noofrow, $result); 
                     include('./view/department.php');
                 }
@@ -161,9 +162,9 @@
                 $noofrow = mysqli_num_rows($result); 
                 if(!empty($result)) {
                     //echo $this->tblDept($result);
-                    header('location:index.php?op=deplist&delete_flag=1');
-                    $data = $this->TblDataD($noofrow, $result); 
-                    include('./view/department.php');
+                    //header('location:index.php?op=deplist&delete_flag=1');
+                    $data = $this->listDep($noofrow, $result); 
+                    //include('./view/department.php');
                 }  
                 else {
                     header('location:index.php?op=deplist&delete_flag=0');
@@ -175,10 +176,13 @@
             $result = $this->departmentModel->changeStatusD($id);
             $noofrow = mysqli_num_rows($result);
             if(!empty($result)){
-                header('location:index.php?op=deplist&delete_flag=1');
-                $data = $this->TblDataD($noofrow, $result); 
-                include('./view/department.php');
+                //header('location:index.php?op=deplist&status_flag=1');
+                $data = $this->listDep($noofrow, $result); 
+                //include('./view/department.php');
             }  
+            else {
+                    header('location:index.php?op=deplist&delete_flag=0');
+                }       
         }
 
         public function alldep(){

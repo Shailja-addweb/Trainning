@@ -40,7 +40,7 @@
 			var letters = new RegExp("^[a-zA-Z]+$");
 			
 			if(!letters.test(n)){
-				var res = alert("Name must be alphabetic");
+				var res = alert(" Department Name must be alphabetic");
 				return false;
 			}
 		});	
@@ -50,7 +50,7 @@
 			var letters = new RegExp("^[a-zA-Z]+$");
 			
 			if(!letters.test(n)){
-			    alert("Name must be alphabetic");
+			    alert("Department Name must be alphabetic");
 				return false;
 			}
 		});

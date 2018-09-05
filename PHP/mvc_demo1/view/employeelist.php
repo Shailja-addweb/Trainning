@@ -19,7 +19,7 @@
 		echo '<span class="succmsg"> Record Updated Successfully </span>';
 	}
  	else if(isset($_GET['update_flag']) && $_GET['update_flag'] == '0') {
-		echo '<span class="failmsg"> Something goes wrong..!! </span>';
+		echo '<span class="failmsg"> Something goes wrong with update..!! </span>';
 	}
  	else if(isset($_GET['add_flag']) && $_GET['add_flag'] == '0') {
 		echo '<span class="failmsg"> Something goes wrong with add..!! </span>';
@@ -28,7 +28,25 @@
 		echo '<span class="succmsg"> Record Deleted Successfully </span>';
 	}
  	else if(isset($_GET['delete_flag']) && $_GET['delete_flag'] == '0') {
-		echo '<span class="failmsg"> Something goes wrong..!! </span>';
+		echo '<span class="failmsg"> Something goes wrong with delete..!! </span>';
+	}
+	else if(isset($_GET['status_flag']) && $_GET['status_flag'] == '0') {
+		echo '<span class="failmsg"> Status is not changed..!! </span>';
+	}
+	else if(isset($_GET['status_flag']) && $_GET['status_flag'] == '1') {
+		echo '<span class="succmsg"> Status changed. </span>';
+	}
+	else if(isset($_GET['sortdep_flag']) && $_GET['sortdep_flag'] == '0') {
+		echo '<span class="succmsg"> Sort Acsending by Department </span>';
+	}
+	else if(isset($_GET['sortdep_flag']) && $_GET['sortdep_flag'] == '1') {
+		echo '<span class="failmsg"> Sort Desending by Department </span>';
+	}
+	else if(isset($_GET['sortdj_flag']) && $_GET['sortdj_flag'] == '0') {
+		echo '<span class="succmsg"> Sort Acsending by Date of Joining </span>';
+	}
+	else if(isset($_GET['sortdj_flag']) && $_GET['sortdj_flag'] == '1') {
+		echo '<span class="failmsg"> Sort Desending by Date of Joining </span>';
 	}
  	else {
 		echo '';
@@ -65,10 +83,11 @@
 
  	</form>
 
- 	SORT BY : <a href="javascript:;" id="sort_dep_asc">Department ASC</a> &nbsp; &nbsp;
+ 	<!-- SORT BY : <a href="javascript:;" id="sort_dep_asc">Department ASC</a> &nbsp; &nbsp;
  	<a href="javascript:;" id="sort_dep_desc">Department DESC</a> &nbsp; &nbsp;
  	<a href="javascript:;" id="sort_dj_asc">Date of Joining ASC</a>&nbsp; &nbsp;
- 	<a href="javascript:;" id="sort_dj_desc">Date of Joining DESC</a>
+ 	<a href="javascript:;" id="sort_dj_desc">Date of Joining DESC</a> -->
+ 	
 
 
 	<table cellpadding="10" cellspacing="5" id="tblEmp">
@@ -90,14 +109,14 @@
  		$('.delete').click(function(e){
 
   			var recId = $(this).attr("data-id");
-  			var res = confirm('Please confirm deletion');
+  			var res = confirm('Are you sure you want to delete ?');
   			e.preventDefault();
             /*var form = $("#record");
             var rec = $(".re");*/
 
   			if(res){
   				$.ajax({
-   					url: 'index.php?op=delete&id='+recId,
+   					url: 'index.php?op=delete&delete_flag=1&id='+recId,
    					type: 'GET',
    					success: function(response){
 
@@ -113,7 +132,7 @@
  		 	var Status = $(this).text();
 
 			$.ajax({
- 		 		url: 'index.php?op=changeE&id='+recId,
+ 		 		url: 'index.php?op=changeE&status_flag=1&id='+recId,
  		 		type: 'GET',
  		 		success: function(response){
  		 			
@@ -128,83 +147,73 @@
  		 	});
 		});
 
-		$('#sort_dep_asc').click(function(){
+ 		var temp1 = localStorage.getItem('temp1', 0);
 
-			$.ajax({
-				url: 'index.php?op=sortdep_asc',
-				type:'GET',
-				success: function(response){
+		$('#dep').click(function(){
+			var change = $('#dep').text();
 
-					$('#records').html(response);
-				}
-			});
+			if ( temp1 == 0 ) {
+
+				localStorage.setItem('temp1', 1);
+
+				$.ajax({
+					url: 'index.php?op=sortdep_asc&sortdep_flag=0',
+					type:'GET',
+					success: function(response){
+
+						$('#records').html(response);
+					}
+				});
+			}
+			else {
+
+				localStorage.setItem('temp1', 0);
+
+				$.ajax({
+					url: 'index.php?op=sortdep_desc&sortdep_flag=1',
+					type:'GET',
+					success: function(response){
+
+						$('#records').html(response);
+					}
+				});
+			}
 		});
 
-		$('#sort_dep_desc').click(function(){
+		var temp = 	localStorage.getItem('temp', 0);
+		$('#dj').click(function(){
+			var change = $('#dj').text();
+			// alert(change);
+			// alert(temp);
 
-			$.ajax({
-				url: 'index.php?op=sortdep_desc',
-				type:'GET',
-				success: function(response){
+			if ( temp == 0 ) {
 
-					$('#records').html(response);
-				}
-			});
+				localStorage.setItem('temp', 1);
+				
+					$.ajax({
+					url: 'index.php?op=sortdj_asc&sortdj_flag=0',
+					type:'GET',
+					success: function(response){
+
+						$('#records').html(response);
+					}
+				});
+			}
+			else {
+
+				localStorage.setItem('temp', 0);
+
+				$.ajax({
+					url: 'index.php?op=sortdj_desc&sortdj_flag=1',
+					type:'GET',
+					success: function(response){
+
+						$('#records').html(response);
+					}
+				});
+			}
 		});
-
-		$('#sort_dj_asc').click(function(){
-
-			$.ajax({
-				url: 'index.php?op=sortdj_asc',
-				type:'GET',
-				success: function(response){
-
-					$('#records').html(response);
-				}
-			});
-		});
-
-		$('#sort_dj_desc').click(function(){
-
-			$.ajax({
-				url: 'index.php?op=sortdj_desc',
-				type:'GET',
-				success: function(response){
-
-					$('#records').html(response);
-				}
-			});
-		});
-
-		/*var table = $('table');
-		$('#dep, #dj').wrapInner('<span title="sort this column"/>').each(function(){
-
-			var th = $(this),
-                thIndex = th.index(),
-                inverse = false;
-
-            th.click(function(){
-
-            	table.find('td').filter(function(){
-                    
-                    return $(this).index() === thIndex;
-                    
-                }).sortElements(function(a, b){
-                    
-                    return $.text([a]) > $.text([b]) ?
-                        inverse ? -1 : 1
-                        : inverse ? 1 : -1;
-                    
-                }, function(){
-                    
-                    // parentNode is the element we want to move
-                    return this.parentNode; 
-                    
-                });
-                
-                inverse = !inverse;
-            });
-		});*/
+		
  	});
 </script>
 </div>

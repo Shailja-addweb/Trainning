@@ -11,7 +11,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 	
 </script><br><?php 
+ 
     
+/*print("<pre>");
+print_r($_POST);*/
     if(isset($_GET['add_flag']) && $_GET['add_flag'] == '1') {
 		echo '<span class="succmsg"> Record Inserted Successfully </span>';
 	}
@@ -38,23 +41,34 @@
 	<br />
 		<form method = "post" action="index.php?op=show" name="show-form" id="showdata">
 			Employee Name : 
-				<select id = "name" name = "emp_name">
+				 <select id = "name" name = "emp_name">
 					<option > Select-Name </option><?php 
 						if($row>0){
 							while ($resultArrayN = mysqli_fetch_array($result1)) {
-		            			echo '<option id="'.$resultArrayN['recid'].'" value="'.$resultArrayN['recid'].'">'.$resultArrayN['employee_name'].' </option>';
+								
+		            			echo '<option id="'.$resultArrayN['recid_sal'].'" value="' . $resultArrayN['recid_sal'].'"'.($resultArrayN['recid_sal'] == $_POST['emp_name'] ? ' selected="selected"':'').'>' .$resultArrayN['employee_name'].'</option>';
 							}        
 		        		}
 					?>
-				</select>
+				</select> 
 
-			Month : <input type="text" name="month" id="month" 
-			               value="<?php if(!empty($row['month'])) echo $row['month']; else echo '';?>"> 
+			Month : <select id = "month" name = "month">
+						<option> Select-Month </option><?php
+							for ($i=1; $i <= 12; $i++) { 
+								echo '<option id="'. $i .'" value="'. $i .'"' . ($i == $_POST['month'] ? ' selected="selected"' : '') . '>'. $i .' </option>';
+							}?>
+					</select> 
 
-			Year : <input type="text" name="year" id=year 
-						  value="<?php if(!empty($row['year'])) echo $row['year']; else echo '';?>">
+			Year : <select id = "year" name = "year">
+						<option> Select-Year </option><?php 
+							$year = date('Y');
+							for ($i=2000; $i <= $year; $i++) { 
+								echo '<option id="'. $i .'" value="'. $i .'"' . ($i == $_POST['year'] ? ' selected="selected"' : '') . '>'. $i .' </option>';
+							}
+						?>
+					</select>
 
-			<button id="show">Show</button>
+			&nbsp; &nbsp; <button id="show">Show</button>
 		</form>
 		<br />
 		<br />
@@ -74,12 +88,12 @@
 				
 				$('.delete').click(function(e){
 					var recId = $(this).attr("data-id");
-					var res = confirm('Please confirm deletion');
+					var res = confirm('Are you sure you want to delete ?');
 					e.preventDefault();
 
 					if(res){
 						$.ajax({
-							url: 'index.php?op=deletesal&id='+recId,
+							url: 'index.php?op=deletesal&delete_flag=1&id='+recId,
 							type: 'GET',
 							success: function(response){
 
@@ -96,20 +110,8 @@
 					var y = $('#year').val();
 					var name = $( "#name option:selected" ).val();
 
-					if( name == "Select-Name" && m == '' && y == ''){
-						alert("Please Enter value");
-						return false;
-					}
-					else if ( name == 'Select-Name' && m == '' ){
-						alert("please enter one value");
-						return false;
-					}
-					else if ( name == 'Select-Name' && y == ''){
-						alert("please enter one value");
-						return false; 
-					}
-					else if(isNaN(m) || isNaN(y)){
-						alert("Please enter numeric value");
+					if( name == "Select-Name" && m == 'Select-Month' && y == 'Select-Year'){
+						alert("Please Enter value what you want to search");
 						return false;
 					}
 					else {

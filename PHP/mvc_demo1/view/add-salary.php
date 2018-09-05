@@ -5,22 +5,87 @@
 
 		<tr>
 			<td>Employee Name:</td>
-			<td><input type="text" name="employee_name" id="name"
-					   value="<?php if(!empty($row['employee_name'])) echo $row['employee_name']; else echo '';?>" >
+			<td><?php if(!empty($row['employee_name'])){ ?>
+					<select id = "name" name="name">
+						<option> Select-Name</option><?php 
+							if($row>0){
+								while ($resultArrayN = mysqli_fetch_array($result1)) {
+									
+									echo '<option id="'.$resultArrayN['recid'].'" value="' . $resultArrayN['recid'].'"'.($row['employee_name'] == $resultArrayN['firstname'] ? ' selected="selected"':'').'>' .$resultArrayN['firstname'].'</option>';
+								}
+							}?>
+					</select>
+
+
+				<?php } else { ?>
+					<select id = "name" name = "name">
+							<option > Select-Name </option><?php 
+									// print_r($resultArrayN);exit();
+								if($row>0){
+									while ($resultArrayN = mysqli_fetch_array($result1)) {
+				            			echo '<option id="'.$resultArrayN['recid'].'" value="'.$resultArrayN['recid'].'">'.$resultArrayN['firstname'].' </option>';
+									}        
+				        		}
+							?>
+						</select>
+				<?php }?>
 			</td>
 		</tr>
 
 		<tr>
 			<td>Month:</td>
-			<td><input type="text" name="month" id="month" 
-					    value="<?php if(!empty($row['month'])) echo $row['month']; else echo '';?>" >
+			<td><?php if(!empty($row['year'])){ ?>
+							<select id = "month" name = "month">
+								<option> Select-Year </option><?php 
+									for ($i=1; $i <= 12; $i++) { 
+										echo '<option id="'. $i .'" value="'. $i .'"' . ($i == $row['month'] ? ' selected="selected"' : '') . '>'. $i .' </option>';
+									}
+								?>
+							</select>
+						<?php }
+						else { ?>
+								<select id = "month" name = "month">
+									<option> Select-Month </option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+								</select>
+						<?php } ?>
 			</td> 
 		</tr>
 
 		<tr>
 			<td>Year:</td>
-			<td><input type="text" name="year" id="year" 
-					   value="<?php if(!empty($row['year'])) echo $row['year']; else echo '';?>" >
+			<td> <?php if(!empty($row['year'])){ ?>
+							<select id = "year" name = "year">
+								<option> Select-Year </option><?php 
+									$year = date('Y');
+									for ($i=2000; $i <= $year; $i++) { 
+										echo '<option id="'. $i .'" value="'. $i .'"' . ($i == $row['year'] ? ' selected="selected"' : '') . '>'. $i .' </option>';
+									}
+								?>
+							</select>
+						<?php }
+						else { ?>
+							<select id = "year" name = "year">
+								<option> Select-Year </option><?php 
+									$year = date('Y');
+									for ($i=2000; $i <= $year; $i++) { 
+										echo '<option id="'. $i .'" value="'. $i .'"' . ($i === $currently_selected ? ' selected="selected"' : '') . '>'. $i .' </option>';
+									}
+								?>
+							</select>
+						<?php }	?>
+				
 			</td>
 		</tr>
 
@@ -30,9 +95,9 @@
 					  value="<?php if(!empty($row['amount'])) echo $row['amount']; else echo '';?>" >
 			</td>
 		</tr><?php 
-			if(!empty($row['recid'])) {?>
+			if(!empty($row['recid_sal'])) {?>
 
-				<input type="hidden" name="recid" value="<?php echo $row['recid']; ?>">
+				<input type="hidden" name="recid_sal" value="<?php echo $row['recid_sal']; ?>">
 				<tr>
 					<td colspan="2"><input type="submit" name="submit" value="Update" id="update">
 									<input type="reset" name="reset" value="Cancel">
@@ -57,31 +122,29 @@
 		$('#save').click(function(){
 
 			var n = $('#name').val();
-			var letters = new RegExp("^[a-zA-Z]+$");
-			var currentYear = (new Date).getFullYear();
 			var amount = $('#amount').val();
 			var month = $('#month').val();
 			var year = $('#year').val();
 
-			if(n == '' || amount == '' || month == '' || year == '') {
-				alert("Please Enter values ");
+			if(n == 'Select-Name' ){ 
+				alert("Please select name of employee ");
+				return false;
+			}
+			else if( amount == '' ){
+				alert("Please enter amount");
+				return false;
+			}
+			else if( month == 'Select-Month' ){
+				alert("Please select month");
+				return false;
+			} 
+			else if(year == 'Select-Year') {
+				alert("Please select year");
 				return false;
 			}
 			else{
-				if(isNaN(month) || isNaN(year) || isNaN(amount) || month % 1 != 0 || year % 1 != 0 || amount % 1 != 0  ){
-					alert("Please enter valid values of month year and amount and all values are required");	
-					return false;
-				}
-				else if(month < 1 && month > 12) {
-					alert("Please Enter month Between 1 to 12");
-					return false;
-				}
-				else if(year < 2000 && year >= currentYear) {
-					alert("Please Enter year Between 2000 to currentYear");
-					return false;
-				}
-				else if(letters.match(n)) {
-					alert("Name must be alphabetic and it's required");
+				if( isNaN(amount) ){
+					alert("Please enter amount in numbers");	
 					return false;
 				}
 			}
@@ -91,31 +154,29 @@
 		$('#update').click(function(){
 
 			var n = $('#name').val();
-			var letters = new RegExp("^[a-zA-Z]+$");
-			var currentYear = (new Date).getFullYear();
 			var amount = $('#amount').val();
 			var month = $('#month').val();
 			var year = $('#year').val();
 
-			if(n == '' || amount == '' || month == '' || year == '') {
-				alert("Please Enter values ");
+			if(n == 'Select-Name' ){ 
+				alert("Please select name of employee ");
+				return false;
+			}
+			else if( amount == '' ){
+				alert("Please enter amount");
+				return false;
+			}
+			else if( month == 'Select-Month' ){
+				alert("Please select month");
+				return false;
+			} 
+			else if(year == 'Select-Year') {
+				alert("Please select year");
 				return false;
 			}
 			else{
-				if(isNaN(month) || isNaN(year) || isNaN(amount) || month % 1 != 0 || year % 1 != 0 || amount % 1 != 0  ){
-					alert("Please enter valid values of month year and amount and all values are required");	
-					return false;
-				}
-				else if(month < 1 && month > 12) {
-					alert("Please Enter month Between 1 to 12");
-					return false;
-				}
-				else if(year < 2000 && year >= currentYear) {
-					alert("Please Enter year Between 2000 to currentYear");
-					return false;
-				}
-				else if(letters.match(n)) {
-					alert("Name must be alphabetic and it's required");
+				if( isNaN(amount) ){
+					alert("Please enter amount in numbers");	
 					return false;
 				}
 			}

@@ -30,6 +30,18 @@
 	else if(isset($_GET['delete_flag']) && $_GET['delete_flag'] == '0') {
 		echo '<span class="failmsg"> Something goes wrong..!! </span>';
 	}
+	else if(isset($_GET['status_flag']) && $_GET['status_flag'] == '0') {
+		echo '<span class="failmsg"> Status is not changed..!! </span>';
+	}
+	else if(isset($_GET['status_flag']) && $_GET['status_flag'] == '1') {
+		echo '<span class="succmsg"> Status changed. </span>';
+	}
+	else if(isset($_GET['sort_flag']) && $_GET['sort_flag'] == '0') {
+		echo '<span class="succmsg"> Sort Acsending by name </span>';
+	}
+	else if(isset($_GET['sort_flag']) && $_GET['sort_flag'] == '1') {
+		echo '<span class="failmsg"> Sort Desending by name </span>';
+	}
 	else {
 		echo '';
 	}; ?>
@@ -68,9 +80,9 @@
 	  	</label>
 	 </form>
 
-	 SORT BY: <a href="javascript:;" id="sort_name_asc"> Name ASC </a> &nbsp; &nbsp;
-	 		  <a href="javascript:;" id="sort_name_desc"> Name DESC </a>
-
+	 <!--   -->
+	 		 <!--  <a href="javascript:;" id="sort_name_desc" style="display: none"> DESC </a>
+ -->
 
 	<table cellpadding="10" cellspacing="5" id="tblDept">
 		<tr>
@@ -87,15 +99,19 @@
 
 	$(document).ready(function(){
 
+		$('#sort_name_desc').hide();
+		flag = 0;
+
  		$('.delete').click(function(e){
 
   			var recId = $(this).attr("data-id");
-  			var res = confirm('Please confirm deletion');
+  			var res = confirm('Are you sure you want to delete ?');
   			e.preventDefault();
 
   			if(res){
   				$.ajax({
-   					url: 'index.php?op=deletedep&id='+recId,
+   					//	url: 'index.php?op=deletedep&id='+recId,
+   					url: 'index.php?op=deletedep&delete_flag=1&id='+recId,
    					type: 'GET',
    					success: function(response){
 
@@ -111,7 +127,7 @@
  		 	var Status = $(this).text();
 
 			$.ajax({
- 		 		url: 'index.php?op=changeD&id='+recId,
+ 		 		url: 'index.php?op=changeD&status_flag=1&id='+recId,
  		 		type: 'GET',
  		 		success: function(response){
  		 			
@@ -126,29 +142,36 @@
  		 	});
 		});
 
-		$('#sort_name_asc').click(function(){
+		var temp2 = localStorage.getItem('temp2', 0);
+		$('#change').click(function(){
+			var change = $('#change').text();
+			//alert(change);
+			//alert(temp);
 
-			$.ajax({
-				url: 'index.php?op=sort_asc',
-				type:'GET',
-				success: function(response){
+		if ( temp2 == 0 ) {
+			localStorage.setItem('temp2', 1);
+			
+				$.ajax({
+					url: 'index.php?op=sort_asc&sort_flag=0',
+					type:'GET',
+					success: function(response){
 
-					$('#records').html(response);
-				}
-			});
-		});
+						$('#records').html(response);
+					}
+				});
+			}
+			else{
+				localStorage.setItem('temp2', 0);
+				$.ajax({
+					url: 'index.php?op=sort_desc&sort_flag=1	',
+					type:'GET',
+					success: function(response){
 
-		$('#sort_name_desc').click(function(){
-
-			$.ajax({
-				url: 'index.php?op=sort_desc',
-				type:'GET',
-				success: function(response){
-
-					$('#records').html(response);
-				}
-			});
-		});
+						$('#records').html(response);
+					}
+				});
+			}
+		})
 
    	});
 

@@ -1,6 +1,6 @@
 <?php 
 	
-class employeeModel{
+class employeeModel {
 
 	var $con;
 	function __construct()
@@ -90,7 +90,7 @@ class employeeModel{
 	
 	
 	public function fetchStatusE($recid){
-		$query = "SELECT recid,status FROM Employee WHERE recid='$recid'";		
+		$query = "SELECT recid, status FROM Employee WHERE recid='$recid'";		
 		$result = mysqli_query($this->con, $query);	
 		return $result;
 	}
@@ -142,6 +142,18 @@ class employeeModel{
 
 	public function SortDJD(){
 		$query = "SELECT * FROM Employee WHERE isDelete = 0 ORDER BY date_of_joining DESC ";
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
+
+	public function saladdName(){
+		$query = "SELECT recid, firstname FROM Employee WHERE isDelete = 0 ";
+		$result1 = mysqli_query($this->con, $query);
+		return $result1;
+	}
+
+	public function fetchname($id){
+		$query ="SELECT recid, firstname FROM Employee WHERE recid = $id ";		
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}

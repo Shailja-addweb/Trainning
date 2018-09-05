@@ -132,8 +132,8 @@
                         <th>Last Name</th>
                         <th>Address</th>
                         <th>Contact Number</th>
-                        <th id=\"dep\">Department</th>
-                        <th id=\"dj\">Date of Joining</th>
+                        <th id=\"dep\"><a href=\"javascript:;\">Department</a></th>
+                        <th id=\"dj\"><a href=\"javascript:;\">Date of Joining</a></th>
                         <th>Date of leaving</th>
                         <th>Image</th>
                         <th>Status</th>
@@ -161,7 +161,7 @@
                             $data .= " <td> <img src=\"images/default.png\" width=\"50\" height=\"50\"> </td> " ;    
                         }
                         $data .= " <td> <a class=\"status\" id=\"status-" . $resultdata['recid'] . "\" 
-                                           href=\"javascript:;\" data-id= " .  $resultdata['recid'] . " > " . $resultdata['status'] . " </a></td> " ;
+                                           href=\"javascript:;\" data-id= " .  $resultdata['recid'] . " > " . $resultdata['status'] = 1 ? 'active' : 'inactive' . " </a></td> " ;
                        // $data .= " <td> " $resultdata['endeffdt'] . " </td> " ;
                         $data .= " <td> <a href=\"index.php?op=edit&id= " . $resultdata['recid'] . "\">
                                     Edit</a> </td>" ;
@@ -229,9 +229,9 @@
             if(!empty($_GET['id'])) {
                 $result = $this->employeeModel->DeleteUser($id); 
                 if(!empty($result)) {
-                    header('location:index.php?op=emplist&delete_flag=1');
-                    $data = $this->TblDataE($noofrow, $result); 
-                    include('./view/employeelist.php');
+                    //header('location:index.php?op=emplist&delete_flag=1');
+                    $data = $this->ListEmployee(); 
+                    //include('./view/employeelist.php');
                 }  
                 else {
                     header('location:index.php?op=emplist&delete_flag=0');
@@ -243,10 +243,13 @@
             $result = $this->employeeModel->changeStatusE($id);
             $noofrow = mysqli_num_rows($result);
             if(!empty($result)){
-                header('location:index.php?op=emplist&update_flag=1');
-                $data = $this->TblDataE($noofrow, $result); 
-                include('./view/employeelist.php');
+                //header('location:index.php?op=emplist&status_flag=1');
+                $data = $this->ListEmployee($noofrow, $result); 
+                //include('./view/employeelist.php');
             }
+            else {
+                    header('location:index.php?op=emplist&status_flag=0');
+                }   
         }
 
         public function allemp(){
