@@ -83,7 +83,7 @@
                         $data .= " <td> " . $resultdata['recid'] . " </td> " ;
                         $data .= " <td> " . $resultdata['name'] . " </td> " ;
                         $data .= " <td> <a class=\"status\" id=\"status-" . $resultdata['recid'] . "\" 
-                                           href=\"javascript:;\" data-id= " .  $resultdata['recid'] . " > " . $resultdata['status'] = 1 ? 'active' : 'inactive' . " </a></td> " ;
+                                           href=\"javascript:;\" data-id= " .  $resultdata['recid'] . " > " . ($resultdata['status'] == 1 ? 'active' : 'inactive') . " </a></td> " ;
     
                         $data .= " <td> <a href=\"index.php?op=editdep&id= " . $resultdata['recid'] . "\">
                                     Edit</a> </td>" ;

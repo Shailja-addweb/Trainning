@@ -161,7 +161,7 @@
                             $data .= " <td> <img src=\"images/default.png\" width=\"50\" height=\"50\"> </td> " ;    
                         }
                         $data .= " <td> <a class=\"status\" id=\"status-" . $resultdata['recid'] . "\" 
-                                           href=\"javascript:;\" data-id= " .  $resultdata['recid'] . " > " . $resultdata['status'] = 1 ? 'active' : 'inactive' . " </a></td> " ;
+                                           href=\"javascript:;\" data-id= " .  $resultdata['recid'] . " > " . ($resultdata['status'] == 1 ? 'active' : 'inactive') . " </a></td> " ;
                        // $data .= " <td> " $resultdata['endeffdt'] . " </td> " ;
                         $data .= " <td> <a href=\"index.php?op=edit&id= " . $resultdata['recid'] . "\">
                                     Edit</a> </td>" ;
@@ -186,6 +186,19 @@
          		$result = $this->employeeModel->FetchUserDetails($recid);
          		$row = mysqli_fetch_array($result);
                 //print_r($row["image"]);exit();
+
+                /*$target_dir = "./images/";
+                $target_file = basename($_FILES["image"]["name"]);
+                $file_tmp = $_FILES["image"]["tmp_name"];
+
+                if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir.$target_file)){
+                    echo "The file " . basename( $_FILES["image"]["name"]) . " has been uploaded."; 
+                } 
+                else {
+                    echo "Sorry, there was an error uploading your file.";
+                }*/
+
+
          		if(isset($_POST['submit']) && !empty($_POST['submit'])) 
     	    	{
                     $target_dir = "./images/";
@@ -198,6 +211,11 @@
                     else {
                         echo "Sorry, there was an error uploading your file.";
                     }
+
+                    if($target_file == ''){
+                        $target_file = $row["image"];
+                    }
+
     	    		$arrayemployee = array();
     	    		$arrayemployee['recid'] = $_POST['recid'];
     	    		$arrayemployee['username'] = $_POST['username'];

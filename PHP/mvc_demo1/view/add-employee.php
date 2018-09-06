@@ -137,59 +137,20 @@
 			var cnl = $('#contact_number').val().length;
 			var dj = $('#date_of_joining').val();
 			var dl = $('#date_of_leaving').val();
-			// var image = $('#image').val();
+			var image = $('#image').val();
 			var ext = $	('#image').val().split('.').pop().toLowerCase();
 			var letters = new RegExp("^[a-zA-Z]+$");
-			var letter = new RegExp("^[a-zA-Z0-9_.]+$");
+			var letter = new RegExp("^[a-zA-Z0-9_-]*$");
+			var add = new RegExp("^[a-zA-Z0-9-,\s]*$");
 			var num = new RegExp("^[0-9]+$");
 			var dt = new RegExp("^\d{4}-\d{2}-\d{2}$");	
 
-			if(un == '' || fn == '' || ln == '' || ad == '' || dep == '' || cn == '' || dj == '' || dl == '' ){
-			 	alert("Please Enter empty fields");
-			 	return false;
-			 }
-			else if(!letter.match(un) || !letter.match(ad) || !letters.match(dep) ){
-				alert("Username and address and department must be alphanumeric");
-				return false;
-			}
-			else if(!letters.test(fn) || !letters.test(ln)){
-				var res = alert("Name must be alphabetic");
-				return false;
-			}
-			else if(!num.test(cn) || cnl != 10 ){
-				alert("contact number must be numeric and 10 digit");
-				return false;
-			}
-			else if( !dt.match(dj) || !dt.match(dl)){
-				alert("invalid format, format must be YYYY-MM-DD");
-				return false;
-			}
-			else if( dl < dj ){
-				alert("date of Leaving must be after date of joining");
-				return false;
-			}
-			else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg', 'svg']) == -1){
-				alert("invalid image file");
-				//$('#image').val('');
-				return false;	
-			}
-			else {
-				var res = confirm("Are you sure you want to save records?");
-				//alert(res);
-				if(res){
-					return true;
-				}
-				else{
-					return false;
-				}
-			}
-
-			/*if(un == ''){
+			if(un == ''){
 				alert("Please enter Username value");
 				return false;
 			}
-			else if(!letter.match(un)){
-					alert("Username must be alphanumeric");
+			else if(!letter.test(un)){
+					alert("Username must be alphanumeric(include alphabets, numbers and unserscore)");
 					return false;
 				
 			}else if(fn == ''){
@@ -197,7 +158,7 @@
 				return false;
 			}
 			else if(!letters.test(fn)){
-				alert("Firstname must be alphabetic");
+				alert("Firstname must be alphabetic(include only alphabets)");
 				return false;
 			}
 			else if(ln == ''){
@@ -205,22 +166,23 @@
 				return false;
 			}
 			else if(!letters.test(ln)){
-				alert("Lastname must be alphabetic ");
+				alert("Lastname must be alphabetic(include only alphabets) ");
 				return false;
 			}
 			else if(ad == ''){
 				alert("Please enter address value");
 				return false;
 			}
-			else if(!letter.match(ad)){
-				alert("Address must be alphanumeric");
+			else if(!add.test(ad)){
+				alert("Address must be alphanumeric(include alphabets, numbers and desh)");
 				return false;
 			}
 			else if(dep == ''){
 				alert("Please enter department value");
 			}
-			else if(!letters.match(dep)){
-				alert("Department must be alphanumeric")
+			else if(!letters.test(dep)){
+				alert("Department must be alphanumeric(include alphabets, numbers and unserscore)");
+				return false;
 			}
 			else if(cn == ''){
 				alert("Please enter contact number");
@@ -235,19 +197,19 @@
 				return false;
 			}
 			else if (!dt.match(dj) ){
-				alert("invalid format, format must be YYYY-MM-DD");
+				alert("invalid format of date of joining, format must be YYYY-MM-DD");
 				return false;
 			}
 			else if(dl == ''){
 				alert("Please enter date of leaving");
 				return false;
 			}
-			else if(!dt.match(dl)){
-				alert("invalid format, format must be YYYY-MM-DD");
+			else if(!dt.test(dl)){
+				alert("invalid format of dat eof leaving, format must be YYYY-MM-DD");
 				return false;
 			}
 			else if( dl < dj ){
-				alert("date of Leaving must be after date of joining");
+				alert("date of Leaving must be greaterthan date of joining");
 				return false;
 			}
 			else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg', 'svg']) == -1){
@@ -263,7 +225,7 @@
 				else{
 					return false;
 				}
-			}*/
+			}
 			
 		});
 
@@ -281,56 +243,17 @@
 			var image = $('#image').val();
 			var ext = $	('#image').val().split('.').pop().toLowerCase();
 			var letters = new RegExp("^[a-zA-Z]+$");
-			var letter = new RegExp("^[a-zA-Z0-9_.,]+$");
+			var letter = new RegExp("^[a-zA-Z0-9_-]*$");
+			var add = new RegExp("^[a-zA-Z0-9-,\s]*$");
 			var num = new RegExp("^[0-9]+$");
 			var dt = new RegExp("^\d{4}-\d{2}-\d{2}$");	
-
-			 /*if(un == '' || fn == '' || ln == '' || ad == '' || dep == '' || cn == '' || dj == '' || dl == '' ){
-			 	alert("Please Enter each values");
-			 	return false;
-			 }
-			else if(!letter.match(un) || !letter.match(ad) || !letter.match(dep) ){
-				alert("Username and address and department must be alphanumeric");
-				return false;
-			}
-			else if(!letters.test(fn) || !letters.test(ln)){
-				var res = alert("Name must be alphabetic");
-				return false;
-			}
-			else if(!num.test(cn) || cnl != 10 ){
-				alert("contact number must be numeric and 10 digit");
-				return false;
-			}
-			/*else if( !dt.test(dj) || !dt.test(dl)){
-				alert("invalid format, format must be YYYY-MM-DD");
-				return false;
-			}*/
-			/*else if( dl < dj ){
-				alert("date of Leaving must be after date of joining");
-				return false;
-			}*/
-			/*else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1){
-				alert("invalid image file");
-				$('#image').val('');
-				return false;	
-			}*/
-			/*else {
-				var res = confirm("Are you sure you want to save records?");
-				//alert(res);
-				if(res){
-					return true;
-				}
-				else{
-					return false;
-				}
-			}*/
 
 		 if(un == ''){
 				alert("Please enter Username value");
 				return false;
 			}
-			else if(!letter.match(un)){
-					alert("Username must be alphanumeric");
+			else if(!letter.test(un)){
+					alert("Username must be alphanumeric(include alphabets, numbers and unserscore)");
 					return false;
 				
 			}else if(fn == ''){
@@ -338,7 +261,7 @@
 				return false;
 			}
 			else if(!letters.test(fn)){
-				alert("Firstname must be alphabetic");
+				alert("Firstname must be alphabetic(include only alphabets)");
 				return false;
 			}
 			else if(ln == ''){
@@ -346,22 +269,23 @@
 				return false;
 			}
 			else if(!letters.test(ln)){
-				alert("Lastname must be alphabetic ");
+				alert("Lastname must be alphabetic(include only alphabets) ");
 				return false;
 			}
 			else if(ad == ''){
 				alert("Please enter address value");
 				return false;
 			}
-			else if(!letter.match(ad)){
-				alert("Address must be alphanumeric");
+			else if(!add.test(ad)){
+				alert("Address must be alphanumeric(include alphabets, numbers and desh)");
 				return false;
 			}
 			else if(dep == ''){
 				alert("Please enter department value");
 			}
-			else if(!letters.match(dep)){
-				alert("Department must be alphanumeric")
+			else if(!letters.test(dep)){
+				alert("Department must be alphanumeric(include alphabets, numbers and unserscore)");
+				return false;
 			}
 			else if(cn == ''){
 				alert("Please enter contact number");
@@ -376,19 +300,19 @@
 				return false;
 			}
 			else if (!dt.match(dj) ){
-				alert("invalid format, format must be YYYY-MM-DD");
+				alert("invalid format of date of joining, format must be YYYY-MM-DD");
 				return false;
 			}
 			else if(dl == ''){
 				alert("Please enter date of leaving");
 				return false;
 			}
-			else if(!dt.match(dl)){
-				alert("invalid format, format must be YYYY-MM-DD");
+			else if(!dt.test(dl)){
+				alert("invalid format of date of leaving, format must be YYYY-MM-DD");
 				return false;
 			}
 			else if( dl < dj ){
-				alert("date of Leaving must be after date of joining");
+				alert("date of Leaving must be greaterthan date of joining");
 				return false;
 			}
 			else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg', 'svg']) == -1){

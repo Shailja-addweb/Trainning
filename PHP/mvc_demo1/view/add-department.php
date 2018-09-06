@@ -33,24 +33,26 @@
 
 <script>
 	$(document).ready(function(){
-		$('#dep-form').validate();
+		/*$('#dep-form').validate();*/
 		
 		$('#save').click(function(){
+
 			var n = $('#name').val();
-			var letters = new RegExp("^[a-zA-Z]+$");
+			var letters = new RegExp("^[a-zA-Z0-9]+([_\/-])*$");
 			
 			if(!letters.test(n)){
-				var res = alert(" Department Name must be alphabetic");
+				var res = alert(" Department Name must be alphabetic(include only alphabets, numbers and underscore)");
 				return false;
 			}
+			
 		});	
 
 		$('#update').click(function(){
 			var n = $('#name').val();
-			var letters = new RegExp("^[a-zA-Z]+$");
+			var letters = new RegExp("^[a-zA-Z0-9]+([_\/-])*$");
 			
 			if(!letters.test(n)){
-			    alert("Department Name must be alphabetic");
+			    alert("Department Name must be alphabeticinclude only alphabets, numbers and underscore)");
 				return false;
 			}
 		});
