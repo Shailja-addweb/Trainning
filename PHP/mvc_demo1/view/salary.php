@@ -68,7 +68,7 @@ print_r($_POST);*/
 						?>
 					</select>
 
-			&nbsp; &nbsp; <button id="show">Show</button>
+			&nbsp; &nbsp; <button id="show">Show</button> &nbsp; &nbsp; <input type="reset" name="reset" value="Cancel" onclick="window.location.href = 'index.php?op=sallist'">
 		</form>
 		<br />
 		<br />

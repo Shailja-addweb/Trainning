@@ -15,7 +15,8 @@
 					else {?>
 						<img src="images/default.png" width="100" height="80" alt="book image" id="forimage"> <?php }?><br><br>
 					<input type="checkbox" name="change" value="change" id="change">Change Profile Photo &nbsp; &nbsp;  
-					<input type="button" name="remove" value="Remove Photo" id="remove"></div><br>
+					<!-- <input type="button" name="remove" value="Remove Photo" id="remove"> -->
+					<a id="remove" data-id=<?php echo $row['recid'];?> href="javascript:;">REMOVE PHOTO</a></div><br>
 					<div class="changeimage" style="display: none">
 						<input type="file" name="image" accept="image/*" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>">
 					</div>
@@ -124,6 +125,25 @@
 		
 		$("#remove").click(function(){
 			  $('#forimage').attr('src','images/default.png');
+			//alert($('#forimage').attr("src"));
+			var recId = $(this).attr("data-id");
+ 		 	var Status = $(this).text();
+
+			$.ajax({
+ 		 		url: 'index.php?op=remove&id='+recId,
+ 		 		type: 'GET',
+ 		 		success: function(response){
+ 		 			
+ 		 			/*if ( Status == 1 ){
+						$('#status-'+recId).text("Inactive");
+					}
+					else {
+				 		$('#status-'+recId).text('Active');
+				 	}*/
+				 	/*$('#records').html(response);
+				 	e.preventdefault();*/
+ 		 		}
+ 		 	});
 		});
 
 		$('#save').click(function(){
@@ -141,7 +161,7 @@
 			var ext = $	('#image').val().split('.').pop().toLowerCase();
 			var letters = new RegExp("^[a-zA-Z]+$");
 			var letter = new RegExp("^[a-zA-Z0-9_-]*$");
-			var add = new RegExp("^[a-zA-Z0-9-,\s]*$");
+			//var add = new RegExp("^[a-zA-Z0-9-,\s]*$");
 			var num = new RegExp("^[0-9]+$");
 			var dt = new RegExp("^\d{4}-\d{2}-\d{2}$");	
 
@@ -173,10 +193,10 @@
 				alert("Please enter address value");
 				return false;
 			}
-			else if(!add.test(ad)){
+			/*else if(!add.test(ad)){
 				alert("Address must be alphanumeric(include alphabets, numbers and desh)");
 				return false;
-			}
+			}*/
 			else if(dep == ''){
 				alert("Please enter department value");
 			}
@@ -244,7 +264,7 @@
 			var ext = $	('#image').val().split('.').pop().toLowerCase();
 			var letters = new RegExp("^[a-zA-Z]+$");
 			var letter = new RegExp("^[a-zA-Z0-9_-]*$");
-			var add = new RegExp("^[a-zA-Z0-9-,\s]*$");
+			//var add = new RegExp("^[a-zA-Z0-9-,\s]*$");
 			var num = new RegExp("^[0-9]+$");
 			var dt = new RegExp("^\d{4}-\d{2}-\d{2}$");	
 
@@ -276,10 +296,10 @@
 				alert("Please enter address value");
 				return false;
 			}
-			else if(!add.test(ad)){
+			/*else if(!add.test(ad)){
 				alert("Address must be alphanumeric(include alphabets, numbers and desh)");
 				return false;
-			}
+			}*/
 			else if(dep == ''){
 				alert("Please enter department value");
 			}

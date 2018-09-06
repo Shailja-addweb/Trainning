@@ -80,8 +80,38 @@ class salaryModel{
 	}
 
 	public function Show($recid_sal, $month, $year){
-		$query = "SELECT * FROM salary 
-					WHERE recid_sal='$recid_sal' OR month='$month' OR year='$year' AND isDelete = 0 ";
+		if($recid_sal == 'Select-Name'){
+			if($month == 'Select-Month'){
+				$query = "SELECT * FROM salary WHERE year = '$year' " ;
+			}
+			else{
+				if($year == 'Select-Year'){
+					$query = "SELECT * FROM salary WHERE month = '$month' " ;
+				}
+				else{
+					$query = "SELECT * FROM salary WHERE year = '$year' AND month = '$month' " ;
+				}
+			}
+		}
+		else{
+			if($month == 'Select-Month'){ 
+				if($year == 'Select-Year'){
+					$query = " SELECT * FROM salary WHERE recid_sal = '$recid_sal' " ;
+				}
+				else{
+					$query = " SELECT * FROM salary WHERE recid_sal = '$recid_sal' AND year = '$year' " ; 
+				}
+			}
+			else{
+				if($year == 'Select-Year'){
+					$query = " SELECT * FROM salary WHERE recid_sal = '$recid_sal' AND month = $month " ;
+				}
+				else{
+					$query = " SELECT * FROM salary WHERE recid_sal = '$recid_sal' AND month = '$month' AND year = '$year' " ; 
+				}
+			}
+		}
+
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}

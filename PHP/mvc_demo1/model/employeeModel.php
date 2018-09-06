@@ -157,6 +157,13 @@ class employeeModel {
 		$result = mysqli_query($this->con, $query);
 		return $result;
 	}
+
+	public function RemoveImg($recid){
+		$query = " UPDATE Employee 
+					SET image = 'default.png' WHERE recid = $recid " ;
+		$result = mysqli_query($this->con, $query);
+		return $result;
+	}
 }
 
 ?>

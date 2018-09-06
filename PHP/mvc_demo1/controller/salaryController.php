@@ -198,6 +198,7 @@
             $recid_sal = $_POST['emp_name'];
             $month = $_POST['month'];
             $year = $_POST['year'];
+            //print_r($recid_sal); print_r($month); print_r($year); exit();
             $result = $this->salaryModel->Show($recid_sal, $month, $year);
             $noofrow = $result->num_rows;
             $result1 = $this->salaryModel->salName();

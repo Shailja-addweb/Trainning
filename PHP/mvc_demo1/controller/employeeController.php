@@ -52,6 +52,9 @@
                 elseif ( $op == 'sortdj_desc' ) {
                     $this->sortDJD();
                 }
+                elseif ( $op == 'remove' ) {
+                    $this->removeImg();
+                }
                 elseif ( $op == 'changeE') {
                     $id = $_GET['id']; 
                     $this->changeE($id);
@@ -180,36 +183,44 @@
 
         }
 
+        public function removeImg(){
+            if(!empty($_GET['id'])){
+                $recid = $_GET['id'];
+                $result = $this->employeeModel->RemoveImg($recid);
+                $noofrow = mysqli_num_rows($result);
+                if(!empty($result)) {
+                    //header('location:index.php?op=emplist&delete_flag=1');
+                    $data = $this->ListEmployee(); 
+                    //include('./view/employeelist.php');
+                }  
+                else {
+                    header('location:index.php?op=emplist&delete_flag=0');
+                }  
+            }
+        }
+
         public function editEmployee() {
          	if(!empty($_GET['id'])) {
          		$recid = $_GET['id'];
          		$result = $this->employeeModel->FetchUserDetails($recid);
          		$row = mysqli_fetch_array($result);
-                //print_r($row["image"]);exit();
-
-                /*$target_dir = "./images/";
-                $target_file = basename($_FILES["image"]["name"]);
-                $file_tmp = $_FILES["image"]["tmp_name"];
-
-                if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir.$target_file)){
-                    echo "The file " . basename( $_FILES["image"]["name"]) . " has been uploaded."; 
-                } 
-                else {
-                    echo "Sorry, there was an error uploading your file.";
-                }*/
-
+                //print_r($row['image']);
 
          		if(isset($_POST['submit']) && !empty($_POST['submit'])) 
     	    	{
+                    //$image = $_FILES["image"]['name'];
+                    //print_r($image); exit();
+                    //print_r($_POST['image']);exit;
                     $target_dir = "./images/";
                     $target_file = basename($_FILES["image"]["name"]);
                     $file_tmp = $_FILES["image"]["tmp_name"];
 
                     if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir.$target_file)){
                         echo "The file " . basename( $_FILES["image"]["name"]) . " has been uploaded."; 
-                    } 
+                    }
                     else {
                         echo "Sorry, there was an error uploading your file.";
+                        
                     }
 
                     if($target_file == ''){
@@ -246,6 +257,7 @@
            
             if(!empty($_GET['id'])) {
                 $result = $this->employeeModel->DeleteUser($id); 
+                $noofrow = mysqli_num_rows($result);
                 if(!empty($result)) {
                     //header('location:index.php?op=emplist&delete_flag=1');
                     $data = $this->ListEmployee(); 

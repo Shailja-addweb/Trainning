@@ -56,7 +56,7 @@
               </body>
         </html><?php 
 
-              if ($_GET['op'] == 'emplist' || $_GET['op'] == '' || $_GET['op'] == 'addemp' || $_GET['op'] == 'delete' || $_GET['op'] == 'edit' || $_GET['op'] == 'allemp' || $_GET['op'] == 'activeemp' || $_GET['op'] == 'inactiveemp' || $_GET['op'] == 'changeE' || $_GET['op'] == 'sortdep_asc' || $_GET['op'] == 'sortdep_desc' || $_GET['op'] == 'sortdj_asc' || $_GET['op'] == 'sortdj_desc' ){
+              if ($_GET['op'] == 'emplist' || $_GET['op'] == '' || $_GET['op'] == 'addemp' || $_GET['op'] == 'delete' || $_GET['op'] == 'edit' || $_GET['op'] == 'allemp' || $_GET['op'] == 'activeemp' || $_GET['op'] == 'inactiveemp' || $_GET['op'] == 'changeE' || $_GET['op'] == 'sortdep_asc' || $_GET['op'] == 'sortdep_desc' || $_GET['op'] == 'sortdj_asc' || $_GET['op'] == 'sortdj_desc' || $_GET['op'] == 'remove' ){
 
                   include_once 'controller/employeeController.php';
                   
