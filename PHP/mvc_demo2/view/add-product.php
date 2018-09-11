@@ -13,8 +13,22 @@
 
 		<tr>
 			<td>Category:</td>
-			<td><input type="text" name="category" id="category" 
-					   value="<?php if(!empty($row['category'])) echo $row['category']; else echo '';?>">
+			<td><?php if(!empty($row['p_id'])){
+					$cat = explode(", ",$row['category']);
+					$i = 0;
+						if($noofrow>0){
+							while($rowarray = mysqli_fetch_array($result)) {
+								echo '<label><input type="checkbox" name="category[]" value="' . $rowarray["name"] . '"'. ($rowarray['name'] == $cat[$i] ? 'checked = "checked"' : '') .'>' .  $rowarray["name"] . '</label>&nbsp;';
+								$i++;
+							}
+						}
+
+				}else?>
+					<?php if($noofrow>0){
+						while($rowarray = mysqli_fetch_array($result)) {
+							echo '<label><input type="checkbox" name="category[]" value="' . $rowarray["name"] . '">' .  $rowarray["name"] . '</label>&nbsp;';
+						}
+					}?> 
 			</td>
 		</tr>
 		
@@ -23,21 +37,27 @@
 			<td>
 				<?php if (!empty($row['p_id'])) { ?>
 						<div class="forImages">
-						<?php if(!empty($row['image'])){
-							?>
-					<img src="images/<?php echo $row['image'];?> " width="100" height="80" alt="book image" id="forimage"><?php }
-					else {?>
-						<img src="images/default.png" width="100" height="80" alt="book image" id="forimage"> <?php }?><br><br>
+							<div class="images">
+								<?php if(!empty($row['image'])){
+		                            $ima = explode(",",$row['image']);
+		                            foreach($ima as $i =>$key){
+		                                echo " <img src=\"images/" . $key . "\" width=\"50\" height=\"50\"> " ;
+		                            }
+		                        }
+								else {?>
+									<img src="images/default.png" width="100" height="80" alt="book image" id="forimage"> <?php }?>
+							</div><br><br>
+					<a href="javascript:;" id="newimage">Add Image</a> 
 					<input type="checkbox" name="change" value="change" id="change">Change Profile Photo &nbsp; &nbsp;  
-					<!-- <input type="button" name="remove" value="Remove Photo" id="remove"> -->
 					<a id="remove" data-id=<?php echo $row['p_id'];?> href="javascript:;">REMOVE PHOTO</a></div><br>
 					<div class="changeimage" style="display: none">
-						<input type="file" name="image" accept="image/*" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>">
+						<input type="file" name="image[]" accept="image/*" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>"  multiple >
 					</div>
 				<?php } 
 
 				else { ?>
-					<input type="file" name="image" accept="image/*" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>">
+					<div class="images"><input type="file" name="image[]" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>" multiple ></div> <br>
+					
 				<?php } ?>
 
 			</td>
@@ -46,7 +66,7 @@
 		<tr>
 			<td>Price:</td>
 			<td><input type="text" name="price" id="price" 
-			           value="<?php if(!empty($row['price'])) echo $row['price']; else echo ''; ?>">
+						value="<?php if(!empty($row['price'])) echo $row['price']; else echo '';?>">
 			</td>
 		</tr>
 
@@ -83,32 +103,44 @@
 	$(document).ready(function(){
 
 		$('.changeimage').hide();
+		var i = 1;
 
 		$('#change').click(function(){
 			if($(this).is(":checked")) {
-				$('#forimage').hide();
+				$('.forImages').hide();
         		$(".changeimage").show();
         		$('#remove').hide();
     		} else {
         		$(".changeimage").hide();
-        		$('#forimage').show();
+        		$('.forimage').show();
         		$('#remove').show();
     		} 
 		});
 		
 		$("#remove").click(function(){
-			  $('#forimage').attr('src','images/default.png');
-			var recId = $(this).attr("data-id");
+			  $('img').attr('src','images/default.png');
+			var Id = $(this).attr("data-id");
  		 	var Status = $(this).text();
 
 			$.ajax({
- 		 		url: 'index.php?op=remove&id='+recId,
+ 		 		url: 'index.php?op=remove&id='+Id,
  		 		type: 'GET',
  		 		success: function(response){
  		 		
  		 		}
  		 	});
 		});
+
+		$("#newimage").click(function(){
+			var x = document.createElement("INPUT");
+		    x.setAttribute("type", "file");
+		    x.setAttribute("id", "image"+i);
+		    x.setAttribute("name", "image[]");
+		    x.setAttribute("value", "<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>");
+		    x.setAttribute("multiple", true);
+		    $(".images").append(x);
+		    i++;	
+		})
 
 		$('#save').click(function(){
 			
@@ -173,7 +205,7 @@
 			var quantity = $('#quantity').val();
 			var image = $('#image').val();
 			var ext = $	('#image').val().split('.').pop().toLowerCase();
-			var letter = new RegExp("^[a-zA-Z]+$");
+			var letter = new RegExp("^[a-zA-Z_]+$");
 
 			if(name == ''){
 				alert("Please enter Name");
@@ -203,10 +235,10 @@
 				alert("Quantity must be numeric ");
 				return false;
 			}	
-			else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg', 'svg']) == -1){
+			/*else if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg', 'svg']) == -1){
 				alert("invalid image file");
 				return false;	
-			}
+			}*/
 			else {
 				var res = confirm("Are you sure you want to Update records?");
 				//alert(res);

@@ -85,6 +85,14 @@
 			return $result;
 		}
 
+		public function AddNameCategory(){
+
+			$query = "SELECT name FROM Category WHERE isDelete = 0 " ;		
+			$result = mysqli_query($this->con, $query);	
+			return $result;
+
+		}
+
 	}
 
 ?>
