@@ -7,8 +7,19 @@
 			color: red;
 			font-size:14px;
 		}
+
+		a.name:link {
+		    color: green;
+		    text-decoration: none;
+		}
+		a.name:hover {
+		    color: red;
+		}
+		a.name:active {
+	    	color: blue;
+		}
 	</style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	<script src="./js/jquery.min.js">
 		
 	</script><?php
 
@@ -58,6 +69,24 @@
 
 		$(document).ready(function(){
 
+			$('.name').click(function(){
+				var name = $(this).text();
+				var name_id = $(this).attr("id");
+				//$("#yourPopup").dialog('open');
+
+
+				$.ajax({
+					url: 'index.php?op=show&name='+name,
+					type: 'GET',
+					success: function(response){
+
+	  					//$('#yourPopup').html(response);
+	  					//showyourPopup();
+	  					alert(response);
+	   				}
+				})
+			});
+
 	 		// Delete 
 	 		$('.delete').click(function(e){
 
@@ -95,3 +124,6 @@
 	 	});
 	</script>
 </div>
+
+
+

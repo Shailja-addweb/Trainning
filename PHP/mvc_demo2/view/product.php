@@ -8,6 +8,8 @@
 			font-size:14px;
 		}
 	</style>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="./js/jquery-ui.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 		
 	</script><?php
@@ -40,6 +42,12 @@
 			echo '';
 		}; ?><br>
 
+	<br>
+	<div class="search">
+			<b>Search Product : </b>
+			<input type="text" size="30" id="search-box">
+			<div id="suggesstion-box"></div>
+	</div>
 
 	<div class="data">
 
@@ -57,6 +65,27 @@
 	<script >
 
 		$(document).ready(function(){
+
+			$("#search-box").keyup(function(){
+				var keyword = $(this).val();
+				var res = keyword.length;
+
+				if(res == '3'){
+					$("#suggesstion-box").autocomplete({
+						source: "index.php?op=search&keyword=" + $(this).val()
+					});
+					/*$.ajax({
+					url: "index.php?op=search&keyword="+keyword,
+					type: "GET",
+					success: function(response){
+
+							 $("#suggesstion-box").show();
+							 $("#suggesstion-box").html(response);
+							 //$("#search-box").css("background","#FFF");
+						}
+					});*/
+				}
+			});
 
 	 		// Delete 
 	 		$('.delete').click(function(e){
@@ -93,5 +122,20 @@
 	 		 	});
 			});		
 	 	});
+
+	 	function selectproduct(val) {
+				$("#search-box").val(val);
+				$("#suggesstion-box").hide();
+
+				$.ajax({
+					url: "index.php?op=searchshow&keyword="+val,
+					type: "GET",
+					success: function(response){
+
+	  						$('#records').html(response);
+						}
+					});
+			}
+
 	</script>
 </div>

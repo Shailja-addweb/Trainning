@@ -1,6 +1,7 @@
 <?php 
    
 	include('./model/categoryModel.php');
+    include('./model/productModel.php');
 
 	class categoryController{
 
@@ -9,6 +10,7 @@
     	public function __construct() {
 
     		$this->categoryModel = new categoryModel();
+            $this->productModel = new productModel();
     	
     	}
 
@@ -37,6 +39,9 @@
                 elseif ( $op == 'remove' ) {
                     $id = $_GET['id'];
                     $this->removeImg($id);
+                }
+                elseif ( $op == 'show' ) {
+                    $this->showProduct();
                 }
     		 	else {
                     $this->showError("Page not found", "Page for operation ".$op." was not found!");
@@ -71,11 +76,11 @@
 
             if($noofrow>0) {
                 while($resultdata = mysqli_fetch_array($result)) {
-                     
+                     $i = 1;
                     $data .= " <tr> " ;
                             
                         $data .= " <td> " . $resultdata['id'] . " </td> " ;
-                        $data .= " <td> " . $resultdata['name'] . " </td> " ;
+                        $data .= " <td><a href=\"javascript:;\" class=\"name\" id=\"name" .+$i."\" > <div id=\"yourPopup\" style=\"padding:0; margin:0; display:none;\"></div>" . $resultdata['name'] . " </a></td> " ;
                         $data .= " <td> <a class=\"status\" id=\"status-" . $resultdata['id'] . "\" 
                                            href=\"javascript:;\" data-id= " .  $resultdata['id'] . " > " . ($resultdata['status'] == 1 ? 'active' : 'inactive') . " </a></td> " ;
                         if(!empty($resultdata['image'])){
@@ -89,7 +94,7 @@
                         $data .= "<td> <a class=\"delete\" href=\"javascript:;\" data-id= " . $resultdata['id'] . " >Delete </a> </td> " ; 
 
                     $data .= " </tr>" ;
-    
+                    $i++;
                 } 
                 return $data; 
             }
@@ -230,6 +235,15 @@
             else {
                     header('location:index.php?op=categorylist&status_flag=0');
                 }   
+        }
+
+        public function showProduct(){
+            $name = $_GET['name'];
+            $result = $this->productModel->ShowProduct($name);
+
+            if(!empty($result)){
+               echo $result;
+            }
         }
 	}
 

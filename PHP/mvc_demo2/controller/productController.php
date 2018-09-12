@@ -41,6 +41,12 @@
                      $id = $_GET['id'];
                     $this->removeImg($id);
                 }
+                elseif ( $op == 'search' ) {
+                    $this->search();
+                }
+                elseif ( $op == 'searchshow' ) {
+                    $this->searchshow();
+                }
     		 	else {
                     $this->showError("Page not found", "Page for operation ".$op." was not found!");
                 }   
@@ -142,10 +148,9 @@
                             $filename = implode(",",$_FILES['image']['name']);
                         }
 
-              
                 $arrayrecords = array();
                 $arrayrecords['name'] = $_POST['name'];
-                $arrayrecords['category'] = implode(", ",$_POST['category']);
+                $arrayrecords['category'] = implode(",",$_POST['category']);
                 $arrayrecords['image'] =  $filename;   
                 $arrayrecords['price'] =  $_POST['price'];
                 $arrayrecords['quantity'] = $_POST['quantity'];
@@ -182,40 +187,37 @@
                 
                 $result = $this->categoryModel->AddNameCategory();
                 $noofrow = mysqli_num_rows($result);
-
+                $filename = $row['image'];
                 if(isset($_POST['submit']) && !empty($_POST['submit'])) 
                 {
                     extract($_POST);
                     $error=array();
-               
-                    print_r($imagess);
                     foreach($_FILES["image"]["tmp_name"] as $key=>$tmp_name){   
                             $file_name=$_FILES["image"]["name"][$key];
                             $file_tmp=$_FILES["image"]["tmp_name"][$key];
                             $ext=pathinfo($file_name,PATHINFO_EXTENSION);
-                            if(!file_exists("./images/".$file_name))
+                            if($file_name != '')
                             {
                                 move_uploaded_file($file_tmp=$_FILES["image"]["tmp_name"][$key],"./images/".$file_name);
+                                 $filename = $filename . "," . $file_name ;
                             }
                             else
                             {
+                                //$filename .= $row["image"];
                                 array_push($error,"$file_name, ");
                             }
 
-                            $filename = implode(",",$_FILES['image']['name']);
                     }
 
-                    if($file_name == ''){
+                    /*if($file_name == ''){
                         $filename = $row["image"];
-                    }
-
-
+                    }*/
                     $arrayrecords = array();
                     $arrayrecords['p_id'] = $_POST['p_id'];
                     $arrayrecords['name'] = $_POST['name'];
                     $arrayrecords['category'] = implode(", ",$_POST['category']);
-                    $arrayrecords['image'] =  $imagename;   
-                    $arrayrecords['price'] =  $_POST['price'];
+                    $arrayrecords['image'] = $filename;   
+                    $arrayrecords['price'] = $_POST['price'];
                     $arrayrecords['quantity'] = $_POST['quantity'];
                     $arrayrecords['status'] = $row['status'];
                     $result = $this->productModel->EditProduct($arrayrecords);
@@ -276,6 +278,46 @@
                 else {
                     header('location:index.php?op=productlist&delete_flag=0');
                 }       
+            }
+        }
+
+        public function search(){
+
+            if(!empty($_GET['keyword'])){
+                $keyword = $_GET['keyword'];
+                $result = $this->productModel->Search($keyword);
+                $noofrow = mysqli_num_rows($result);
+                if(!empty($result)) {
+                    /*echo "<ul id=\"product-list\">";
+                    
+                    foreach($result as $product) {
+
+                        echo "<li onClick=\"selectproduct('" . $product["name"] . "')\">" . $product["name"] ."</li>";
+                    }
+                    echo "</ul>";*/
+                    foreach($result as $product) {
+
+                        echo "<option value='". $product['name'] ."' onClick=\"selectproduct('" . $product['name'] . "')\" >". $product['name'] ."</option>";
+                    }
+                } 
+            }
+        }
+
+        public function searchshow(){
+
+            if(!empty($_GET['keyword'])){
+                $keyword = $_GET['keyword'];
+                $result = $this->productModel->SearchShow($keyword);
+                $noofrow = mysqli_num_rows($result);
+                if(!empty($result)) {
+
+                    $data = $this->TblProduct($noofrow, $result); 
+                     include('./view/product.php');
+
+                }  
+                else {
+                    header('location:index.php?op=productlist');
+                }  
             }
         }
 
