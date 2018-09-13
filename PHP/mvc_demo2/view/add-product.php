@@ -41,15 +41,17 @@
 								<?php if(!empty($row['image'])){
 		                            $ima = explode(",",$row['image']);
 		                            foreach($ima as $i =>$key){
-		                                echo " <img src=\"images/" . $key . "\" width=\"50\" height=\"50\"> <a href=\"javascript:;\" id=\"delete\"".+$i.">DELETE</a>" ;
+		                                echo "<span data-id=\"".$row['p_id']."\" id=\"image".$row['p_id']."\"> <img src=\"images/" . $key . "\" width=\"50\" height=\"50\"> <a href=\"javascript:;\" class=\"delete\" id=\"delete".+$i."\">DELETE</a></span>" ;
 		                            }
 		                        }
 								else {?>
 									<img src="images/default.png" width="100" height="80" alt="book image" id="forimage"> <?php }?>
 							</div><br><br>
+
 					<a href="javascript:;" id="newimage">Add Image</a> 
 					<input type="checkbox" name="change" value="change" id="change">Change Profile Photo &nbsp; &nbsp;  
 					<a id="remove" data-id=<?php echo $row['p_id'];?> href="javascript:;">REMOVE ALL IMAGES</a></div><br>
+
 					<div class="changeimage" style="display: none">
 						<input type="file" name="image[]" accept="image/*" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>"  multiple >
 					</div>
@@ -118,7 +120,8 @@
 		});
 		
 		$("#remove").click(function(){
-			  $('img').attr('src','images/default.png');
+			  //$('img').attr('src','images/default.png');
+			  $('span').remove();
 			var Id = $(this).attr("data-id");
  		 	var Status = $(this).text();
 
@@ -131,7 +134,22 @@
  		 	});
 		});
 
-		$("#newimage").click(function(){
+		$("span").click(function(){
+			//$(this).remove();
+			var Id = $(this).attr("data-id");
+			var src = $("span").closest("img").attr("src");
+			alert(src);
+
+			/*$.ajax({
+ 		 		url: 'index.php?op=remove&id='+Id,
+ 		 		type: 'GET',
+ 		 		success: function(response){
+ 		 		
+ 		 		}
+ 		 	});*/
+		});
+
+		/*$("#newimage").click(function(){
 			var x = document.createElement("INPUT");
 		    x.setAttribute("type", "file");
 		    x.setAttribute("id", "image"+i);
@@ -140,7 +158,7 @@
 		    x.setAttribute("multiple", true);
 		    $(".images").append(x);
 		    i++;	
-		})
+		});*/
 
 		$('#save').click(function(){
 			
@@ -205,7 +223,7 @@
 			var quantity = $('#quantity').val();
 			var image = $('#image').val();
 			var ext = $	('#image').val().split('.').pop().toLowerCase();
-			var letter = new RegExp("^[a-zA-Z_]+$");
+			var letter = new RegExp("^[a-zA-Z_-0-9]+$");
 
 			if(name == ''){
 				alert("Please enter Name");

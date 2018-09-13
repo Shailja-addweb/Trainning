@@ -23,7 +23,7 @@
 
 	  	public function ProductList(){
 
-	  		$query = "SELECT * FROM Product WHERE isDelete = 0 ";
+	  		$query = "SELECT * FROM product WHERE isdelete = 0 ";
 			$result = mysqli_query($this->con, $query);
 			return $result;
 
@@ -31,8 +31,8 @@
 
 	  	public function AddProduct($arrayrecords){
 
-	  		$query = "INSERT INTO Product
-					(name, category, image, price, quantity, status, isDelete) 
+	  		$query = "INSERT INTO product
+					(name, category, image, price, quantity, status, isdelete) 
 					VALUES
 					('" . addslashes($arrayrecords['name']) . "',
 					'" . addslashes($arrayrecords['category']) . "',
@@ -48,14 +48,14 @@
 	  	}
 
 	  	public function FetchProductDetails($id){
-	  		$query = "SELECT * FROM Product WHERE p_id='$id' " ;		
+	  		$query = "SELECT * FROM product WHERE p_id='$id' " ;		
 			$result = mysqli_query($this->con, $query);
 			return $result;
 	  	}
 
 	  	public function EditProduct($arrayrecords) {
 		
-			$query = "UPDATE Product 
+			$query = "UPDATE product 
 						SET name = '" . addslashes($arrayrecords['name']) . "' , 
 						category = '" . addslashes($arrayrecords['category']) . "',
 						image = '" . $arrayrecords["image"] . "',
@@ -69,7 +69,7 @@
 		}
 
 		public function RemoveImg($id){
-			$query = " UPDATE Product 
+			$query = " UPDATE product 
 						SET image = 'default.png' WHERE p_id = $id " ;
 			$result = mysqli_query($this->con, $query);
 			return $result;
@@ -77,7 +77,7 @@
 
 		public function ChangeStatusP($id){
 
-			$query = "UPDATE Product 
+			$query = "UPDATE product 
 						SET status = IF(status=1, 0, 1) WHERE p_id = $id ";
 
 			$result = mysqli_query($this->con, $query);	
@@ -85,14 +85,14 @@
 		}
 
 		public function DeleteProduct($id) {
-			$query = "UPDATE Product
-					  	SET isDelete = 1 WHERE p_id=$id";	
+			$query = "UPDATE product
+					  	SET isdelete = 1 WHERE p_id=$id";	
 			$result = mysqli_query($this->con, $query);	
 			return $result;
 		}
 
 		public function ShowProduct($name){
-			$query = "SELECT name,category FROM Product ";
+			$query = "SELECT name,category FROM product ";
 			$cat = mysqli_query($this->con, $query);
 			$noofrow = mysqli_num_rows($cat);
 			$result = 'Product of '.$name.' category are : ';
@@ -115,8 +115,8 @@
 		}
 
 		public function Search($keyword){
-			$query =" SELECT name FROM Product 
-						WHERE name like '" . $keyword . "%' AND isDelete = 0 ORDER BY name LIMIT 0,6 ";
+			$query =" SELECT name FROM product 
+						WHERE name like '" . $keyword . "%' AND isdelete = 0 ORDER BY name LIMIT 0,6 ";
 
 			$result = mysqli_query($this->con, $query);
 			return $result;
@@ -124,8 +124,8 @@
 
 		public function SearchShow($keyword){
 
-			$query = " SELECT * FROM Product
-						WHERE name = '$keyword' AND isDelete = 0 ";			
+			$query = " SELECT * FROM product
+						WHERE name = '$keyword' AND isdelete = 0 ";			
 			$result = mysqli_query($this->con, $query);
 			return $result;
 
