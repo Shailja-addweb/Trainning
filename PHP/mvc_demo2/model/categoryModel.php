@@ -22,7 +22,7 @@
 
 	  	public function CategoryList(){
 
-	  		$query = "SELECT * FROM category WHERE isdelete = 0 ";
+	  		$query = "SELECT * FROM category WHERE isdelete = '9999-12-31' ";
 			$result = mysqli_query($this->con, $query);
 			return $result;
 
@@ -36,7 +36,7 @@
 					('" . addslashes($arrayrecords['name']) . "',
 					'1',
 					'" . $arrayrecords["image"] . "',
-					'0' )";
+					'9999-12-31' )";
 			
 			$result = mysqli_query($this->con, $query);	
 			
@@ -71,7 +71,7 @@
 
 		public function DeleteCategory($id) {
 			$query = "UPDATE category
-					  	SET isdelete = 1 WHERE id=$id";	
+					  	SET isdelete = now() WHERE id=$id";	
 			$result = mysqli_query($this->con, $query);	
 			return $result;
 		}
@@ -87,9 +87,30 @@
 
 		public function AddNameCategory(){
 
-			$query = "SELECT name FROM category WHERE isdelete = 0 " ;		
+			$query = "SELECT id,name FROM category WHERE isdelete = '9999-12-31' " ;		
 			$result = mysqli_query($this->con, $query);	
 			return $result;
+
+		}
+		public function fetchname(){
+
+			$query = "SELECT id,name FROM category WHERE isdelete = '9999-12-31'" ;
+			$result = mysqli_query($this->con, $query);
+			return $result;
+		}
+
+		public function gettingname($id){
+
+			$query = "SELECT id,name FROM category WHERE id = '$id' AND isdelete = '9999-12-31'";
+			$result = mysqli_query($this->con, $query);
+			$noofrow =  mysqli_num_rows($result);
+			if($noofrow>0){
+				while($rowarray = mysqli_fetch_array($result)) {
+					$name = $rowarray['name'];
+							
+				}
+			}
+			return $name;
 
 		}
 

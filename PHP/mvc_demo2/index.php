@@ -15,9 +15,9 @@
 
     case 'search':
 
-        include_once 'controller/productController.php';
+        include_once 'controller/productsController.php';
                 
-        $controller = new productController();
+        $controller = new productsController();
                  
         $controller->handleRequest();
 
@@ -68,9 +68,9 @@
 
 				if($_GET['op'] == 'productlist' || $_GET['op'] == '' || $_GET['op'] == 'addproduct' || $_GET['op'] == 'editproduct' || $_GET['op'] == 'deleteproduct'|| $_GET['op'] == 'changestatusp' || $_GET['op'] == 'remove' || $_GET['op'] == 'searchshow'){
 
-            include_once 'controller/productController.php';
+            include_once 'controller/productsController.php';
                 
-            $controller = new productController();
+            $controller = new productsController();
                  
             $controller->handleRequest();
 
