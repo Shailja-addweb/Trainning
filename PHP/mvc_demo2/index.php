@@ -57,6 +57,7 @@
                       <li><a href="index.php">Home</a></li>
                       <li><a href="?op=productlist">Product</a></li>
                       <li><a href="?op=categorylist">Category</a></li>
+                      <li><a href="?op=shoplist">Shop</a></li>
                   </ul>
                   <br/>
                   <br/>
@@ -66,7 +67,7 @@
               </body>
         </html><?php 
 
-				if($_GET['op'] == 'productlist' || $_GET['op'] == '' || $_GET['op'] == 'addproduct' || $_GET['op'] == 'editproduct' || $_GET['op'] == 'deleteproduct'|| $_GET['op'] == 'changestatusp' || $_GET['op'] == 'remove' || $_GET['op'] == 'searchshow'){
+				if($_GET['op'] == 'productlist' || $_GET['op'] == '' || $_GET['op'] == 'addproduct' || $_GET['op'] == 'editproduct' || $_GET['op'] == 'deleteproduct'|| $_GET['op'] == 'changestatusp' || $_GET['op'] == 'remove' || $_GET['op'] == 'searchshow' || $_GET['op'] == 'changedefault' || $_GET['op'] == 'delete'){
 
             include_once 'controller/productsController.php';
                 
@@ -85,6 +86,14 @@
             $controller->handleRequest();
 					
 				}
+        elseif ($_GET['op'] == 'shoplist'){
+
+          include_once 'controller/shopController.php';
+
+            $controller = new shopController();
+                 
+            $controller->handleRequest();
+        }
 
 			break;
 	}

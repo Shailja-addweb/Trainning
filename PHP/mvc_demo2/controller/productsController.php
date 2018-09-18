@@ -41,6 +41,15 @@
                      $id = $_GET['id'];
                     $this->removeImg($id);
                 }
+                elseif ( $op == 'changedefault' ) {
+                     $id = $_GET['id'];
+                     $p_id = $_GET['p_id'];
+                    $this->changeDefault($id,$p_id);
+                }
+                elseif ( $op == 'delete' ) {
+                     $id = $_GET['id'];
+                    $this->delete($id);
+                }
                 elseif ( $op == 'search' ) {
                     $this->search();
                 }
@@ -111,7 +120,14 @@
                             $image_name = $resultdata['image'];
                             $ima = explode(',',$image_name);
                             foreach($ima as $i =>$key){
-                                $name = $this->productsModel->FetchName($key);
+                                $res = $this->productsModel->FetchName($key);
+                                $noofrow1 = mysqli_num_rows($res);
+        
+                                foreach ($res['name'] as $name) {
+                                     
+                                    $filename = $name.",".$filename; 
+                                } 
+
                                 $data .= " <img src=\"images/" . $name . "\" width=\"50\" height=\"50\"> " ;
                             }
                         }
@@ -195,7 +211,7 @@
                 $arrayrecords['status'] = "1";
                 $result = $this->productsModel->AddProduct($arrayrecords);
 
-                $lastid = $this->productsModel->fetchID($result);
+                $lastid = $this->productsModel->fetchID($result,$idofimages);
                 $lastid_c = $this->productsModel->fetchID_c($result);
 
                 if($result) {
@@ -232,9 +248,24 @@
                 $name = $row['image'];
                 $filename = '';
                 $ima = explode(',',$name);
+                $id_img =array();
                 foreach($ima as $i =>$key){
-                    $name = $this->productsModel->FetchName($key);
-                    $filename = $name.",".$filename;  
+                    $res = $this->productsModel->FetchName($key);
+                    $noofrow1 = mysqli_num_rows($res);
+        
+                    foreach ($res['name'] as $name) {
+                        if($filename != '' ){
+                            $filename = $filename.",".$name; 
+                        }
+                        else{
+                            $filename = $name;
+                        }
+                    } 
+
+                    foreach ($res['id'] as $id) {  
+                        $id_img[] = $id; 
+                    }
+                    
                 }
 
                 if (substr($filename, -1, 1) == ',')
@@ -245,6 +276,7 @@
                 if(isset($_POST['submit']) && !empty($_POST['submit'])) 
                 {
                     $idofimages = '';
+
                             foreach($_FILES["image"]["tmp_name"] as $key=>$tmp_name)
                             {   
                                 $file_name=$_FILES["image"]["name"][$key];
@@ -260,13 +292,14 @@
                                 }
 
                                 $arrayimage['imagename'] = $file_name;
-                                $image = $this->productsModel->InsertImage($arrayimage); 
+                                
+                                $image = $this->productsModel->InsertImage($arrayimage, $id_set); 
                                 
                             }
                             $idofimages = $row['image'];
                             
                
-                    $fetchimgid = $this->productsModel->FetchImageId();
+                    $fetchimgid = $this->productsModel->FetchImageId($id_set);
                     $noofrow = mysqli_num_rows($fetchimgid);  
                     if($noofrow>0){
                 
@@ -274,7 +307,10 @@
 
                             if($idofimages != ''){
                                 $idofimages .= ',';
-                                 $idofimages .= $imgid['id'];
+                                $idofimages .= $imgid['id'];
+                                /*$id_up = $imgid['id'];
+                                $id_set = $_POST['id'];
+                                $update = $this->productsModel->updateId($id_up,$id_set);*/
                             }
                             else{
                                 $idofimages .= $imgid['id'];
@@ -298,7 +334,7 @@
                     $arrayrecords['status'] = $row['status'];
                     $result = $this->productsModel->EditProduct($arrayrecords);
 
-                    $lastid = $this->productsModel->fetchID($result);
+                    $lastid = $this->productsModel->fetchID($result,$idofimages);
                     $lastid_c = $this->productsModel->fetchID_c($result);
 
                     if(!empty($result)) {
@@ -311,6 +347,18 @@
                     include('./view/add-products.php');
                 }
             } 
+        }
+
+        public function changeDefault($id,$p_id){
+
+            $res = $this->productsModel->ChangeDefault($id,$p_id);
+            
+        }
+
+        public function delete($id){
+
+            $res = $this->productsModel->Delete($id);
+            
         }
 
         public function removeImg($id){

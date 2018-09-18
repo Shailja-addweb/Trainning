@@ -43,9 +43,13 @@
 						<div class="forImages">
 							<div class="images">
 								<?php if(!empty($row['image'])){
-		                            $ima = explode(",",$filename);
+		                            $ima = explode(",",$filename);	
+		                         	
 		                            foreach($ima as $i =>$key){
-		                                echo "<span data-id=\"".$row['p_id']."\" id=\"image".$row['p_id']."\"> <img src=\"images/" . $key . "\" width=\"50\" height=\"50\"> <a href=\"javascript:;\" class=\"delete\" id=\"delete".+$i."\">DELETE</a></span>" ;
+		                                echo "<span data-id=\"".$row['p_id']."\" id=\"image".$id_img[$i]."\"> 
+		                                <img src=\"images/" . $key . "\" width=\"50\" height=\"50\"> 
+		                                <a href=\"javascript:;\" class=\"delete\" id=\"".$id_img[$i]."\">DELETE</a>
+		                                <input type=\"checkbox\" class=\"changedefault\" id=\"".$id_img[$i]."\">Set as Default</span>" ;
 		                            }
 		                        }
 								else {?>
@@ -108,51 +112,74 @@
 <script>
 	$(document).ready(function(){
 
-		$('.changeimage').hide();
 		var i = 1;
 
-		/*$('#change').click(function(){
-			if($(this).is(":checked")) {
-				$('.forImages').hide();
-        		$(".changeimage").show();
-        		$('#remove').hide();
+		$('.changedefault').click(function(){
 
-        		var x = document.createElement("INPUT");
-			    x.setAttribute("type", "file");
-			    x.setAttribute("id", "image"+i);
-			    x.setAttribute("name","image[]");
-			    x.setAttribute("value","");
-			    x.setAttribute("multiple", true);
-			    $(".changeimage").append(x);
-		    	i++;
-		    	
-    		} else {
-        		$(".changeimage").hide();
-        		$('.forimage').show();
-        		$('#remove').show();
-    		} 
-		});*/
+			var id = $(this).attr("id");
+			var p_id = $('span').attr("data-id");
+
+			 $.ajax({
+	 		 		url: 'index.php?op=changedefault&id='+id+'&p_id='+p_id,
+	 		 		type: 'GET',
+	 		 		success: function(response){
+	 		 		
+	 		 		}
+	 		});
+
+		});
+
+		$('.delete').click(function(){
+			var res = confirm("Are you sure you want to delete this image?");
+			var id_span = $('span').attr("id");
+			//alert(id_span);
+			if(res){
+				$('span[id = '+id_span+']').remove();
+
+				var id = $(this).attr("id");
+				var p_id = $('span').attr("data-id");
+
+				 $.ajax({
+		 		 		url: 'index.php?op=delete&id='+id,
+		 		 		type: 'GET',
+		 		 		success: function(response){
+		 		 		
+		 		 		}
+		 		});
+			}
+			else{
+				return false;
+			}
+
+		});
 		
 		$("#remove").click(function(){
-			  //$('img').attr('src','images/default.png');
-			  $('span').remove();
-			var Id = $(this).attr("data-id");
- 		 	var Status = $(this).text();
+			 
+			var res = confirm("Are you sure you want to REMOVE ALL IMAGES ?");
+			if(res){
 
-			$.ajax({
- 		 		url: 'index.php?op=remove&id='+Id,
- 		 		type: 'GET',
- 		 		success: function(response){
- 		 		
- 		 		}
- 		 	});
+				$('span').remove();
+				var Id = $(this).attr("data-id");
+	 		 	var Status = $(this).text();
+
+				$.ajax({
+	 		 		url: 'index.php?op=remove&id='+Id,
+	 		 		type: 'GET',
+	 		 		success: function(response){
+	 		 		
+	 		 		}
+	 		 	});
+			}
+			else {
+				return false;
+			}
 		});
 
 		$("span").click(function(){
 			//$(this).remove();
 			var Id = $(this).attr("data-id");
 			var src = $("span").closest("img").attr("src");
-			alert(src);
+			//alert(src);
 
 			/*$.ajax({
  		 		url: 'index.php?op=remove&id='+Id,

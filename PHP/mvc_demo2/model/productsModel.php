@@ -44,7 +44,7 @@
 
 	  	public function FetchImageId(){
 
-	  		$query = "SELECT id FROM images WHERE p_id = 0 ";
+	  		$query = "SELECT id FROM images WHERE p_id = 0 AND isdelete = '9999-12-31'";
 	  
 	  		$fetchimgid = mysqli_query($this->con,$query);
 	  		return $fetchimgid;
@@ -66,18 +66,19 @@
 			return $result;
 	  	}
 
-	  	public function fetchID($result){
+	  	public function fetchID($result,$idofimages){
 
-                $query = "SELECT last_insert_id() FROM products";
+                $query = "SELECT p_id FROM products 
+                			WHERE image = '$idofimages' AND isdelete = '9999-12-31'";
                 $lastid = mysqli_query($this->con, $query);
                 $noofrow = mysqli_num_rows($lastid);  
                 if($noofrow>0){
                     while ($last_id = mysqli_fetch_array($lastid)) {
-                        $id = $last_id['last_insert_id()'];
+                        $id = $last_id['p_id'];
                     }
                 }
                 $query1 = "UPDATE images
-                			SET p_id = '$id' WHERE P_id = 0";
+                			SET p_id = $id WHERE P_id = 0";
                	$res = mysqli_query($this->con, $query1);
                	return $res;
 	  	}
@@ -109,16 +110,19 @@
 	  	}
 
 	  	public function FetchName($key){
-	  		$query = "SELECT imagename FROM images WHERE id = $key ";
+	  		$query = "SELECT id,imagename FROM images WHERE id = $key AND isdelete = '9999-12-31' ";
 	  		$result = mysqli_query($this->con, $query);
 	  		$noofrow = mysqli_num_rows($result);  
                 if($noofrow>0){
                     while ($img_name = mysqli_fetch_array($result)) {
+                    	$res = array();
                         $name = $img_name['imagename'];
-                        $id =$img_name['id'];
+                        $res['name'][] = $name;
+                        $id = $img_name['id'];
+                        $res['id'][] = $id; 
                     }
                 }
-                return $name;
+                return $res;
 
 	  	}
 
@@ -133,6 +137,14 @@
 						status = '" . addslashes($arrayrecords['status']) . "'
 						WHERE p_id='" . $arrayrecords['p_id'] . "'";	
 			
+			$result = mysqli_query($this->con, $query);	
+
+			return $result;
+		}
+
+		public function updateId($id_up,$id_set){
+			$query = "UPDATE images
+						SET p_id = $id_set WHERE id = $id_up";
 			$result = mysqli_query($this->con, $query);	
 			return $result;
 		}
@@ -160,26 +172,30 @@
 			return $result;
 		}
 
-		public function ShowProduct($name){
-			$query = "SELECT name,category FROM products ";
+		public function ShowProduct($id){
+
+			$query = "SELECT name,category FROM products WHERE isdelete = '9999-12-31'";
 			$cat = mysqli_query($this->con, $query);
 			$noofrow = mysqli_num_rows($cat);
-			$result = 'Product of '.$name.' category are : ';
+
 			if($noofrow>0){
 				while ($resultdata = mysqli_fetch_array($cat)) {
-					$namecat = explode(", ", $resultdata['category']);
+					$namecat = explode(",", $resultdata['category']);
+
 					foreach ($namecat as $i => $key) {
 						$categoryname = explode(',', $key);
+ 
 						for ($i=0; $i < count($categoryname); $i++) { 
-							$name = trim($name," ");
-							if($categoryname[$i] == $name){
+							$id = trim($id," ");
+							if($categoryname[$i] == $id){
 								$result .= $resultdata['name'];
-								$result .= ", ";
+								$result .= " ,";
 							}
 						}
 					}
-				}
+				}					
 			}
+
 			if (substr($result, -1, 1) == ',')
             {
                 $result = substr($result, 0, -1);
@@ -202,6 +218,34 @@
 			$result = mysqli_query($this->con, $query);
 			return $result;
 
+		}
+
+		public function fetchIds(){
+
+			$query = "SELECT p_id FROM products WHERE isdelete = '9999-12-31'";
+			$result = mysqli_query($this->con, $query);
+			return $result;
+		}
+
+		public function ChangeDefault($id,$p_id){
+
+			$query = "UPDATE images 
+						SET defaultimg = 'N' WHERE p_id = $p_id";
+			$query1 = "UPDATE images
+						SET defaultimg = 'Y' WHERE id = $id ";
+						print_r($query);
+						print_r($query1);
+			$res = mysqli_query($this->con, $query);
+			$res1 = mysqli_query($this->con, $query1);
+			return $res1;
+		}
+
+		public function Delete($id){
+
+			$query = "UPDATE images
+						SET isdelete = curdate() WHERE id = $id";
+			$res = mysqli_query($this->con, $query);
+			return $res;	
 		}
 
 

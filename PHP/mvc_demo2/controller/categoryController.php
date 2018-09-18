@@ -1,7 +1,7 @@
 <?php 
    
 	include('./model/categoryModel.php');
-    include('./model/productModel.php');
+    include('./model/productsModel.php');
 
 	class categoryController{
 
@@ -10,7 +10,7 @@
     	public function __construct() {
 
     		$this->categoryModel = new categoryModel();
-            $this->productModel = new productModel();
+            $this->productsModel = new productsModel();
     	
     	}
 
@@ -80,7 +80,7 @@
                     $data .= " <tr> " ;
                             
                         $data .= " <td> " . $resultdata['id'] . " </td> " ;
-                        $data .= " <td><a href=\"javascript:;\" class=\"name\" id=\"name" .+$i."\" > <div id=\"yourPopup\" style=\"padding:0; margin:0; display:none;\"></div>" . $resultdata['name'] . " </a></td> " ;
+                        $data .= " <td><a href=\"javascript:;\" class=\"name\" value=\"". $resultdata['id'] ."\"> <div id=\"yourPopup\" style=\"padding:0; margin:0; display:none;\"></div>" . $resultdata['name'] . " </a></td> " ;
                         $data .= " <td> <a class=\"status\" id=\"status-" . $resultdata['id'] . "\" 
                                            href=\"javascript:;\" data-id= " .  $resultdata['id'] . " > " . ($resultdata['status'] == 1 ? 'active' : 'inactive') . " </a></td> " ;
                         if(!empty($resultdata['image'])){
@@ -238,8 +238,9 @@
         }
 
         public function showProduct(){
-            $name = $_GET['name'];
-            $result = $this->productModel->ShowProduct($name);
+            $id = $_GET['id'];
+            
+            $result = $this->productsModel->ShowProduct($id);
 
             if(!empty($result)){
                echo $result;

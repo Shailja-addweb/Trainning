@@ -71,18 +71,18 @@
 
 			$('.name').click(function(){
 				var name = $(this).text();
-				var name_id = $(this).attr("id");
+				var id = $(this).attr('value');
 				//$("#yourPopup").dialog('open');
 
 
 				$.ajax({
-					url: 'index.php?op=show&name='+name,
+					url: 'index.php?op=show&id='+id,
 					type: 'GET',
 					success: function(response){
 
 	  					//$('#yourPopup').html(response);
 	  					//showyourPopup();
-	  					alert(response);
+	  					alert("Product of "+name+" category are :"+response);
 	   				}
 				})
 			});
