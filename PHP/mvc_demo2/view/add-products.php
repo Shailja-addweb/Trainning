@@ -21,8 +21,19 @@
 						if($noofrow>0){
 							while($rowarray = mysqli_fetch_array($result)) {
 								$id = $cat[$i];
-								$name = $this->categoryModel->gettingname($id);
-								echo '<label><input type="checkbox" name="category[]" value="' . $rowarray["id"] . '"'. ($rowarray['name'] == $name ? 'checked = "checked"' : '') .'>' .  $rowarray["name"] . '</label>&nbsp;';
+								//$name = $this->categoryModel->gettingname($id);
+
+								foreach ($cat as $j => $key) {
+
+									if($rowarray['id'] == $key){
+										$flag = 1;
+									}
+									else{
+										$flag = 0;
+									}
+									
+								}
+								echo '<label><input type="checkbox" name="category[]" value="' . $rowarray["id"] . '"'. ($flag == 1 ? 'checked = "checked"' : '') .'>' .  $rowarray["name"] . '</label>&nbsp;';
 								$i++;	
 							}
 						}
@@ -131,16 +142,17 @@
 
 		$('.delete').click(function(){
 			var res = confirm("Are you sure you want to delete this image?");
-			var id_span = $('span').attr("id");
-			//alert(id_span);
+			var id_span = $(this).attr("id");
+
+			alert(id_span);
 			if(res){
-				$('span[id = '+id_span+']').remove();
+				$('span[id = image'+id_span+']').remove();
 
 				var id = $(this).attr("id");
 				var p_id = $('span').attr("data-id");
 
 				 $.ajax({
-		 		 		url: 'index.php?op=delete&id='+id,
+		 		 		url: 'index.php?op=delete&id='+id+'&p_id='+p_id,
 		 		 		type: 'GET',
 		 		 		success: function(response){
 		 		 		

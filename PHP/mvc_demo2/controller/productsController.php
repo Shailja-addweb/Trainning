@@ -48,7 +48,8 @@
                 }
                 elseif ( $op == 'delete' ) {
                      $id = $_GET['id'];
-                    $this->delete($id);
+                     $p_id = $_GET['p_id'];
+                    $this->delete($id,$p_id);
                 }
                 elseif ( $op == 'search' ) {
                     $this->search();
@@ -355,9 +356,9 @@
             
         }
 
-        public function delete($id){
+        public function delete($id,$p_id){
 
-            $res = $this->productsModel->Delete($id);
+            $res = $this->productsModel->Delete($id,$p_id);
             
         }
 

@@ -61,6 +61,8 @@
                     $data .= " <div class=\"column\" data-id=\"".$imgid['p_id']."\">";
 
                         $id = $imgid['p_id'];
+                        $name = $this->shopModel->productname($id);
+                        $data .= "<center><b>".$name."</b></center>";
                         $result = $this->shopModel->fetchImages($id);
                         $rows = mysqli_num_rows($result);
                         if($rows>0){

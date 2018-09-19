@@ -7,9 +7,28 @@
 			color: red;
 			font-size:14px;
 		}
+		.search{
+			position: relative;
+  			display: inline-block;
+		}
+		#suggesstion-box{
+			position: absolute;
+		    border: 1px solid #a5a5a5;
+		    border-bottom: none;
+		    border-top: none;
+		    z-index: 99;
+		  	margin-left: 118px;
+		    top: 100%;
+		    left: 0;
+		    right: 0; 
+		}
+		#search-box :focus {
+		  color: #858585;
+		}
 	</style>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="./js/jquery-ui.js"></script>
+	<!-- <script src="./js/jquery-ui.js"></script> -->
+	<script src="./js/autocomplete.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 		
 	</script><?php
@@ -45,7 +64,7 @@
 	<br>
 	<div class="search">
 			<b>Search Product : </b>
-			<input type="text" size="30" id="search-box">
+			<input type="text" name="search" size="30" id="search-box">
 			<div id="suggesstion-box"></div>
 	</div>
 
@@ -66,27 +85,6 @@
 
 		$(document).ready(function(){
 
-			$("#search-box").keyup(function(){
-				var keyword = $(this).val();
-				var res = keyword.length;
-
-				if(res == '3'){
-					$("#suggesstion-box").autocomplete({
-						source: "index.php?op=search&keyword=" + $(this).val()
-					});
-					/*$.ajax({
-					url: "index.php?op=search&keyword="+keyword,
-					type: "GET",
-					success: function(response){
-
-							 $("#suggesstion-box").show();
-							 $("#suggesstion-box").html(response);
-							 //$("#search-box").css("background","#FFF");
-						}
-					});*/
-				}
-			});
-
 	 		// Delete 
 	 		$('.delete').click(function(e){
 
@@ -106,7 +104,8 @@
 	    			});
 	  			}
 	   		});
-	 		 	
+	 		 
+	 		 //status	
 	 		$('.status').click(function(){
 	 		 	var Id = $(this).attr("data-id");
 	 		 	var Status = $(this).text();
@@ -122,6 +121,36 @@
 	 		 	});
 			});		
 	 	});
+
+		//search
+		var isSelected = false;
+    	var qBox = $('input[name=search]');
+
+		$("#search-box").keyup(function(){
+
+			var keyword = $(this).val();
+			var res = keyword.length;
+				
+			if(res == '3'){
+				/*$("#suggesstion-box").autocomplete({
+					source: "index.php?op=search&keyword=" + $(this).val()
+				});*/
+
+				$.ajax({
+					url: "index.php?op=search&keyword="+keyword,
+					type: "GET",
+					success: function(response){
+
+						$("#suggesstion-box").show();
+						$("#suggesstion-box").html(response);
+						//$("#search-box").css("background","#FFF");
+						}
+					});
+				}
+				else if(res == '2' || res == '1' || res == '0'){
+					$("#suggesstion-box").hide();	
+				}
+			});
 
 	 	function selectproduct(val) {
 				$("#search-box").val(val);

@@ -33,10 +33,11 @@
 	  	public function InsertImage($arrayimage){
 
 	  		$query = "INSERT INTO images
-	  					(p_id, imagename, defaultimg)
+	  					(p_id, imagename, defaultimg, isdelete)
 	  					VALUES ( 0,
 	  							'" . $arrayimage['imagename'] . "',
-	  							'N') ";
+	  							'N',
+	  							'9999-12-31') ";
 	  		//print_r($query);exit();
 	  		$image = mysqli_query($this->con, $query);
 	  		return $image;
@@ -233,19 +234,49 @@
 						SET defaultimg = 'N' WHERE p_id = $p_id";
 			$query1 = "UPDATE images
 						SET defaultimg = 'Y' WHERE id = $id ";
-						print_r($query);
-						print_r($query1);
 			$res = mysqli_query($this->con, $query);
 			$res1 = mysqli_query($this->con, $query1);
 			return $res1;
 		}
 
-		public function Delete($id){
+		public function Delete($id,$p_id){
 
 			$query = "UPDATE images
 						SET isdelete = curdate() WHERE id = $id";
+			$query1 = "SELECT image FROM products WHERE p_id = $p_id";
+			$result = mysqli_query($this->con, $query1);
 			$res = mysqli_query($this->con, $query);
+			$noofrow = mysqli_num_rows($result);
+
+			if($noofrow>0){
+				while ($resdata = mysqli_fetch_array($result)) {
+
+					$image_id = explode(",", $resdata['image']);
+					
+					foreach ($image_id as $i => $key) {
+						if($id == $key){
+							unset($image_id[$i]);
+						}
+					}
+					$image = array_values($image_id);
+					foreach ($image as $key => $value) {
+						$imgids .= $value;
+						$imgids .= ',';
+					}
+					if (substr($imgids, -1, 1) == ',')
+		            {
+		                $imgids = substr($imgids, 0, -1);
+		            }
+
+		            $query2 = "UPDATE products
+		            			SET image = '$imgids' WHERE p_id = $p_id";
+		      
+		            $resimg = mysqli_query($this->con, $query2);			
+				}
+			}
+			
 			return $res;	
+
 		}
 
 

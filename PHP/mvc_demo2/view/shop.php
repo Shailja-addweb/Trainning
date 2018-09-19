@@ -18,6 +18,10 @@
 		width: 90%;
 		
 	}
+	b{
+		color: red;
+		font-size: 30px;
+	}
 
 </style>
 <?php
@@ -26,76 +30,5 @@
 	echo "<div class=\"row\">";
 		echo $data;
 	echo "</div>";
-
-	
-
-	/*echo "<div class=\"row\">
-
-			<div class=\"column\" data-id=\"".$id."\">
-
-			<img src =\"images/asus.png\" >
-			<center><div class=\"th\"><img src =\"images/asus.png\" style=\"width:10%\">
-			<img src =\"images/asus.png\" style=\"width:10%\">
-			<img src =\"images/asus.png\" style=\"width:10%\"></div></center>
-			</div>
-
-			<div class=\"column\">
-
- 
-			<img src =\"images/asus.png\" >
-
-			</div>
-
-			<div class=\"column\">
-
-			<img src =\"images/asus.png\" >
-
-			</div>
-
-		</div>
-
-		<div class=\"row\">
-
-			<div class=\"column\">
-
-			<img src =\"images/asus.png\" >
-
-			</div>
-
-			<div class=\"column\">
-
-			<img src =\"images/asus.png\" >
-
-			</div>
-
-			<div class=\"column\">
-
-			<img src =\"images/asus.png\" >
-
-			</div>
-
-		</div>
-
-		<div class=\"row\">
-
-			<div class=\"column\">
-
-			<img src =\"images/asus.png\" >
-
-			</div>
-
-			<div class=\"column\">
-
-			<img src =\"images/asus.png\">
-
-			</div>
-
-			<div class=\"column\">
-
-			<img src =\"images/asus.png\">
-
-			</div>
-
-		</div>";*/
 
 ?>
