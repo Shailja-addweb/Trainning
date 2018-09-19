@@ -14,26 +14,24 @@
 		<tr>
 			<td>Category:</td>
 			<td><?php if(!empty($row['p_id'])){
-					$cat = explode(",",$row['category']);
-					//$rowarray = mysqli_fetch_array($result);
-
+					$cat = explode(", ",$row['category']);
+					
 					$i = 0;
+					
 						if($noofrow>0){
 							while($rowarray = mysqli_fetch_array($result)) {
 								$id = $cat[$i];
-								//$name = $this->categoryModel->gettingname($id);
-
-								foreach ($cat as $j => $key) {
-
-									if($rowarray['id'] == $key){
-										$flag = 1;
-									}
-									else{
-										$flag = 0;
-									}
-									
+								
+								$k = $rowarray['id'];
+						
+								if(in_array($k, $cat)){
+									$flag[$k] = 1;
 								}
-								echo '<label><input type="checkbox" name="category[]" value="' . $rowarray["id"] . '"'. ($flag == 1 ? 'checked = "checked"' : '') .'>' .  $rowarray["name"] . '</label>&nbsp;';
+								else{
+									$flag[$k] = 0;
+								}
+								
+								echo '<label><input type="checkbox" name="category[]" value="' . $rowarray["id"] . '"'. ($flag[$k] == 1 ? 'checked = "checked"' : '') .'>' .  $rowarray["name"] . '</label>&nbsp;';
 								$i++;	
 							}
 						}
