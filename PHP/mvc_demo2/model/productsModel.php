@@ -30,8 +30,8 @@
 	  						INNER JOIN images AS i ON p.id = i.p_id 
 	  						INNER JOIN product_category AS pc ON p.id = pc.p_id 
 	  						INNER JOIN category AS c ON pc.c_id = c.id 
-	  							WHERE p.isdelete = '9999-12-31' 
-	  								AND c.isdelete = '9999-12-31' 
+	  							WHERE p.isdelete IS NULL 
+	  								AND c.isdelete IS NULL  
 	  								GROUP BY p.id";
 	  		 					//print_r($query);exit();
 			//$query = "SELECT * FROM products WHERE isdelete = '9999-12-31' ";
@@ -43,20 +43,19 @@
 	  	public function AddProduct($arrayrecords){
 
 	  		$query = "INSERT INTO products
-					(name, price, quantity, status, isdelete ) 
+					(name, price, quantity, status) 
 					VALUES
 					('" . addslashes($arrayrecords['name']) . "',
 					'" . addslashes($arrayrecords['price']) . "',
 					'" . addslashes($arrayrecords['quantity']) . "',
-					'1',
-					'9999-12-31')";
+					'1')";
 			$result = mysqli_query($this->con, $query);	
 			return $result;
 	  	}
 
 	  	public function fetchp_id(){
 
-			$query ="SELECT id FROM products WHERE isdelete = '9999-12-31' ORDER BY id DESC LIMIT 1";
+			$query ="SELECT id FROM products WHERE isdelete IS NULL ORDER BY id DESC LIMIT 1";
 			$result =  mysqli_query($this->con, $query);
 			$noofrow = mysqli_num_rows($result);
 
@@ -82,11 +81,10 @@
 		public function InsertImage($arrayimage,$p_id){
 
 	  		$query = "INSERT INTO images
-	  					(p_id, name, flag, isdelete)
+	  					(p_id, name, flag)
 	  					VALUES ( '". $p_id ."',
 	  							'" . $arrayimage['name'] . "',
-	  							'N',
-	  							'9999-12-31') ";
+	  							'N') ";
 	  		//print_r($query);exit();
 	  		$image = mysqli_query($this->con, $query);
 	  		return $image;
@@ -103,9 +101,9 @@
 	  						INNER JOIN images AS i ON p.id = i.p_id 
 	  						INNER JOIN product_category AS pc ON p.id = pc.p_id 
 	  						INNER JOIN category AS c ON pc.c_id = c.id 
-	  							WHERE p.isdelete = '9999-12-31' 
+	  							WHERE p.isdelete IS NULL 
 	  								
-	  								AND c.isdelete = '9999-12-31' 
+	  								AND c.isdelete IS NULL  
 	  								AND p.id = $id
 	  								GROUP BY p.id" ;		
 	  		//print_r($query);exit();
@@ -114,7 +112,7 @@
 	  	}
 
 	  	public function FetchName($key){
-	  		$query = "SELECT id,name FROM images WHERE id = $key AND isdelete = '9999-12-31' AND name <> 'default.png' ";
+	  		$query = "SELECT id,name FROM images WHERE id = $key AND isdelete IS NULL  AND name <> 'default.png' ";
 	  		$result = mysqli_query($this->con, $query);
 	  		$noofrow = mysqli_num_rows($result);  
                 if($noofrow>0){
@@ -180,9 +178,9 @@
             return $result;		
         }
 
-        public function category_delete($c_id){
+        public function category_delete($c_id,$p_id){
 
-        	$query = "DELETE FROM product_category WHERE c_id = $c_id" ;
+        	$query = "DELETE FROM product_category WHERE c_id = $c_id AND p_id = $p_id" ;
         	$result = mysqli_query($this->con, $query);	
             return $result;	
         }
@@ -230,7 +228,7 @@
 				}
 			}
 			foreach ($p_id as $i => $value) {
-				$query1 = "SELECT name FROM products WHERE id = $value AND isdelete = '9999-12-31'";
+				$query1 = "SELECT name FROM products WHERE id = $value AND isdelete IS NULL ";
 				$pro_name = mysqli_query($this->con, $query1);
 				$noofrow = mysqli_num_rows($pro_name);
 				
@@ -254,7 +252,7 @@
 
 		public function Search($keyword){
 			$query =" SELECT name FROM products 
-						WHERE name like '" . $keyword . "%' AND isdelete = '9999-12-31' ORDER BY name LIMIT 0,6 ";
+						WHERE name like '" . $keyword . "%' AND isdelete IS NULL ORDER BY name LIMIT 0,6 ";
 
 			$result = mysqli_query($this->con, $query);
 			return $result;
@@ -263,7 +261,7 @@
 		public function SearchShow($keyword){
 
 			$query = " SELECT * FROM products
-						WHERE name = '$keyword' AND isdelete = '9999-12-31' ";			
+						WHERE name = '$keyword' AND isdelete IS NULL  ";			
 			$result = mysqli_query($this->con, $query);
 			return $result;
 
@@ -281,9 +279,7 @@
 		}
 
 		public function Delete($id){
-/*
-			$query = "UPDATE images
-						SET isdelete = curdate() WHERE id = $id";*/
+
 			$query = "DELETE FROM images WHERE id = $id";
 			$res = mysqli_query($this->con, $query);
 			return $res;	

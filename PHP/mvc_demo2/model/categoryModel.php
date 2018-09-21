@@ -22,7 +22,7 @@
 
 	  	public function CategoryList(){
 
-	  		$query = "SELECT * FROM category WHERE isdelete = '9999-12-31' ";
+	  		$query = "SELECT * FROM category WHERE isdelete IS NULL  ";
 			$result = mysqli_query($this->con, $query);
 			return $result;
 
@@ -31,12 +31,11 @@
 	  	public function AddCategory($arrayrecords) {
   			
 			$query = "INSERT INTO category
-					(name, status, image, isdelete) 
+					(name, status, image) 
 					VALUES
 					('" . addslashes($arrayrecords['name']) . "',
 					'1',
-					'" . $arrayrecords["image"] . "',
-					'9999-12-31' )";
+					'" . $arrayrecords["image"] . "')";
 			
 			$result = mysqli_query($this->con, $query);	
 			
@@ -71,7 +70,7 @@
 
 		public function DeleteCategory($id) {
 			$query = "UPDATE category
-					  	SET isdelete = now() WHERE id=$id";	
+					  	SET isdelete = curdate() WHERE id=$id";	
 			$result = mysqli_query($this->con, $query);	
 			return $result;
 		}
@@ -87,14 +86,14 @@
 
 		public function AddNameCategory(){
 
-			$query = "SELECT id,name FROM category WHERE isdelete = '9999-12-31' " ;		
+			$query = "SELECT id,name FROM category WHERE isdelete IS NULL " ;		
 			$result = mysqli_query($this->con, $query);	
 			return $result;
 
 		}
 		public function fetchname(){
 
-			$query = "SELECT id,name FROM category WHERE isdelete = '9999-12-31'" ;
+			$query = "SELECT id,name FROM category WHERE isdelete IS NULL" ;
 			$result = mysqli_query($this->con, $query);
 			return $result;
 		}

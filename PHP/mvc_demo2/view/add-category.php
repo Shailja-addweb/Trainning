@@ -94,7 +94,7 @@
 			var image = $('input[type=file]').val().split("\\").pop();
 			var ext = image.split(".").pop();
 			
-			var letter = new RegExp("^[a-zA-Z0-9_]+$");	
+			var letter = new RegExp("^[a-zA-Z0-9_'\\s]+$");	
 
 			if(name == ''){
 				alert("Please enter Name");
@@ -128,7 +128,7 @@
 			var image = $('input[type=file]').val().split("\\").pop();
 			var ext = image.split(".").pop();
 			
-			var letter = new RegExp("^[a-zA-Z0-9_]+$");	
+			var letter = new RegExp("^[a-zA-Z0-9_'\\s]+$");	
 
 			if(name == ''){
 				alert("Please enter Name");

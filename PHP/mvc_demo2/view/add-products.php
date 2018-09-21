@@ -227,7 +227,7 @@
 			var quantity = $('#quantity').val();
 			var image = $('input[type=file]').val().split("\\").pop();
 			var ext = image.split(".").pop();
-			var letter = new RegExp("^[a-zA-Z-_0-9]+$");
+			var letter = new RegExp("^[a-zA-Z-_0-9'\\s]+$");
 			var numbers = new RegExp("^[0-9.,]+$");
 
 			if(name == ''){
@@ -286,7 +286,7 @@
 			var quantity = $('#quantity').val();
 			var image = $('input[type=file]').val().split("\\").pop();
 			var ext = image.split(".").pop();
-			var letter = new RegExp("^[a-zA-Z-_0-9]+$");
+			var letter = new RegExp("^[a-zA-Z-_0-9'\\s]+$");
 			var numbers = new RegExp("^[0-9.,]$");
 
 			if(name == ''){

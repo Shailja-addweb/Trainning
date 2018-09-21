@@ -245,25 +245,37 @@
                             $catid[] = $category_id['c_id']; 
                         }
                     }
-                    //print_r($catid);
-                    $cat_diff = array_diff($cat, $catid);
-                    $cat_diff2 = array_diff($catid,$cat);
-                    //print_r($cat_diff);
-                    //print_r($cat_diff2);
+                    
+                    //$cat : selected
+                    //$catid : fetched
+                    $categories = array_merge($cat, $catid);
+                     //print_r($categories);print_r("<br>");
+                    $categories = array_unique($categories);
+                    //print_r($categories);print_r("<br>");
+                    $cat_1 = array_diff($categories, $cat);
+                    // deletethem
+                    //print_r($cat_1);print_r("<br>");
+                    $cat_2 = array_diff($categories,$catid);
+                    //insert them
+                    //print_r($cat_2);
+                    //exit();
+                    
 
-                    if($cat_diff){ 
-                        foreach ($cat_diff as $i => $c_id) {
-                            //echo "no";
+                    if($cat_1){ 
+                        foreach ($cat_1 as $i => $c_id) {
+                            
+                            $cat_del = $this->productsModel->category_delete($c_id,$p_id);
+                        }
+                    }
+
+                    if($cat_2){
+                        foreach ($cat_2 as $i => $c_id) {
+                            
                             $cat_ins = $this->productsModel->category_insert($p_id,$c_id);
                         }
                     }
-                    if($cat_diff2){
-                        foreach ($cat_diff2 as $i => $c_id) {
-                            //echo "yes";
-                            $cat_del = $this->productsModel->category_delete($c_id);
-                        }
-                    }
 
+                   
                     extract($_POST);
                     $error=array();
                     $arrayimage =array();

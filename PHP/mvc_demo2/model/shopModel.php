@@ -23,13 +23,13 @@
 	  	public function fetchImages($p_id){
 
 	  		$query = "SELECT id,name,flag FROM images 
-	  						WHERE p_id = $p_id AND isdelete = '9999-12-31' AND name <> 'default.png'";
+	  						WHERE p_id = $p_id AND isdelete IS NULL AND name <> 'default.png'";
 	  		$result = mysqli_query($this->con, $query);
 	  		return $result;
 	  	}
 
 	  	public function productname($p_id){
-	  		$query = "SELECT name FROM products WHERE id = $p_id AND isdelete = '9999-12-31'";
+	  		$query = "SELECT name FROM products WHERE id = $p_id AND isdelete IS NULL";
 	  		$result = mysqli_query($this->con, $query);
 	  		$noofrow = mysqli_num_rows($result);  
                 if($noofrow>0){
@@ -41,19 +41,19 @@
 	  	}
 
 	  	public function fetchId_shop(){
-			$query = "SELECT id,p_id FROM images WHERE isdelete = '9999-12-31' AND name <> 'default.png' AND flag = 'Y' ORDER BY p_id";
+			$query = "SELECT id,p_id FROM images WHERE isdelete IS NULL  AND name <> 'default.png' AND flag = 'Y' ORDER BY p_id";
 			$result = mysqli_query($this->con, $query); 
 			return $result;
 		}
 
 		public function ProductDetails_1(){
-			$query="SELECT * FROM images WHERE p_id = 1 AND isdelete = '9999-12-31' AND name <> 'default.png'";
+			$query="SELECT * FROM images WHERE p_id = 1 AND isdelete IS NULL AND name <> 'default.png'";
 			$result = mysqli_query($this->con, $query);
 			return $result;
 		}
 
 		public function ProductDetails_2(){
-			$query="SELECT * FROM images WHERE p_id = 2 AND isdelete = '9999-12-31' AND name <> 'default.png'";
+			$query="SELECT * FROM images WHERE p_id = 2 AND isdelete IS NULL AND name <> 'default.png'";
 			$result = mysqli_query($this->con, $query);
 			return $result;
 		}
