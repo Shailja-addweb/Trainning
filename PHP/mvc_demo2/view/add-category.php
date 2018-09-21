@@ -5,6 +5,13 @@
 	<table cellpadding="10">
 
 		<tr>
+			<td>Name:</td>
+			<td><input type="text" name="name" id="name" 
+			           value="<?php if(!empty($row['name'])) echo $row['name']; else echo '';?>">
+			</td>
+		</tr>
+
+		<tr>
 			<td>Image:</td>
 			<td>
 				<?php if (!empty($row['id'])) { ?>
@@ -15,7 +22,7 @@
 					else {?>
 						<img src="images/default.png" width="100" height="80" alt="book image" id="forimage"> <?php }?><br><br>
 					<input type="checkbox" name="change" value="change" id="change">Change Photo &nbsp; &nbsp;  
-					<!-- <input type="button" name="remove" value="Remove Photo" id="remove"> -->
+					
 					<a id="remove" data-id=<?php echo $row['id'];?> href="javascript:;">REMOVE PHOTO</a></div><br>
 					<div class="changeimage" style="display: none">
 						<input type="file" name="image" accept="image/*" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>">
@@ -23,16 +30,9 @@
 				<?php } 
 
 				else { ?>
-					<input type="file" name="image" accept="image/*" id="image"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>">
+					<input type="file" name="image" accept="image/*" id="newimage"  value="<?php if(!empty($row['image'])) echo $row['image']; else echo '';?>">
 				<?php } ?>
 
-			</td>
-		</tr>
-
-		<tr>
-			<td>Name:</td>
-			<td><input type="text" name="name" id="name" 
-			           value="<?php if(!empty($row['name'])) echo $row['name']; else echo '';?>">
 			</td>
 		</tr>
 
@@ -91,9 +91,10 @@
 		$('#save').click(function(){
 			
 			var name = $('#name').val();
-			var image = $('#image').attr("src");
-			var ext = $	('#image').attr("src").split('.').pop().toLowerCase();
-			var letter = new RegExp("^[a-zA-Z]+$");	
+			var image = $('input[type=file]').val().split("\\").pop();
+			var ext = image.split(".").pop();
+			
+			var letter = new RegExp("^[a-zA-Z0-9_]+$");	
 
 			if(name == ''){
 				alert("Please enter Name");
@@ -118,14 +119,16 @@
 				}
 			}
 			
+			
 		});
 
 		$('#update').click(function(){
 			
 			var name = $('#name').val();
-			var image = $('#image').attr("src");
-			var ext = $	('#image').val().split('.').pop().toLowerCase();
-			var letter = new RegExp("^[a-zA-Z]+$");	
+			var image = $('input[type=file]').val().split("\\").pop();
+			var ext = image.split(".").pop();
+			
+			var letter = new RegExp("^[a-zA-Z0-9_]+$");	
 
 			if(name == ''){
 				alert("Please enter Name");
@@ -140,9 +143,8 @@
 				return false;	
 			}
 			else {
-
 				var res = confirm("Are you sure you want to update records?");
-				
+
 				if(res){
 					return true;
 				}
@@ -150,6 +152,7 @@
 					return false;
 				}
 			}
+			
 		});
 	});
 </script>

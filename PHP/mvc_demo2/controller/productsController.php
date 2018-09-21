@@ -48,8 +48,8 @@
                 }
                 elseif ( $op == 'delete' ) {
                      $id = $_GET['id'];
-                     $p_id = $_GET['p_id'];
-                    $this->delete($id,$p_id);
+                     //$p_id = $_GET['p_id'];
+                    $this->delete($id);
                 }
                 elseif ( $op == 'search' ) {
                     $this->search();
@@ -93,43 +93,21 @@
 
             if($noofrow>0) {
                 while($resultdata = mysqli_fetch_array($result)) {
-                     
+
                     $data .= " <tr> " ;
-                            
-                        $data .= " <td> " . $resultdata['p_id'] . " </td> " ;
+                        $data .= " <td> " . $resultdata['id'] . " </td> " ;
                         $data .= " <td> " . $resultdata['name'] . " </td> " ;
-
-                        $res = $this->categoryModel->fetchname();
-                        $nr = mysqli_num_rows($res);
-                        $catname = '';
-                        if($nr>0) {
-                            while($rdata = mysqli_fetch_array($res)) {
-                                $rd = explode(",", $resultdata['category'] );
-                                foreach ($rd as $i => $value) {
-                                    if($rdata['id'] == $value ){
-
-                                        $catname = $catname.",".$rdata['name'];
-                                    }
-                                }
-                            }
-                        }
-                        $catname = substr( $catname, 1 );
-                        
-                        $data .= " <td> " .  $catname . "</td> " ;
+                        $data .= " <td> " . $resultdata['GROUP_CONCAT(DISTINCT c.name)'] . " </td> ";
                         $data .= " <td> ";
-                        if(!empty($resultdata['image'])){
-                            $image_name = $resultdata['image'];
+                        if(!empty($resultdata['GROUP_CONCAT(DISTINCT i.name)'])){
+                            $image_name = $resultdata['GROUP_CONCAT(DISTINCT i.name)'];
+                            $image_name = trim($image_name,",");
                             $ima = explode(',',$image_name);
                             foreach($ima as $i =>$key){
-                                $res = $this->productsModel->FetchName($key);
-                                $noofrow1 = mysqli_num_rows($res);
-        
-                                foreach ($res['name'] as $name) {
-                                     
-                                    $filename = $name.",".$filename; 
-                                } 
+                                if($key != 'default.png'){
 
-                                $data .= " <img src=\"images/" . $name . "\" width=\"50\" height=\"50\"> " ;
+                                    $data .= " <img src=\"images/" . $key . "\" width=\"50\" height=\"50\"> " ;
+                                }
                             }
                         }
                         else {
@@ -138,13 +116,14 @@
                         $data .= " </td> ";
                         $data .= " <td> " . $resultdata['price'] . " </td> " ;
                         $data .= " <td> " . $resultdata['quantity'] . " </td> " ;
-                        $data .= " <td> <a class=\"status\" id=\"status-" . $resultdata['p_id'] . "\" 
-                                           href=\"javascript:;\" data-id= " .  $resultdata['p_id'] . " > " . ($resultdata['status'] == 1 ? 'active' : 'inactive') . " </a></td> " ;
-                        $data .= " <td> <a href=\"index.php?op=editproduct&id= " . $resultdata['p_id'] . "\">
+                        $data .= " <td> <a class=\"status\" id=\"status-" . $resultdata['id'] . "\" 
+                                           href=\"javascript:;\" data-id= " .  $resultdata['id'] . " > " . ($resultdata['status'] == 1 ? 'active' : 'inactive') . " </a></td> " ;
+                        $data .= " <td> <a href=\"index.php?op=editproduct&id= " . $resultdata['id'] . "\">
                                     Edit</a> </td>" ;
-                        $data .= "<td> <a class=\"delete\" href=\"javascript:;\" data-id= " . $resultdata['p_id'] . " >Delete </a> </td> " ; 
+                        $data .= "<td> <a class=\"delete\" href=\"javascript:;\" data-id= " . $resultdata['id'] . " >Delete </a> </td> " ; 
 
-                    $data .= " </tr>" ; 
+                    $data .= " </tr>" ;
+
                 } 
                 return $data; 
             }
@@ -161,7 +140,24 @@
             $noofrow = mysqli_num_rows($result);
 
             if(isset($_POST['submit']) && !empty($_POST['submit'])) 
-            {   
+            {  
+
+                $arrayrecords = array();
+                $arrayrecords['name'] = $_POST['name'];
+                $arrayrecords['price'] =  $_POST['price'];
+                $arrayrecords['quantity'] = $_POST['quantity'];
+                $arrayrecords['status'] = "1";
+                $result = $this->productsModel->AddProduct($arrayrecords);
+
+                $p_id = $this->productsModel->fetchp_id();
+
+                $cat = $_POST['category'];
+                foreach ($cat as $i => $value) {   
+                    $c_id = $value;
+                    $cat = $this->productsModel->category_insert($p_id,$c_id);
+                }
+                
+
                 extract($_POST);
                 $error=array();
                 $arrayimage =array();
@@ -180,40 +176,10 @@
                                 array_push($error,"$file_name, ");
                             }
 
-                            $arrayimage['imagename'] = $file_name;
-                            $image = $this->productsModel->InsertImage($arrayimage); 
-                            //$filename = implode(",",$_FILES['image']['name']);
+                            $arrayimage['name'] = $file_name;
+                           
+                            $image = $this->productsModel->InsertImage($arrayimage,$p_id); 
                         }
-
-                $fetchimgid = $this->productsModel->FetchImageId();
-                $noofrow = mysqli_num_rows($fetchimgid);  
-                $idofimages = '';
-                if($noofrow>0){
-                    while ($imgid = mysqli_fetch_array($fetchimgid)) {
-
-                        $idofimages .= $imgid['id'];
-                        $idofimages .= ',';
-                    }
-                } 
-                //rtrim($idofimages,",");     
-                
-                if (substr($idofimages, -1, 1) == ',')
-                {
-                  $idofimages = substr($idofimages, 0, -1);
-                }
-                
-
-                $arrayrecords = array();
-                $arrayrecords['name'] = $_POST['name'];
-                $arrayrecords['category'] = implode(",",$_POST['category']);
-                $arrayrecords['image'] =  $idofimages;   
-                $arrayrecords['price'] =  $_POST['price'];
-                $arrayrecords['quantity'] = $_POST['quantity'];
-                $arrayrecords['status'] = "1";
-                $result = $this->productsModel->AddProduct($arrayrecords);
-
-                $lastid = $this->productsModel->fetchID($result,$idofimages);
-                $lastid_c = $this->productsModel->fetchID_c($result);
 
                 if($result) {
                     header('location:index.php?op=productlist&add_flag=1');
@@ -238,47 +204,71 @@
   
             if(!empty($_GET['id'])) {
                 $id = $_GET['id'];
+
                 $result1 = $this->productsModel->FetchProductDetails($id);
                 $row = mysqli_fetch_array($result1);
                 
+
                 //for category name
                 $result = $this->categoryModel->AddNameCategory();
                 $noofrow = mysqli_num_rows($result);
 
-                //for image
-                $name = $row['image'];
-                $filename = '';
-                $ima = explode(',',$name);
-                $id_img =array();
-                foreach($ima as $i =>$key){
-                    $res = $this->productsModel->FetchName($key);
-                    $noofrow1 = mysqli_num_rows($res);
-        
-                    foreach ($res['name'] as $name) {
-                        if($filename != '' ){
-                            $filename = $filename.",".$name; 
-                        }
-                        else{
-                            $filename = $name;
-                        }
-                    } 
+                //for image id
+                $img_id = $this->productsModel->fetch_img_id($id);
+                $img_flag = $this->productsModel->fetch_img_flag($id);
+            
 
-                    foreach ($res['id'] as $id) {  
-                        $id_img[] = $id; 
-                    }
-                    
-                }
-
-                if (substr($filename, -1, 1) == ',')
-                {
-                  $filename = substr($filename, 0, -1);
-                }
-                
                 if(isset($_POST['submit']) && !empty($_POST['submit'])) 
                 {
-                    $idofimages = '';
 
-                            foreach($_FILES["image"]["tmp_name"] as $key=>$tmp_name)
+
+                    $arrayrecords = array();
+                    $arrayrecords['id'] = $_POST['id'];
+                    $arrayrecords['name'] = $_POST['name'];
+                    $arrayrecords['price'] = $_POST['price'];
+                    $arrayrecords['quantity'] = $_POST['quantity'];
+                    $arrayrecords['status'] = $row['status'];
+                    $result = $this->productsModel->EditProduct($arrayrecords);
+
+                    $cat = $_POST['category'];
+                    //print_r("selected category :  ");print_r($cat); print_r("<br>");
+                    $p_id = $_POST['id'];
+                    $old_cat = $row['GROUP_CONCAT(DISTINCT c.name)'];
+                    $cat_id = $this->productsModel->fetchID_c($p_id);
+                    
+                    $noofrow = mysqli_num_rows($cat_id); 
+                    $i = 0;
+                    $catid = array();;
+                    if($noofrow>0){
+                        while ($category_id = mysqli_fetch_array($cat_id)){
+
+                            $catid[] = $category_id['c_id']; 
+                        }
+                    }
+                    //print_r($catid);
+                    $cat_diff = array_diff($cat, $catid);
+                    $cat_diff2 = array_diff($catid,$cat);
+                    //print_r($cat_diff);
+                    //print_r($cat_diff2);
+
+                    if($cat_diff){ 
+                        foreach ($cat_diff as $i => $c_id) {
+                            //echo "no";
+                            $cat_ins = $this->productsModel->category_insert($p_id,$c_id);
+                        }
+                    }
+                    if($cat_diff2){
+                        foreach ($cat_diff2 as $i => $c_id) {
+                            //echo "yes";
+                            $cat_del = $this->productsModel->category_delete($c_id);
+                        }
+                    }
+
+                    extract($_POST);
+                    $error=array();
+                    $arrayimage =array();
+            
+                    foreach($_FILES["image"]["tmp_name"] as $key=>$tmp_name)
                             {   
                                 $file_name=$_FILES["image"]["name"][$key];
                                 $file_tmp=$_FILES["image"]["tmp_name"][$key];
@@ -292,51 +282,10 @@
                                     array_push($error,"$file_name, ");
                                 }
 
-                                $arrayimage['imagename'] = $file_name;
-                                
-                                $image = $this->productsModel->InsertImage($arrayimage, $id_set); 
-                                
+                                $arrayimage['name'] = $file_name;
+                               
+                                $image = $this->productsModel->InsertImage($arrayimage,$p_id); 
                             }
-                            $idofimages = $row['image'];
-                            
-               
-                    $fetchimgid = $this->productsModel->FetchImageId($id_set);
-                    $noofrow = mysqli_num_rows($fetchimgid);  
-                    if($noofrow>0){
-                
-                        while ($imgid = mysqli_fetch_array($fetchimgid)) {
-
-                            if($idofimages != ''){
-                                $idofimages .= ',';
-                                $idofimages .= $imgid['id'];
-                                /*$id_up = $imgid['id'];
-                                $id_set = $_POST['id'];
-                                $update = $this->productsModel->updateId($id_up,$id_set);*/
-                            }
-                            else{
-                                $idofimages .= $imgid['id'];
-                            }
-                        }
-                    }     
-                    
-                    if (substr($idofimages, -1, 1) == ',')
-                    {
-                        $idofimages = substr($idofimages, 0, -1);
-                    }
-                 
-                    
-                    $arrayrecords = array();
-                    $arrayrecords['p_id'] = $_POST['p_id'];
-                    $arrayrecords['name'] = $_POST['name'];
-                    $arrayrecords['category'] = implode(", ",$_POST['category']);
-                    $arrayrecords['image'] = $idofimages;  
-                    $arrayrecords['price'] = $_POST['price'];
-                    $arrayrecords['quantity'] = $_POST['quantity'];
-                    $arrayrecords['status'] = $row['status'];
-                    $result = $this->productsModel->EditProduct($arrayrecords);
-
-                    $lastid = $this->productsModel->fetchID($result,$idofimages);
-                    $lastid_c = $this->productsModel->fetchID_c($result);
 
                     if(!empty($result)) {
                         header('location:index.php?op=productlist&update_flag=1');
@@ -356,9 +305,9 @@
             
         }
 
-        public function delete($id,$p_id){
+        public function delete($id){
 
-            $res = $this->productsModel->Delete($id,$p_id);
+            $res = $this->productsModel->Delete($id);
             
         }
 

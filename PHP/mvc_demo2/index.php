@@ -86,7 +86,7 @@
             $controller->handleRequest();
 					
 				}
-        elseif ($_GET['op'] == 'shoplist'){
+        elseif ($_GET['op'] == 'shoplist' || $_GET['op'] == 'productdetails_1' || $_GET['op'] == 'productdetails_2'){
 
           include_once 'controller/shopController.php';
 

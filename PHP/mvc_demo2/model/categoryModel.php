@@ -99,21 +99,6 @@
 			return $result;
 		}
 
-		public function gettingname($id){
-
-			$query = "SELECT id,name FROM category WHERE id = '$id' AND isdelete = '9999-12-31'";
-			$result = mysqli_query($this->con, $query);
-			$noofrow =  mysqli_num_rows($result);
-			if($noofrow>0){
-				while($rowarray = mysqli_fetch_array($result)) {
-					$name = $rowarray['name'];
-							
-				}
-			}
-			return $name;
-
-		}
-
 	}
 
 ?>

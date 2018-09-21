@@ -20,24 +20,42 @@
 			//echo "connected";
 	  	}
 
-	  	public function fetchImages($id){
+	  	public function fetchImages($p_id){
 
-	  		$query = "SELECT id,imagename,defaultimg FROM images 
-	  						WHERE p_id = $id AND isdelete = '9999-12-31'";
+	  		$query = "SELECT id,name,flag FROM images 
+	  						WHERE p_id = $p_id AND isdelete = '9999-12-31' AND name <> 'default.png'";
 	  		$result = mysqli_query($this->con, $query);
 	  		return $result;
 	  	}
 
-	  	public function productname($id){
-	  		$query = "SELECT name FROM products WHERE p_id = $id AND isdelete = '9999-12-31'";
+	  	public function productname($p_id){
+	  		$query = "SELECT name FROM products WHERE id = $p_id AND isdelete = '9999-12-31'";
 	  		$result = mysqli_query($this->con, $query);
 	  		$noofrow = mysqli_num_rows($result);  
                 if($noofrow>0){
                     while ($pro_name = mysqli_fetch_array($result)) {
                     	$name = $pro_name['name'];
-                    }
+                   	}
                 }
 	  		return $name;
 	  	}
+
+	  	public function fetchId_shop(){
+			$query = "SELECT id,p_id FROM images WHERE isdelete = '9999-12-31' AND name <> 'default.png' AND flag = 'Y' ORDER BY p_id";
+			$result = mysqli_query($this->con, $query); 
+			return $result;
+		}
+
+		public function ProductDetails_1(){
+			$query="SELECT * FROM images WHERE p_id = 1 AND isdelete = '9999-12-31' AND name <> 'default.png'";
+			$result = mysqli_query($this->con, $query);
+			return $result;
+		}
+
+		public function ProductDetails_2(){
+			$query="SELECT * FROM images WHERE p_id = 2 AND isdelete = '9999-12-31' AND name <> 'default.png'";
+			$result = mysqli_query($this->con, $query);
+			return $result;
+		}
 	}
 ?>

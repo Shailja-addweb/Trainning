@@ -147,7 +147,7 @@
 						}
 					});
 				}
-				else if(res == '2' || res == '1' || res == '0'){
+				else if(res < 3){
 					$("#suggesstion-box").hide();	
 				}
 			});
