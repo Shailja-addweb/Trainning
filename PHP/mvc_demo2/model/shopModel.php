@@ -20,6 +20,7 @@
 			//echo "connected";
 	  	}
 
+
 	  	public function fetchImages($p_id){
 
 	  		$query = "SELECT id,name,flag FROM images 
@@ -46,14 +47,26 @@
 			return $result;
 		}
 
-		public function ProductDetails_1(){
-			$query="SELECT * FROM images WHERE p_id = 1 AND isdelete IS NULL AND name <> 'default.png'";
+		public function Product_img_Details($id){
+			$query="SELECT * FROM images WHERE p_id = $id AND isdelete IS NULL AND name <> 'default.png'";
 			$result = mysqli_query($this->con, $query);
 			return $result;
 		}
 
-		public function ProductDetails_2(){
+		public function ProductDetails(){
 			$query="SELECT * FROM images WHERE p_id = 2 AND isdelete IS NULL AND name <> 'default.png'";
+			$result = mysqli_query($this->con, $query);
+			return $result;
+		}
+		public function Product_Details($id){
+			$query = "SELECT p.name, p.quantity, p.price, GROUP_CONCAT(DISTINCT c.name) 
+						FROM products AS p 
+						INNER JOIN product_category AS pc ON p.id = pc.p_id 
+						INNER JOIN category AS c ON pc.c_id = c.id 
+						WHERE p.isdelete IS NULL 
+	  								AND c.isdelete IS NULL  
+	  								AND p.id = $id
+	  								GROUP BY p.id ";
 			$result = mysqli_query($this->con, $query);
 			return $result;
 		}

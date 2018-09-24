@@ -39,7 +39,7 @@
 			echo '<span class="succmsg"> Record Deleted Successfully </span>';
 		}
 	 	else if(isset($_GET['delete_flag']) && $_GET['delete_flag'] == '0') {
-			echo '<span class="failmsg"> Something goes wrong with delete..!! </span>';
+			echo '<span class="failmsg"> Record not deleted...!! </span>';
 		}
 		else if(isset($_GET['status_flag']) && $_GET['status_flag'] == '0') {
 			echo '<span class="failmsg"> Status is not changed..!! </span>';
@@ -80,9 +80,7 @@
 					type: 'GET',
 					success: function(response){
 
-	  					//$('#yourPopup').html(response);
-	  					//showyourPopup();
-	  					alert("Product of "+name+" category are :"+response);
+	  					alert("Product of "+name+" category are : "+response);
 	   				}
 				})
 			});
@@ -96,7 +94,7 @@
 
 	  			if(res){
 	  				$.ajax({
-	   					url: 'index.php?op=deletecategory&delete_flag=1&id='+Id,
+	   					url: 'index.php?op=deletecategory&id='+Id,
 	   					type: 'GET',
 	   					success: function(response){
 

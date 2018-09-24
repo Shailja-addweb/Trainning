@@ -210,16 +210,33 @@
            
             if(!empty($_GET['id'])) {
                 $id = $_GET['id']; 
-                $result = $this->categoryModel->DeleteCategory($id); 
-                $noofrow = mysqli_num_rows($result);
-                if(!empty($result)) {
+
+                $result1 = $this->categoryModel->check_cat($id);
+                $noofrow1 = mysqli_num_rows($result1);
+                
+                if($noofrow1 != 0){
+
+                    echo '<script language="javascript">';
+                    echo 'alert("This category is in use, So that you cannot delete this category.")';
+                    echo '</script>';  
 
                     $data = $this->categoryList(); 
+                   
+                }
+                else{
 
-                }  
-                else {
-                    header('location:index.php?op=categorylist&delete_flag=0');
-                }       
+                    $result = $this->categoryModel->DeleteCategory($id); 
+                    $noofrow = mysqli_num_rows($result);
+                    if(!empty($result)) {
+                        header('location:index.php?op=categorylist&delete_flag=1');
+                        $data = $this->categoryList(); 
+
+                    }  
+                    else {
+                        header('location:index.php?op=categorylist&delete_flag=0');
+                    }    
+                }
+                     
             }
         }
 

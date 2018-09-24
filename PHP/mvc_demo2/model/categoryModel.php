@@ -68,6 +68,13 @@
 			return $result;
 		}
 
+		public function check_cat($id){
+
+			$query = "SELECT c_id FROM product_category WHERE c_id = $id";
+			$result = mysqli_query($this->con, $query);	
+			return $result;
+		}
+
 		public function DeleteCategory($id) {
 			$query = "UPDATE category
 					  	SET isdelete = curdate() WHERE id=$id";	

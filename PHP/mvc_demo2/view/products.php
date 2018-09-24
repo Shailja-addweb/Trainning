@@ -27,7 +27,6 @@
 		}
 	</style>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<!-- <script src="./js/jquery-ui.js"></script> -->
 	<script src="./js/autocomplete.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 		

@@ -54,9 +54,10 @@
 							<div class="images">
 								<?php if(!empty($row['GROUP_CONCAT(DISTINCT i.name)'])){
 									$filename = $row['GROUP_CONCAT(DISTINCT i.name)'];
+									
                 					$filename = trim($filename, ',');
 		                            $ima = explode(",",$filename);	
-
+		                           
 		                            foreach($ima as $i =>$key){
 		                            	if($key != 'default.png'){
 		                                echo "<span class = \"image_span\" data-id=\"".$row['id']."\" id=\"image".$img_id[$i]."\"> 
