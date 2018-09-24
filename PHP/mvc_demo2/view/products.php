@@ -29,9 +29,7 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="./js/autocomplete.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-		
 	</script><?php
-
 		if(isset($_GET['add_flag']) && $_GET['add_flag'] == '1') {
 			echo '<span class="succmsg"> Record Inserted Successfully </span>';
 		}
@@ -66,38 +64,27 @@
 			<input type="text" name="search" size="30" id="search-box">
 			<div id="suggesstion-box"></div>
 	</div>
-
 	<div class="data">
-
 		<table cellpadding="10" cellspacing="5" id="tblEmp">
 			<tr>
 				<td colspan="6" align="right"><a href="index.php?op=addproduct">Add Product</a></td>
-			</tr>
-
-			<?php echo $data; ?>
-
-		</table>
-
+			</tr><?php 
+			echo $data; 
+		?></table>
 	</div>
-
-	<script >
-
-		$(document).ready(function(){
+	<script>
+		$(document).ready(function() {
 
 	 		// Delete 
-	 		$('.delete').click(function(e){
-
+	 		$('.delete').click(function(e) {
 	  			var Id = $(this).attr("data-id");
 	  			var res = confirm('Are you sure you want to delete ?');
 	  			e.preventDefault();
-
-	  			if(res){
+	  			if(res) {
 	  				$.ajax({
 	   					url: 'index.php?op=deleteproduct&delete_flag=1&id='+Id,
 	   					type: 'GET',
 	   					success: function(response){
-
-	  						  $('#records').empty();
 	  						  $('#records').html(response);
 	   					}
 	    			});
@@ -105,17 +92,14 @@
 	   		});
 	 		 
 	 		 //status	
-	 		$('.status').click(function(){
+	 		$('.status').click(function() {
 	 		 	var Id = $(this).attr("data-id");
 	 		 	var Status = $(this).text();
-
 				$.ajax({
 	 		 		url: 'index.php?op=changestatusp&status_flag=1&id='+Id,
 	 		 		type: 'GET',
 	 		 		success: function(response){
-
 					 	$('#records').html(response);
-	 		 		
 	 		 		}
 	 		 	});
 			});		
@@ -124,46 +108,34 @@
 		//search
 		var isSelected = false;
     	var qBox = $('input[name=search]');
-
-		$("#search-box").keyup(function(){
-
+		$("#search-box").keyup(function() {
 			var keyword = $(this).val();
 			var res = keyword.length;
-				
-			if(res == '3'){
-				/*$("#suggesstion-box").autocomplete({
-					source: "index.php?op=search&keyword=" + $(this).val()
-				});*/
-
+			if(res == '3') {
 				$.ajax({
 					url: "index.php?op=search&keyword="+keyword,
 					type: "GET",
-					success: function(response){
-
+					success: function(response) {
 						$("#suggesstion-box").show();
 						$("#suggesstion-box").html(response);
-						//$("#search-box").css("background","#FFF");
 						}
 					});
 				}
-				else if(res < 3){
+				else if(res < 3) {
 					$("#suggesstion-box").hide();	
 				}
 			});
 
 	 	function selectproduct(val) {
-				$("#search-box").val(val);
-				$("#suggesstion-box").hide();
-
-				$.ajax({
-					url: "index.php?op=searchshow&keyword="+val,
-					type: "GET",
-					success: function(response){
-
-	  						$('#records').html(response);
-						}
-					});
-			}
-
+			$("#search-box").val(val);
+			$("#suggesstion-box").hide();
+			$.ajax({
+				url: "index.php?op=searchshow&keyword="+val,
+				type: "GET",
+				success: function(response) {
+	  				$('#records').html(response);
+				}
+			});
+		}
 	</script>
 </div>

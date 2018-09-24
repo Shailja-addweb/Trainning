@@ -7,7 +7,6 @@
 			color: red;
 			font-size:14px;
 		}
-
 		a.name:link {
 		    color: green;
 		    text-decoration: none;
@@ -20,9 +19,7 @@
 		}
 	</style>
 	<script src="./js/jquery.min.js">
-		
 	</script><?php
-
 		if(isset($_GET['add_flag']) && $_GET['add_flag'] == '1') {
 			echo '<span class="succmsg"> Record Inserted Successfully </span>';
 		}
@@ -50,36 +47,24 @@
 	 	else {
 			echo '';
 		}; ?><br>
-
-
 	<div class="data">
-
 		<table cellpadding="10" cellspacing="5" id="tblEmp">
 			<tr>
 				<td colspan="6" align="right"><a href="index.php?op=addcategory">Add Category</a></td>
 			</tr>
-
 			<?php echo $data; ?>
-
 		</table>
-
 	</div>
+	<script>
+		$(document).ready(function() {
 
-	<script >
-
-		$(document).ready(function(){
-
-			$('.name').click(function(){
+			$('.name').click(function() {
 				var name = $(this).text();
 				var id = $(this).attr('value');
-				//$("#yourPopup").dialog('open');
-
-
 				$.ajax({
 					url: 'index.php?op=show&id='+id,
 					type: 'GET',
 					success: function(response){
-
 	  					alert("Product of "+name+" category are : "+response);
 	   				}
 				})
@@ -87,35 +72,28 @@
 
 	 		// Delete 
 	 		$('.delete').click(function(e){
-
 	  			var Id = $(this).attr("data-id");
 	  			var res = confirm('Are you sure you want to delete ?');
 	  			e.preventDefault();
-
-	  			if(res){
+	  			if(res) {
 	  				$.ajax({
 	   					url: 'index.php?op=deletecategory&id='+Id,
 	   					type: 'GET',
 	   					success: function(response){
-
-	  						  $('#records').empty();
-	  						  $('#records').html(response);
+	  						$('#records').html(response);
 	   					}
 	    			});
 	  			}
 	   		});
 	 		 	
-	 		$('.status').click(function(){
+	 		$('.status').click(function() {
 	 		 	var Id = $(this).attr("data-id");
 	 		 	var Status = $(this).text();
-
 				$.ajax({
 	 		 		url: 'index.php?op=changestatusc&status_flag=1&id='+Id,
 	 		 		type: 'GET',
-	 		 		success: function(response){
-
+	 		 		success: function(response) {
 					 	$('#records').html(response);
-	 		 		
 	 		 		}
 	 		 	});
 			});		

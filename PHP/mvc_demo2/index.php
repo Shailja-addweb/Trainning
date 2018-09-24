@@ -1,54 +1,40 @@
 <?php
-
 	$action = $_GET['op'];
-
 	switch ( $action ) {
 		case 'show':
-
         include_once 'controller/categoryController.php';
-
-        $controller = new categoryController();
-                 
+        $controller = new categoryController();        
         $controller->handleRequest();
-			  
         break;
-
     case 'search':
-
-        include_once 'controller/productsController.php';
-                
-        $controller = new productsController();
-                 
+        include_once 'controller/productsController.php';       
+        $controller = new productsController();         
         $controller->handleRequest();
-
         break;
-		
 		default:?>
-
 			<style>
-            ul#menubar{
+            ul#menubar {
               margin:0px;
               padding:0px;
               list-style:none;
               width:800px;
               height:40px;
             }
-            ul#menubar li{
+            ul#menubar li {
               width:100px;
               height:40px;
               line-height:30px;
               float:left;
               padding-left: 10px;
             }
-            ul#menubar li a{
+            ul#menubar li a {
               text-decoration:none;
               color:WHITE;
             }
-            ul#menubar li a:hover{
+            ul#menubar li a:hover {
             	color:RED; 
             }
         </style>
-
         <html>                                                                                          
             <body>
             <div id="records">
@@ -67,34 +53,23 @@
               </body>
         </html><?php 
 
-				if($_GET['op'] == 'productlist' || $_GET['op'] == '' || $_GET['op'] == 'addproduct' || $_GET['op'] == 'editproduct' || $_GET['op'] == 'deleteproduct'|| $_GET['op'] == 'changestatusp' || $_GET['op'] == 'remove' || $_GET['op'] == 'searchshow' || $_GET['op'] == 'changedefault' || $_GET['op'] == 'delete'){
+				if($_GET['op'] == 'productlist' || $_GET['op'] == '' || $_GET['op'] == 'addproduct' || $_GET['op'] == 'editproduct' || $_GET['op'] == 'deleteproduct'|| $_GET['op'] == 'changestatusp' || $_GET['op'] == 'remove' || $_GET['op'] == 'searchshow' || $_GET['op'] == 'changedefault' || $_GET['op'] == 'delete') {
 
-            include_once 'controller/productsController.php';
-                
-            $controller = new productsController();
-                 
+            include_once 'controller/productsController.php';   
+            $controller = new productsController();   
             $controller->handleRequest();
-
 				}
-				
 				elseif ($_GET['op'] == 'categorylist' || $_GET['op'] == 'addcategory' || $_GET['op'] == 'editcategory' || $_GET['op'] == 'deletecategory' || $_GET['op'] == 'changestatusc' || $_GET['op'] == 'remove' ) {
-
             include_once 'controller/categoryController.php';
-
-            $controller = new categoryController();
-                 
+            $controller = new categoryController();     
             $controller->handleRequest();
-					
 				}
-        elseif ($_GET['op'] == 'shoplist' || $_GET['op'] == 'productdetails'){
+        elseif ($_GET['op'] == 'shoplist' || $_GET['op'] == 'productdetails') {
 
           include_once 'controller/shopController.php';
-
-            $controller = new shopController();
-                 
-            $controller->handleRequest();
+          $controller = new shopController();     
+          $controller->handleRequest();
         }
-
 			break;
 	}
 
