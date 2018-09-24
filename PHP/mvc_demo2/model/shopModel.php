@@ -16,8 +16,10 @@
 	  	}
 
 	  	public function fetchImages($p_id) {
-	  		$query = "SELECT id,name,flag FROM images 
-	  					WHERE p_id = $p_id AND isdelete IS NULL AND name <> 'default.png'";
+	  		$query = "SELECT i.id, i.name, i.flag FROM images AS i
+	  					INNER JOIN products AS p ON i.p_id = p.id 
+	  					WHERE i.p_id = $p_id AND i.isdelete IS NULL AND i.name <> 'default.png' 
+	  					AND p.isdelete IS NULL ";
 	  		$result = mysqli_query($this->con, $query);
 	  		return $result;
 	  	}
